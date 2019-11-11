@@ -199,7 +199,7 @@ public class PacienteDao {
             POJO.setSexo(rs.getString("sexo"));
             POJO.setCliente_idcliente(rs.getInt("cliente_idcliente"));
             POJO.setTipoAnimal_idtipoAnimal(rs.getInt("tipoAnimal_idtipoAnimal"));
-            POJO.setCumple(rs.getDate("cumple"));
+            POJO.setCumple(rs.getDate("cumpleanios"));
         } catch (SQLException ex) {
             System.out.println("Error al inflar pojo Paciente: " + ex);
         }

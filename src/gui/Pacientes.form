@@ -467,7 +467,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="ani">
+            <Component class="javax.swing.JLabel" name="aniV">
               <Properties>
                 <Property name="opaque" type="boolean" value="true"/>
               </Properties>
@@ -493,7 +493,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="mes">
+            <Component class="javax.swing.JLabel" name="mesV">
               <Properties>
                 <Property name="opaque" type="boolean" value="true"/>
               </Properties>

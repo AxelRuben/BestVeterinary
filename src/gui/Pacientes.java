@@ -136,6 +136,14 @@ public void filter(){
     }
     
     
+    void calcularAyM(int diass) {
+        int anioss = diass/365;
+        int mesess = (diass-(anioss*365))/30;
+        aniV.setText(""+anioss);
+        mesV.setText(""+mesess);
+    }
+    
+    
     
     
     
@@ -148,7 +156,9 @@ public void filter(){
         update.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         Paciente paciente = pacienteDao.selectedPaciente(id);
         jnombre2.setText(paciente.getNombre());
-        Date fecha;
+        Date fecha = paciente.getCumple();
+        int diasT = calcularDias(fecha);
+        calcularAyM(diasT);
         /*
 //        sexo1.setText(sexoDI(cliente.getSexo()));
         jedad2.setText(""+paciente.getEdad());
@@ -227,9 +237,9 @@ public void filter(){
         due = new javax.swing.JLabel();
         des = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        ani = new javax.swing.JLabel();
+        aniV = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
-        mes = new javax.swing.JLabel();
+        mesV = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         update = new javax.swing.JDialog();
         jPanel5 = new javax.swing.JPanel();
@@ -417,16 +427,16 @@ public void filter(){
         jLabel24.setText("Años");
         nombr.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, -1, -1));
 
-        ani.setOpaque(true);
-        nombr.add(ani, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 70, 22));
+        aniV.setOpaque(true);
+        nombr.add(aniV, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 70, 22));
 
         jLabel30.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(255, 255, 255));
         jLabel30.setText("Edad");
         nombr.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
 
-        mes.setOpaque(true);
-        nombr.add(mes, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 70, 22));
+        mesV.setOpaque(true);
+        nombr.add(mesV, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 70, 22));
 
         jLabel33.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(255, 255, 255));
@@ -815,7 +825,7 @@ public void filter(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog add;
-    private javax.swing.JLabel ani;
+    private javax.swing.JLabel aniV;
     private javax.swing.JLabel cum;
     private com.toedter.calendar.JDateChooser cumpleUp;
     private com.toedter.calendar.JDateChooser cumplea;
@@ -874,7 +884,7 @@ public void filter(){
     private javax.swing.JComboBox<String> jsexo2;
     private javax.swing.JComboBox<String> jtipo;
     private javax.swing.JComboBox<String> jtipo2;
-    private javax.swing.JLabel mes;
+    private javax.swing.JLabel mesV;
     private javax.swing.JLabel nom;
     private javax.swing.JPanel nombr;
     private javax.swing.JLabel raz;
