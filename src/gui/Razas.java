@@ -164,7 +164,7 @@ String path="";
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 76, -1));
-        jPanel2.add(nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 166, 28));
+        jPanel2.add(nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 240, 28));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -189,7 +189,7 @@ String path="";
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, -1, 31));
 
         tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Perro", "Gato", "Ave", "Roedor", "Reptil", "Pez", "General", "Otros..." }));
-        jPanel2.add(tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 166, 30));
+        jPanel2.add(tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 240, 30));
 
         javax.swing.GroupLayout addLayout = new javax.swing.GroupLayout(add.getContentPane());
         add.getContentPane().setLayout(addLayout);

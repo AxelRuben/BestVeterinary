@@ -91,7 +91,7 @@ public void filter(){
         Cliente cliente = (Cliente) jdueno.getSelectedItem();
         TipoAnimal tipoAnimal = (TipoAnimal) jtipo.getSelectedItem();
         String name = jnombre.getText();
-        Date cum = (Date) cumplea.getDate();
+        java.sql.Date cum = new java.sql.Date(cumplea.getDate().getTime());
         String des = jTextArea1.getText();
         String sex = jsexo.getSelectedItem().toString();
         int cli = cliente.getIdcliente();
