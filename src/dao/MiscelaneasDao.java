@@ -279,7 +279,7 @@ public class MiscelaneasDao {
          Miscelaneas pojo = new Miscelaneas();
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("CALL select_a_friend(?)");
+            st = con.prepareStatement("select * from miscelaneas where idMiscelaneas=?");
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {

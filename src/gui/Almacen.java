@@ -208,8 +208,6 @@ public class Almacen extends javax.swing.JFrame implements WindowListener{
         nombreS1 = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         costoS1 = new javax.swing.JTextField();
-        stockS1 = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
         cancelarS1 = new javax.swing.JButton();
         guardarS1 = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
@@ -760,9 +758,6 @@ public class Almacen extends javax.swing.JFrame implements WindowListener{
         jLabel16.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel16.setText("Costo");
 
-        jLabel18.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jLabel18.setText("Stock");
-
         cancelarS1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         cancelarS1.setContentAreaFilled(false);
         cancelarS1.addActionListener(new java.awt.event.ActionListener() {
@@ -801,10 +796,6 @@ public class Almacen extends javax.swing.JFrame implements WindowListener{
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(costoS1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
                             .addComponent(nombreS1, javax.swing.GroupLayout.Alignment.LEADING)))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                        .addComponent(stockS1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -820,33 +811,29 @@ public class Almacen extends javax.swing.JFrame implements WindowListener{
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombreS1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(costoS1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(stockS1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18))
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel19)
-                        .addGap(0, 114, Short.MAX_VALUE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nombreS1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4)
-                        .addContainerGap())))
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(guardarS1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cancelarS1)
-                .addGap(49, 49, 49))
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(costoS1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel19)
+                                .addGap(102, 102, 102))
+                            .addComponent(jScrollPane4)))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(guardarS1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelarS1)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout updateSLayout = new javax.swing.GroupLayout(updateS.getContentPane());
@@ -1262,16 +1249,24 @@ Inputing.setLocationRelativeTo(null);
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          // TODO add your handling code here:
-        Miscelaneas miscelaneas = miscelaneasDao.selectedMiscelaneas(jTable1.getSelectedRow());
-        String tipoo = miscelaneas.getTipo();
-        if (tipoo.equals("Medicamento")) {
-            
-        } else if (tipoo.equals("Articulos")) {
-            
-        } else if (tipoo.equals("Servicios")) {
-            
-        } else {
-            
+        Miscelaneas miscelaneas = miscelaneasDao.selectedMiscelaneas(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
+        String tipo= miscelaneas.getTipo();
+        proveedorMOA1.setModel(proveedorDao.cargarCombo());
+        if (tipo.equalsIgnoreCase("Servicios")) {
+            updateS.setSize(600, 280);
+            updateS.setVisible(true);
+            nombreS1.setText(miscelaneas.getNombre());
+            costoS1.setText(""+miscelaneas.getCosto());
+            descripcionS1.setText(miscelaneas.getDescripcionS());
+        } else if (tipo.equalsIgnoreCase("Medicamento")||tipo.equalsIgnoreCase("Articulos")) {
+            updateMOA.setSize(580, 300);
+            updateMOA.setVisible(true);
+            nombreMOA1.setText(miscelaneas.getNombre());
+            costoMOA1.setText(""+miscelaneas.getCosto());
+            stockMOA1.setText(""+miscelaneas.getStock());
+            Date dates = miscelaneas.getCaducidadMOA();
+            caduucidad1.setDate(dates);
+            proveedorMOA1.setSelectedIndex(miscelaneas.getProveedor_idproveedor());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -1401,7 +1396,6 @@ public void proveedoresA(){
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -1451,7 +1445,6 @@ public void proveedoresA(){
     private javax.swing.JTable proveedoresInfo;
     private javax.swing.JTextField stockMOA;
     private javax.swing.JTextField stockMOA1;
-    private javax.swing.JTextField stockS1;
     private javax.swing.JDialog updateMOA;
     private javax.swing.JDialog updateS;
     // End of variables declaration//GEN-END:variables
