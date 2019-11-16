@@ -31,6 +31,8 @@ public class Almacen extends javax.swing.JFrame implements WindowListener{
     MiscelaneasDao miscelaneasDao = new MiscelaneasDao();
     TableRowSorter<TableModel> sorter;
     String opcion;
+    String tipo;
+    int id;
     ProveedorDao proveedorDao = new ProveedorDao();
     /**
      * Creates new form Accesorios
@@ -1249,8 +1251,10 @@ Inputing.setLocationRelativeTo(null);
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          // TODO add your handling code here:
+         
         Miscelaneas miscelaneas = miscelaneasDao.selectedMiscelaneas(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
-        String tipo= miscelaneas.getTipo();
+        id=Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+        tipo= miscelaneas.getTipo();
         proveedorMOA1.setModel(proveedorDao.cargarCombo());
         if (tipo.equalsIgnoreCase("Servicios")) {
             updateS.setSize(600, 280);
@@ -1296,6 +1300,16 @@ Inputing.setLocationRelativeTo(null);
     private void guardarS1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarS1ActionPerformed
         // TODO add your handling code here:
         
+        try {
+            Miscelaneas miscelaneas = new Miscelaneas(id, nombreS1.getText(), Double.parseDouble(costoS1.getText().toString()), tipo, descripcionS1.getText());
+            miscelaneasDao.actualizar_miscelaneas(miscelaneas);
+            loadModelIn();
+            JOptionPane.showMessageDialog(null, "éxito al actualizar servicio");
+            updateS.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(Almacen.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error");
+        }
     }//GEN-LAST:event_guardarS1ActionPerformed
 
     private void cancelarMOA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarMOA1ActionPerformed
@@ -1304,6 +1318,17 @@ Inputing.setLocationRelativeTo(null);
 
     private void guardarMOA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarMOA1ActionPerformed
         // TODO add your handling code here:
+        
+        try {
+            java.sql.Date cum = new java.sql.Date(caduucidad1.getDate().getTime());
+            Miscelaneas miscelaneas2 = new Miscelaneas(id, nombreMOA1.getText(), Double.parseDouble(costoMOA1.getText()), proveedorMOA1.getSelectedIndex(), Integer.parseInt(stockMOA1.getText()),tipo, cum);
+            miscelaneasDao.actualizar_miscelaneas(miscelaneas2);
+            loadModelIn();
+            JOptionPane.showMessageDialog(null, "éxito al actualizar");
+        } catch (SQLException ex) {
+            Logger.getLogger(Almacen.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error");
+        }
     }//GEN-LAST:event_guardarMOA1ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
