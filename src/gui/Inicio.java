@@ -89,6 +89,7 @@ public class Inicio extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -153,18 +154,19 @@ public class Inicio extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 210, 70));
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 210, 70));
 
         jButton7.setBackground(new java.awt.Color(255, 102, 0));
         jButton7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Salir");
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir-button (1).png"))); // NOI18N
+        jButton7.setContentAreaFilled(false);
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 490, 140, 40));
+        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 490, 140, 70));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/trabajadores-button.png"))); // NOI18N
         jButton6.setContentAreaFilled(false);
@@ -173,7 +175,11 @@ public class Inicio extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 220, 70));
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 220, 70));
+
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/citas-button.png"))); // NOI18N
+        jButton8.setContentAreaFilled(false);
+        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 190, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/inicio-Fondo.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -270,6 +276,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
