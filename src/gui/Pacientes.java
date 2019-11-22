@@ -177,9 +177,14 @@ public void filter(){
         update.setLocationRelativeTo(null);
         update.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         Paciente paciente = pacienteDao.selectedPaciente(id);
-        nom.setText(paciente.getNombre());
+        jnombre2.setText(paciente.getNombre());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/YYYY");
-        cum.setText(simpleDateFormat.format(paciente.getCumple()));
+        cumpleUp.setDate(paciente.getCumple());
+        jsexo2.setSelectedIndex(sexoDI(paciente.getSexo())-1);
+        jtipo2.setSelectedIndex(paciente.getTipoAnimal_idtipoAnimal());
+        jdueno2.setSelectedIndex(paciente.getCliente_idcliente());
+        jTextArea4.setText(paciente.getDescripcion());
+        jCheckBox1.setSelected(paciente.isActivo());
     }
     
     
@@ -258,6 +263,8 @@ public void filter(){
         guardarUpda = new javax.swing.JButton();
         jLabel31 = new javax.swing.JLabel();
         cumpleUp = new com.toedter.calendar.JDateChooser();
+        jLabel29 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -274,24 +281,24 @@ public void filter(){
         jPanel2.setBackground(new java.awt.Color(251, 230, 229));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel3.setText("Cumpleaños");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
         jPanel2.add(jnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 227, 29));
 
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel5.setText("Sexo");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel6.setText("Raza");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
 
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel7.setText("Dueño");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
 
-        jLabel8.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel8.setText("Descripción");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, -1, -1));
 
@@ -347,7 +354,7 @@ public void filter(){
         jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 160, -1, -1));
         jPanel2.add(cumplea, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 230, 30));
 
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel4.setText("Nombre");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
@@ -362,36 +369,30 @@ public void filter(){
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        nombr.setBackground(new java.awt.Color(204, 204, 204));
+        nombr.setBackground(new java.awt.Color(251, 230, 229));
         nombr.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel16.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel16.setText("Nombre");
         nombr.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
-        jLabel17.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel17.setText("Cumpleaños");
         nombr.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
 
-        jLabel18.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel18.setText("Sexo");
         nombr.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
 
-        jLabel19.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel19.setText("Raza");
         nombr.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
-        jLabel20.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel20.setText("Dueño");
         nombr.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
 
-        jLabel21.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel21.setText("Descripción");
         nombr.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
 
@@ -404,42 +405,47 @@ public void filter(){
         });
         nombr.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, -1, -1));
 
+        cum.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         cum.setOpaque(true);
         nombr.add(cum, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 246, 22));
 
+        nom.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         nom.setOpaque(true);
         nombr.add(nom, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 246, 22));
 
+        sex.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         sex.setOpaque(true);
         nombr.add(sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 246, 22));
 
+        raz.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         raz.setOpaque(true);
         nombr.add(raz, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 246, 22));
 
+        due.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         due.setOpaque(true);
         nombr.add(due, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 246, 22));
 
+        des.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         des.setOpaque(true);
         nombr.add(des, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 246, 111));
 
-        jLabel24.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel24.setText("Años");
         nombr.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, -1, -1));
 
+        aniV.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         aniV.setOpaque(true);
         nombr.add(aniV, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 70, 22));
 
-        jLabel30.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel30.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel30.setText("Edad");
         nombr.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
 
+        mesV.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         mesV.setOpaque(true);
         nombr.add(mesV, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 70, 22));
 
-        jLabel33.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel33.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel33.setText("Meses");
         nombr.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, -1, -1));
 
@@ -457,32 +463,32 @@ public void filter(){
         jPanel5.setBackground(new java.awt.Color(251, 230, 229));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel23.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel23.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel23.setText("Cumpleaños");
         jPanel5.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
         jPanel5.add(jnombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 227, 29));
 
-        jLabel25.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel25.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel25.setText("Sexo");
         jPanel5.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
 
-        jLabel26.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel26.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel26.setText("Raza");
         jPanel5.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
 
-        jLabel27.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel27.setText("Dueño");
-        jPanel5.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
+        jLabel27.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel27.setText("Activo");
+        jPanel5.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
-        jLabel28.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel28.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel28.setText("Descripción");
-        jPanel5.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
+        jPanel5.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
 
         jTextArea4.setColumns(20);
         jTextArea4.setRows(5);
         jdescripcion2.setViewportView(jTextArea4);
 
-        jPanel5.add(jdescripcion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 308, 130));
+        jPanel5.add(jdescripcion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, 260, 130));
 
         jtipo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Husky", "Labrador", "Chow chow", "Frensh Poodle" }));
         jtipo2.addActionListener(new java.awt.event.ActionListener() {
@@ -502,7 +508,7 @@ public void filter(){
                 jButton10ActionPerformed(evt);
             }
         });
-        jPanel5.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, -1, -1));
+        jPanel5.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, -1, -1));
 
         jsexo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Macho", "Hembra" }));
         jPanel5.add(jsexo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 227, 31));
@@ -514,22 +520,29 @@ public void filter(){
                 guardarUpdaActionPerformed(evt);
             }
         });
-        jPanel5.add(guardarUpda, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, -1, 81));
+        jPanel5.add(guardarUpda, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, -1, 81));
 
-        jLabel31.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel31.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel31.setText("Nombre");
         jPanel5.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
         jPanel5.add(cumpleUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 230, 30));
+
+        jLabel29.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel29.setText("Dueño");
+        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
+        jPanel5.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, -1, -1));
 
         javax.swing.GroupLayout updateLayout = new javax.swing.GroupLayout(update.getContentPane());
         update.getContentPane().setLayout(updateLayout);
         updateLayout.setHorizontalGroup(
             updateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         updateLayout.setVerticalGroup(
             updateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+            .addGroup(updateLayout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -656,11 +669,6 @@ public void filter(){
         view.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-        view.dispose();
-    }//GEN-LAST:event_jButton9ActionPerformed
-
     private void jtipo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtipo2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtipo2ActionPerformed
@@ -687,8 +695,10 @@ public void filter(){
         String sexoU=jsexo2.getSelectedItem().toString();
         int cli2 = cliente2.getIdcliente();
         int raz2 = tipoAnimal2.getIdtipoAnimal();
-        Date cum2 = (Date) cumpleUp.getDate();
-        Paciente paciente = new Paciente(id, nombreU, descrU, sexoU, cli2, raz2, cum2);
+//        Date cum2 = (Date) cumpleUp.getDate();
+        java.sql.Date cum2 = new java.sql.Date(cumpleUp.getDate().getTime());
+        boolean activ = jCheckBox1.isSelected();
+        Paciente paciente = new Paciente(id, nombreU, descrU, sexoU, cli2, raz2, cum2, activ);
         
         if (pacienteDao.actualizar_paciente(paciente)) {
             JOptionPane.showMessageDialog(this, "El Paciente se modificó con exito");
@@ -707,7 +717,7 @@ public void filter(){
          if (jTable1.getSelectedRow()==-1) {
              JOptionPane.showMessageDialog(null, "Seleccione un dato");
         } else {
-         cargarDatos(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
+         cargarDatosV(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -757,6 +767,11 @@ public void filter(){
     private void jtipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtipoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtipoActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        view.dispose();
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     public String openFileChooser() {
         JFileChooser fileChooser = new JFileChooser();
@@ -842,6 +857,7 @@ public void filter(){
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
@@ -857,6 +873,7 @@ public void filter(){
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;

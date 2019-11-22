@@ -95,7 +95,7 @@ public class PacienteDao {
         Paciente paciente = POJO;
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("CALL update_paciente(?,?,?,?,?,?,?)");
+            st = con.prepareStatement("CALL update_paciente(?,?,?,?,?,?,?,?)");
             st.setInt(1, paciente.getIdpaciente());
             st.setString(2, paciente.getNombre());
             st.setString(3, paciente.getDescripcion());
@@ -103,6 +103,7 @@ public class PacienteDao {
             st.setInt(5, paciente.getCliente_idcliente());
             st.setInt(6, paciente.getTipoAnimal_idtipoAnimal());
             st.setDate(7, paciente.getCumple());
+            st.setBoolean(8, paciente.isActivo());
 
             int x = st.executeUpdate();
             if (x == 0) {

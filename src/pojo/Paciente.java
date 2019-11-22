@@ -19,12 +19,13 @@ public class Paciente {
     private int cliente_idcliente;
     private int tipoAnimal_idtipoAnimal;
     private Date cumple;
+    private boolean activo;
     
 
     public Paciente() {
     }
 
-    public Paciente(int idpaciente, String nombre, String descripcion, String sexo, int cliente_idcliente, int tipoAnimal_idtipoAnimal, Date cumple) {
+    public Paciente(int idpaciente, String nombre, String descripcion, String sexo, int cliente_idcliente, int tipoAnimal_idtipoAnimal, Date cumple, boolean activo) {
         this.idpaciente = idpaciente;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -32,20 +33,16 @@ public class Paciente {
         this.cliente_idcliente = cliente_idcliente;
         this.tipoAnimal_idtipoAnimal = tipoAnimal_idtipoAnimal;
         this.cumple = cumple;
+        this.activo = activo;
     }
-    public Paciente( String nombre, String descripcion, String sexo, int cliente_idcliente, int tipoAnimal_idtipoAnimal, Date cumple) {
+
+    public Paciente(String nombre, String descripcion, String sexo, int cliente_idcliente, int tipoAnimal_idtipoAnimal, Date cumple) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.sexo = sexo;
         this.cliente_idcliente = cliente_idcliente;
         this.tipoAnimal_idtipoAnimal = tipoAnimal_idtipoAnimal;
         this.cumple = cumple;
-    }
-
-
-    @Override
-    public String toString() {
-        return getNombre();
     }
 
     public int getIdpaciente() {
@@ -103,4 +100,15 @@ public class Paciente {
     public void setCumple(Date cumple) {
         this.cumple = cumple;
     }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+    
+    
+
 }

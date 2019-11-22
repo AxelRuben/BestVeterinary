@@ -101,7 +101,6 @@ TableRowSorter<TableModel> sorter;
         jLabel15 = new javax.swing.JLabel();
         jsexo = new javax.swing.JComboBox<>();
         jhorario = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
         update = new javax.swing.JDialog();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -116,7 +115,6 @@ TableRowSorter<TableModel> sorter;
         jLabel16 = new javax.swing.JLabel();
         sexo1 = new javax.swing.JComboBox<>();
         horario1 = new javax.swing.JComboBox<>();
-        jLabel12 = new javax.swing.JLabel();
         view = new javax.swing.JDialog();
         jPanel4 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -130,7 +128,6 @@ TableRowSorter<TableModel> sorter;
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -146,27 +143,27 @@ TableRowSorter<TableModel> sorter;
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setBackground(new java.awt.Color(196, 250, 251));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel3.setText("Nombre");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, -1, -1));
-        jPanel2.add(jnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 227, 29));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
+        jPanel2.add(jnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 227, 29));
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel4.setText("Edad");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
-        jPanel2.add(jedad, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, 227, 29));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        jPanel2.add(jedad, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 227, 29));
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel5.setText("Sexo");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, -1, -1));
-        jPanel2.add(jespecialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 330, 227, 29));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
+        jPanel2.add(jespecialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 227, 29));
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel7.setText("Especialidad");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, -1, -1));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         jButton7.setContentAreaFilled(false);
@@ -175,7 +172,7 @@ TableRowSorter<TableModel> sorter;
                 jButton7ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, -1, -1));
+        jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, -1, -1));
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
         jButton8.setContentAreaFilled(false);
@@ -184,53 +181,50 @@ TableRowSorter<TableModel> sorter;
                 jButton8ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, -1, -1));
+        jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel15.setText("Horario");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, -1));
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         jsexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino" }));
-        jPanel2.add(jsexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 227, 31));
+        jPanel2.add(jsexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 227, 31));
 
         jhorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matutino", "Vespertino" }));
-        jPanel2.add(jhorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 380, 227, 31));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/trabajador_insertar-Fondo.jpg"))); // NOI18N
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 490));
+        jPanel2.add(jhorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 227, 31));
 
         javax.swing.GroupLayout addLayout = new javax.swing.GroupLayout(add.getContentPane());
         add.getContentPane().setLayout(addLayout);
         addLayout.setHorizontalGroup(
             addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         addLayout.setVerticalGroup(
             addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.setBackground(new java.awt.Color(196, 250, 251));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel8.setText("Nombre");
-        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, -1, -1));
-        jPanel3.add(nombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 227, 29));
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        jPanel3.add(nombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 227, 29));
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel9.setText("Edad");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
-        jPanel3.add(edad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, 227, 29));
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+        jPanel3.add(edad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 227, 29));
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel10.setText("Sexo");
-        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, -1, -1));
-        jPanel3.add(especialidad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 330, 227, 29));
+        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+        jPanel3.add(especialidad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 227, 29));
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel11.setText("Especialidad");
-        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, -1, -1));
+        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         jButton9.setContentAreaFilled(false);
@@ -239,7 +233,7 @@ TableRowSorter<TableModel> sorter;
                 jButton9ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, -1, -1));
+        jPanel3.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, -1, -1));
 
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
         jButton10.setContentAreaFilled(false);
@@ -248,50 +242,47 @@ TableRowSorter<TableModel> sorter;
                 jButton10ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, -1, -1));
+        jPanel3.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel16.setText("Horario");
-        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, -1));
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
         sexo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino" }));
-        jPanel3.add(sexo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 227, 31));
+        jPanel3.add(sexo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 227, 31));
 
         horario1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matutino", "Vespertino" }));
-        jPanel3.add(horario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 380, 227, 31));
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/trabajador_editar-Fondo.jpg"))); // NOI18N
-        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 490));
+        jPanel3.add(horario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 227, 31));
 
         javax.swing.GroupLayout updateLayout = new javax.swing.GroupLayout(update.getContentPane());
         update.getContentPane().setLayout(updateLayout);
         updateLayout.setHorizontalGroup(
             updateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         updateLayout.setVerticalGroup(
             updateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
         );
 
-        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel4.setBackground(new java.awt.Color(196, 250, 251));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel13.setText("Nombre");
-        jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, -1, -1));
+        jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel14.setText("Edad");
-        jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
+        jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel17.setText("Sexo");
-        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, -1, -1));
+        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
 
         jLabel18.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel18.setText("Especialidad");
-        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, -1, -1));
+        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
         jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hecho.png"))); // NOI18N
         jButton11.setContentAreaFilled(false);
@@ -300,44 +291,41 @@ TableRowSorter<TableModel> sorter;
                 jButton11ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, -1, -1));
+        jPanel4.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, -1, -1));
 
         jLabel19.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel19.setText("Horario");
-        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, -1));
+        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
         jLabel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel21.setOpaque(true);
-        jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 190, 235, 29));
+        jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 235, 29));
 
         jLabel22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel22.setOpaque(true);
-        jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 290, 235, 29));
+        jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 235, 29));
 
         jLabel23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel23.setOpaque(true);
-        jPanel4.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 337, 235, 29));
+        jPanel4.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 235, 29));
 
         jLabel24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel24.setOpaque(true);
-        jPanel4.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 384, 235, 29));
+        jPanel4.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 235, 29));
 
         jLabel25.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel25.setOpaque(true);
-        jPanel4.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 237, 235, 29));
-
-        jLabel26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/trabajador_visualizar-Fondo.jpg"))); // NOI18N
-        jPanel4.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 500));
+        jPanel4.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 235, 29));
 
         javax.swing.GroupLayout viewLayout = new javax.swing.GroupLayout(view.getContentPane());
         view.getContentPane().setLayout(viewLayout);
         viewLayout.setHorizontalGroup(
             viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
         );
         viewLayout.setVerticalGroup(
             viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -580,7 +568,6 @@ TableRowSorter<TableModel> sorter;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -594,11 +581,9 @@ TableRowSorter<TableModel> sorter;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
