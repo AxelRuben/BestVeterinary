@@ -160,6 +160,8 @@ public class PacienteDao {
         }
         return pojo;
     }
+    
+    
     public DefaultTableModel cargarModelo() {
         Connection con = null;
         PreparedStatement st = null;
@@ -175,7 +177,7 @@ public class PacienteDao {
                 Object ob[] = new Object[3];
                 Paciente pojo = inflaPOJO(rs);
                 ob[0] = pojo.getIdpaciente();
-                ob[1] = pojo.getNombre();
+                ob[1] = pojo.getNombre().toUpperCase();
                 ob[2] = pojo.getCliente_idcliente();
 
                 dt.addRow(ob);

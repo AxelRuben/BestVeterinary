@@ -5,38 +5,41 @@
  */
 package pojo;
 
+import java.sql.Date;
+
 
 public class Cliente {
     private int idcliente;
     private String nombre;
     private String sexo;
-    private int edad;
+    private Date cumpleani;
     private String contacto;
     private String correo;
     private String direccion;
 
-    public Cliente(int idcliente, String nombre, String sexo, int edad, String contacto, String correo, String direccion) {
+    public Cliente(int idcliente, String nombre, String sexo, Date cumpleani, String contacto, String correo, String direccion) {
         this.idcliente = idcliente;
         this.nombre = nombre;
         this.sexo = sexo;
-        this.edad = edad;
+        this.cumpleani = cumpleani;
         this.contacto = contacto;
         this.correo = correo;
         this.direccion = direccion;
     }
-
-    public Cliente(String nombre, String sexo, int edad, String contacto, String correo, String direccion) {
+    public Cliente(String nombre, String sexo, Date cumpleani, String contacto, String correo, String direccion) {
         this.nombre = nombre;
         this.sexo = sexo;
-        this.edad = edad;
+        this.cumpleani = cumpleani;
         this.contacto = contacto;
         this.correo = correo;
         this.direccion = direccion;
     }
-
     public Cliente() {
-     
     }
+    
+    
+    
+
 
     public int getIdcliente() {
         return idcliente;
@@ -62,12 +65,12 @@ public class Cliente {
         this.sexo = sexo;
     }
 
-    public int getEdad() {
-        return edad;
+    public Date getCumpleani() {
+        return cumpleani;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setCumpleani(Date cumpleani) {
+        this.cumpleani = cumpleani;
     }
 
     public String getContacto() {
@@ -93,10 +96,8 @@ public class Cliente {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-
     @Override
     public String toString() {
         return getNombre();
     }
-    
 }

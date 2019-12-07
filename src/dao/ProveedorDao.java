@@ -130,7 +130,7 @@ public class ProveedorDao {
                 Object ob[] = new Object[3];
                 Proveedor pojo = inflaPOJO(rs);
                 ob[0] = pojo.getIdproveedor();
-                ob[1] = pojo.getNombre();
+                ob[1] = pojo.getNombre().toUpperCase();
                 ob[2] = pojo.getContacto();
 
                 dt.addRow(ob);

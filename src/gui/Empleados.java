@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import pojo.Cliente;
 import pojo.Empleado;
 
 /**
@@ -39,10 +40,48 @@ TableRowSorter<TableModel> sorter;
     setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
     }
     Inicio inicio = new Inicio();
+    public void filter(){
+                try{
+                    sorter.setRowFilter(RowFilter.regexFilter(jTextField4.getText().toUpperCase()));
+                }catch(Exception e){
+                    System.out.println("Texto vacío" + e);
+                }
+            }
+    
+    public int sexoDI(String sexoo) {
+        int sex=0;
+        if (sexoo.equals("F")) {
+            sex = 1;
+        } else if (sexoo.equals("M")) {
+            sex = 2;
+        }
+        return sex;
+    }
+    
+    void cargarDatosV(int id){
+        view.setSize(550, 400);
+        view.setTitle("Visualizar empleado");
+        view.setVisible(true);
+        view.setLocationRelativeTo(null);
+        view.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
+        Empleado empleado= empleadoDao.selectedEmpleado(id);
+        jnombre2.setText(empleado.getNombre());
+//        sexo1.setText(sexoDI(cliente.getSexo()));
+        jedad2.setText(""+empleado.getEdad());
+        jsexo2.setSelectedItem(sexoDI(empleado.getSexo()));
+        jespecialidad2.setText(empleado.getEspecialidad());
+        jedad2.setText(""+empleado.getEdad());
+        jhorario2.setText(empleado.getHorario());
+//        jcontacto2.setText(cliente.getContacto());
+//        jcorreo2.setText(cliente.getCorreo());
+//        jdireccion2.setText(cliente.getDireccion());
+    }
     
     void cargarDatos(int id){
         update.setSize(690, 520);
+        update.setTitle("Editar empleado");
         update.setVisible(true);
+        update.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         update.setLocationRelativeTo(null);
         Empleado empleado = empleadoDao.selectedEmpleado(id);
         nombre1.setText(empleado.getNombre());
@@ -51,13 +90,7 @@ TableRowSorter<TableModel> sorter;
     }
     
     
-    public void filter(){
-                try{
-                    sorter.setRowFilter(RowFilter.regexFilter(jTextField4.getText(), jComboBox7.getSelectedIndex()));
-                }catch(Exception e){
-                    System.out.println("Texto vacío" + e);
-                }
-            }
+    
     
     int addTrabajadores() throws SQLException{
     String name = jnombre.getText();
@@ -123,11 +156,11 @@ TableRowSorter<TableModel> sorter;
         jLabel18 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
+        jnombre2 = new javax.swing.JLabel();
+        jespecialidad2 = new javax.swing.JLabel();
+        jhorario2 = new javax.swing.JLabel();
+        jedad2 = new javax.swing.JLabel();
+        jsexo2 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -138,10 +171,7 @@ TableRowSorter<TableModel> sorter;
         empleadoos = new javax.swing.JTable();
         jTextField4 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox7 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
 
         jPanel2.setBackground(new java.awt.Color(196, 250, 251));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -266,23 +296,18 @@ TableRowSorter<TableModel> sorter;
         );
 
         jPanel4.setBackground(new java.awt.Color(196, 250, 251));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel13.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel13.setText("Nombre");
-        jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        jLabel14.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel14.setText("Edad");
-        jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
 
-        jLabel17.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel17.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel17.setText("Sexo");
-        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
 
-        jLabel18.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel18.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel18.setText("Especialidad");
-        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
         jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hecho.png"))); // NOI18N
         jButton11.setContentAreaFilled(false);
@@ -291,41 +316,104 @@ TableRowSorter<TableModel> sorter;
                 jButton11ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, -1, -1));
 
-        jLabel19.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel19.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel19.setText("Horario");
-        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
-        jLabel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel21.setOpaque(true);
-        jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 235, 29));
+        jnombre2.setBackground(new java.awt.Color(255, 255, 255));
+        jnombre2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jnombre2.setEnabled(false);
+        jnombre2.setOpaque(true);
 
-        jLabel22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel22.setOpaque(true);
-        jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 235, 29));
+        jespecialidad2.setBackground(new java.awt.Color(255, 255, 255));
+        jespecialidad2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jespecialidad2.setEnabled(false);
+        jespecialidad2.setOpaque(true);
 
-        jLabel23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel23.setOpaque(true);
-        jPanel4.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 235, 29));
+        jhorario2.setBackground(new java.awt.Color(255, 255, 255));
+        jhorario2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jhorario2.setEnabled(false);
+        jhorario2.setOpaque(true);
 
-        jLabel24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel24.setOpaque(true);
-        jPanel4.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 235, 29));
+        jedad2.setBackground(new java.awt.Color(255, 255, 255));
+        jedad2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jedad2.setEnabled(false);
+        jedad2.setOpaque(true);
 
-        jLabel25.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel25.setOpaque(true);
-        jPanel4.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 235, 29));
+        jsexo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
+        jsexo2.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addGap(32, 32, 32)
+                        .addComponent(jespecialidad2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addGap(73, 73, 73)
+                        .addComponent(jhorario2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel14))
+                                .addGap(69, 69, 69))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel17)
+                                .addGap(91, 91, 91)))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jsexo2, javax.swing.GroupLayout.Alignment.LEADING, 0, 235, Short.MAX_VALUE)
+                            .addComponent(jnombre2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jedad2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(55, 55, 55)
+                        .addComponent(jButton11))))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel14))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jnombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)
+                        .addComponent(jedad2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton11))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jsexo2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel18)
+                    .addComponent(jespecialidad2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel19)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jhorario2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
 
         javax.swing.GroupLayout viewLayout = new javax.swing.GroupLayout(view.getContentPane());
         view.getContentPane().setLayout(viewLayout);
         viewLayout.setHorizontalGroup(
             viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         viewLayout.setVerticalGroup(
             viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -356,6 +444,11 @@ TableRowSorter<TableModel> sorter;
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojo.png"))); // NOI18N
         jButton3.setToolTipText("Visualizar");
         jButton3.setContentAreaFilled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 310, 70, 50));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png"))); // NOI18N
@@ -394,16 +487,8 @@ TableRowSorter<TableModel> sorter;
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lupa.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, 40, -1));
 
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Tipo" }));
-        jPanel1.add(jComboBox7, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 30, 140, 32));
-
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/empleados-Fondo.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 580));
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -421,8 +506,10 @@ TableRowSorter<TableModel> sorter;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         add.setSize(690, 520);
+        add.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         add.setVisible(true);
         add.setLocationRelativeTo(null);
+        add.setTitle("Añadir empleado");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -481,7 +568,7 @@ TableRowSorter<TableModel> sorter;
         String horarioU=horario1.getSelectedItem().toString();
         Empleado empleado = new Empleado(id, nombreU, sexoU, especialidadU, edadU, horarioU);
         if (empleadoDao.actualizar_empleado(empleado)) {
-            JOptionPane.showMessageDialog(this, "El empleado se modificó con exito");
+            JOptionPane.showMessageDialog(this, "El empleado se modificó con éxito");
             nombre1.setText("");
             especialidad1.setText("");
             edad1.setText("");
@@ -496,6 +583,15 @@ TableRowSorter<TableModel> sorter;
          // TODO add your handling code here:
         cargarDatos(Integer.parseInt(empleadoos.getValueAt(empleadoos.getSelectedRow(), 0).toString()));
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+         // TODO add your handling code here:
+         if (empleadoos.getSelectedRow()==-1) {
+             JOptionPane.showMessageDialog(null, "Seleccione un dato");
+        } else {
+        cargarDatosV(Integer.parseInt(empleadoos.getValueAt(empleadoos.getSelectedRow(), 0).toString()));
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     
     /**
@@ -564,7 +660,6 @@ TableRowSorter<TableModel> sorter;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -576,19 +671,12 @@ TableRowSorter<TableModel> sorter;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -596,10 +684,15 @@ TableRowSorter<TableModel> sorter;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jedad;
+    private javax.swing.JLabel jedad2;
     private javax.swing.JTextField jespecialidad;
+    private javax.swing.JLabel jespecialidad2;
     private javax.swing.JComboBox<String> jhorario;
+    private javax.swing.JLabel jhorario2;
     private javax.swing.JTextField jnombre;
+    private javax.swing.JLabel jnombre2;
     private javax.swing.JComboBox<String> jsexo;
+    private javax.swing.JComboBox<String> jsexo2;
     private javax.swing.JTextField nombre1;
     private javax.swing.JComboBox<String> sexo1;
     private javax.swing.JDialog update;

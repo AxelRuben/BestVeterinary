@@ -109,6 +109,9 @@ public class Paciente {
         this.activo = activo;
     }
     
-    
+    @Override
+    public String toString() {
+        return getNombre();
+    }
 
 }

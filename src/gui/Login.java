@@ -5,21 +5,24 @@
  */
 package gui;
 
+import dao.UsuarioDao;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import pojo.Usuario;
 
 /**
  *
  * @author blanc
  */
 public class Login extends javax.swing.JFrame {
-
+    UsuarioDao usuarioDao;
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
         this.setTitle("Login");
+        usuarioDao = new UsuarioDao();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
     }
@@ -109,12 +112,17 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if (usuario.getText().equals("sara")&&contrasena.getText().equals("123")) {
+        try {
+        Usuario usuario1 =usuarioDao.selectedCliente(usuario.getText());
+            if (usuario1.getContrasena().equalsIgnoreCase(contrasena.getText())) {
             JOptionPane.showMessageDialog(null, "Acceso Concedido");
-        inicio.inicioV();
-        this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(null, "Acceso Denegado");
+            inicio.inicioV();
+            this.dispose();
+            }else{
+            JOptionPane.showMessageDialog(null, "El usuario o contraseña estan incorrectos");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "El usuario o contraseña estan incorrectos");
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed

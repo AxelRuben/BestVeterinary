@@ -5,6 +5,7 @@
  */
 package gui;
 
+import java.awt.Cursor;
 import javax.swing.ImageIcon;
 
 /**
@@ -23,6 +24,15 @@ public class Inicio extends javax.swing.JFrame {
         this.setTitle("Inicio");
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
+        jButton1.setCursor(new Cursor(HAND_CURSOR));
+        jButton1.setCursor(new Cursor(HAND_CURSOR));
+        jButton2.setCursor(new Cursor(HAND_CURSOR));
+        jButton3.setCursor(new Cursor(HAND_CURSOR));
+        jButton4.setCursor(new Cursor(HAND_CURSOR));
+        jButton5.setCursor(new Cursor(HAND_CURSOR));
+        jButton6.setCursor(new Cursor(HAND_CURSOR));
+        jButton7.setCursor(new Cursor(HAND_CURSOR));
+        jButton8.setCursor(new Cursor(HAND_CURSOR));
     }
     public void inicioV(){
         Inicio inicio = new Inicio();
@@ -42,7 +52,7 @@ public class Inicio extends javax.swing.JFrame {
         this.dispose();
     }
     public void almacen(){
-        Almacen almacen = new Almacen();
+        Inventarios almacen = new Inventarios();
         almacen.setVisible(true);
         this.dispose();
     }
@@ -100,6 +110,7 @@ public class Inicio extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pacientes-button.png"))); // NOI18N
+        jButton1.setToolTipText("Ir a la pestaña pacientes");
         jButton1.setContentAreaFilled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,6 +123,7 @@ public class Inicio extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clientes-button.png"))); // NOI18N
+        jButton2.setToolTipText("Ir a la pestaña clientes");
         jButton2.setContentAreaFilled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,6 +136,7 @@ public class Inicio extends javax.swing.JFrame {
         jButton3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/inventarios-button.png"))); // NOI18N
+        jButton3.setToolTipText("Ir a la pestaña inventarios");
         jButton3.setContentAreaFilled(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,6 +149,7 @@ public class Inicio extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/expedientes-button.png"))); // NOI18N
+        jButton4.setToolTipText("Ir a la pestaña expedientes");
         jButton4.setContentAreaFilled(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,6 +162,7 @@ public class Inicio extends javax.swing.JFrame {
         jButton5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ventas-button.png"))); // NOI18N
+        jButton5.setToolTipText("Ir a la pestaña ventas");
         jButton5.setContentAreaFilled(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,6 +175,7 @@ public class Inicio extends javax.swing.JFrame {
         jButton7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir-button (1).png"))); // NOI18N
+        jButton7.setToolTipText("Salie al login");
         jButton7.setContentAreaFilled(false);
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,17 +185,24 @@ public class Inicio extends javax.swing.JFrame {
         jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 490, 140, 70));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/trabajadores-button.png"))); // NOI18N
+        jButton6.setToolTipText("Ir a la pestaña trabajadores");
         jButton6.setContentAreaFilled(false);
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 220, 70));
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 220, 70));
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/citas-button.png"))); // NOI18N
+        jButton8.setToolTipText("Ir a la pestaña citas");
         jButton8.setContentAreaFilled(false);
-        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 190, -1));
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 210, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/inicio-Fondo.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -232,6 +255,11 @@ public class Inicio extends javax.swing.JFrame {
          // TODO add your handling code here:
          trabajadores();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        citas();
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments

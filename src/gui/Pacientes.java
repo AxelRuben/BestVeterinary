@@ -8,6 +8,8 @@ package gui;
 import dao.ClienteDao;
 import dao.PacienteDao;
 import dao.TipoAnimalDao;
+import java.awt.Cursor;
+import static java.awt.Frame.HAND_CURSOR;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -35,6 +37,8 @@ public class Pacientes extends javax.swing.JFrame {
 
     PacienteDao pacienteDao;
     ClienteDao clienteDao;
+    TipoAnimal tipoAnimal;
+    Cliente cliente;
     TipoAnimalDao tipoAnimalDao;
     TableRowSorter<TableModel> sorter;
     java.util.Date fecha;
@@ -46,6 +50,8 @@ public class Pacientes extends javax.swing.JFrame {
         initComponents();
         pacienteDao = new PacienteDao();
         clienteDao = new ClienteDao();
+        tipoAnimal = new TipoAnimal();
+        cliente = new Cliente();
         tipoAnimalDao = new TipoAnimalDao();
         fecha = new java.util.Date();
         this.setTitle("Pacientes");
@@ -54,7 +60,11 @@ public class Pacientes extends javax.swing.JFrame {
         loadCombooC();
         loadCombooR();
         setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
-       
+       jButton1.setCursor(new Cursor(HAND_CURSOR));
+    jButton2.setCursor(new Cursor(HAND_CURSOR));
+    jButton3.setCursor(new Cursor(HAND_CURSOR));
+    jButton4.setCursor(new Cursor(HAND_CURSOR));
+    jButton5.setCursor(new Cursor(HAND_CURSOR));
     
     }
     Inicio in = new Inicio();
@@ -62,7 +72,7 @@ public class Pacientes extends javax.swing.JFrame {
     
 public void filter(){
                 try{
-                    sorter.setRowFilter(RowFilter.regexFilter(jTextField3.getText(), jComboBox6.getSelectedIndex()));
+                    sorter.setRowFilter(RowFilter.regexFilter(jTextField3.getText().toUpperCase()));
                 }catch(Exception e){
                     System.out.println("Texto vacío" + e);
                 }
@@ -114,24 +124,35 @@ public void filter(){
         return sex;
     }
     
+    public String sexoDM(String sexoo) {
+        String sex="";
+        if (sexoo.equals("M")) {
+            sex = "Mujer";
+        } else if (sexoo.equals("H")) {
+            sex = "Hombre";
+        }
+        return sex;
+    }
     
     
     
-    int calcularDias(Date cumpleanios){
+    
+    int calcularDias(java.util.Date cumpleanios) {
         int dias = 0;
         int anio = cumpleanios.getYear();
         int mes = cumpleanios.getMonth();
         int dia = cumpleanios.getDate();
         java.util.Date fechaHoy = new java.util.Date();
-        while(true){
-            if (cumpleanios.compareTo(fechaHoy)==0) {
+        while (true) {
+            if (cumpleanios.compareTo(fechaHoy) >= 0) {
                 break;
             } else {
                 dias++;
                 dia++;
-                cumpleanios = new Date(anio, mes, dia);
+                cumpleanios = new java.util.Date(anio, mes, dia);
             }
         }
+     
         return dias;
     }
     
@@ -159,6 +180,8 @@ public void filter(){
         Date fecha = paciente.getCumple();
         int diasT = calcularDias(fecha);
         calcularAyM(diasT);
+        
+        
         /*
 //        sexo1.setText(sexoDI(cliente.getSexo()));
         jedad2.setText(""+paciente.getEdad());
@@ -170,9 +193,9 @@ public void filter(){
 
     
     
-    void cargarDatosV(int id){
+    void cargarDatosM(int id){
         update.setSize(600, 400);
-        update.setTitle("Añadir paciente");
+        update.setTitle("Modificar paciente");
         update.setVisible(true);
         update.setLocationRelativeTo(null);
         update.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
@@ -186,7 +209,23 @@ public void filter(){
         jTextArea4.setText(paciente.getDescripcion());
         jCheckBox1.setSelected(paciente.isActivo());
     }
-    
+    void cargarDatosV(int id){
+        view.setSize(650, 400);
+        view.setTitle("Modificar paciente");
+        view.setVisible(true);
+        view.setLocationRelativeTo(null);
+        view.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
+        Paciente paciente = pacienteDao.selectedPaciente(id);
+        nom.setText(paciente.getNombre());
+        cum.setText(""+(paciente.getCumple()));
+        sex.setText(""+(sexoDM(paciente.getSexo())));
+        raz.setText(tipoAnimalDao.selectedAnimal(paciente.getTipoAnimal_idtipoAnimal()).getRaza());
+        due.setText(clienteDao.selectedCliente(paciente.getCliente_idcliente()).getNombre());
+        jdueno2.setSelectedIndex(paciente.getCliente_idcliente());
+        java.util.Date cum = new java.util.Date(paciente.getCumple().getYear(), paciente.getCumple().getMonth(), paciente.getCumple().getDate());
+        calcularAyM(calcularDias(cum));
+        jTextArea4.setText(paciente.getDescripcion());
+    }
     
     
     boolean delete(int id){
@@ -275,7 +314,6 @@ public void filter(){
         jButton5 = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox6 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
 
         jPanel2.setBackground(new java.awt.Color(251, 230, 229));
@@ -405,26 +443,32 @@ public void filter(){
         });
         nombr.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, -1, -1));
 
+        cum.setBackground(new java.awt.Color(255, 255, 255));
         cum.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         cum.setOpaque(true);
         nombr.add(cum, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 246, 22));
 
+        nom.setBackground(new java.awt.Color(255, 255, 255));
         nom.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         nom.setOpaque(true);
         nombr.add(nom, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 246, 22));
 
+        sex.setBackground(new java.awt.Color(255, 255, 255));
         sex.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         sex.setOpaque(true);
         nombr.add(sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 246, 22));
 
+        raz.setBackground(new java.awt.Color(255, 255, 255));
         raz.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         raz.setOpaque(true);
         nombr.add(raz, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 246, 22));
 
+        due.setBackground(new java.awt.Color(255, 255, 255));
         due.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         due.setOpaque(true);
         nombr.add(due, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 246, 22));
 
+        des.setBackground(new java.awt.Color(255, 255, 255));
         des.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         des.setOpaque(true);
         nombr.add(des, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 246, 111));
@@ -433,6 +477,7 @@ public void filter(){
         jLabel24.setText("Años");
         nombr.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, -1, -1));
 
+        aniV.setBackground(new java.awt.Color(255, 255, 255));
         aniV.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         aniV.setOpaque(true);
         nombr.add(aniV, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 70, 22));
@@ -441,6 +486,7 @@ public void filter(){
         jLabel30.setText("Edad");
         nombr.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
 
+        mesV.setBackground(new java.awt.Color(255, 255, 255));
         mesV.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         mesV.setOpaque(true);
         nombr.add(mesV, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 70, 22));
@@ -595,7 +641,7 @@ public void filter(){
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 390, -1, -1));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png"))); // NOI18N
-        jButton4.setToolTipText("Eliminar");
+        jButton4.setToolTipText("Dar de baja");
         jButton4.setContentAreaFilled(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -605,7 +651,7 @@ public void filter(){
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 480, -1, -1));
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casa (GR).png"))); // NOI18N
-        jButton5.setToolTipText("Home");
+        jButton5.setToolTipText("Inicio");
         jButton5.setContentAreaFilled(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -623,9 +669,6 @@ public void filter(){
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lupa.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 30, 40, -1));
-
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Tipo" }));
-        jPanel1.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 30, 140, 32));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pacientes-Fondo.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -662,11 +705,7 @@ public void filter(){
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        view.setSize(510, 470);
-        view.setTitle("Visualizar");
-        view.setVisible(true);
-        view.setLocationRelativeTo(null);
-        view.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
+        cargarDatosV(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jtipo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtipo2ActionPerformed
@@ -717,7 +756,7 @@ public void filter(){
          if (jTable1.getSelectedRow()==-1) {
              JOptionPane.showMessageDialog(null, "Seleccione un dato");
         } else {
-         cargarDatosV(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
+         cargarDatosM(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -736,10 +775,14 @@ public void filter(){
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
         Razas razas = new Razas();
+        
         razas.setVisible(true);
+        this.dispose();
+        add.dispose();
         razas.setSize(430, 520);
         razas.setLocationRelativeTo(null);
         razas.setTitle("Ingresar Raza");
+        loadCombooR();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void guardarAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarAddActionPerformed
@@ -858,7 +901,6 @@ public void filter(){
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;

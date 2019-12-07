@@ -127,7 +127,7 @@ public class EmpleadoDao {
                 Object ob[] = new Object[3];
                 Empleado pojo = inflaPOJO(rs);
                 ob[0] = pojo.getIdempleado();
-                ob[1] = pojo.getNombre();
+                ob[1] = pojo.getNombre().toUpperCase();
                 ob[2] = pojo.getHorario();
 
                 dt.addRow(ob);

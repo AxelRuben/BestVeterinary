@@ -229,7 +229,7 @@ public class MiscelaneasDao {
                 Object ob[] = new Object[4];
                 Miscelaneas pojo = inflaPOJO(rs);
                 ob[0] = pojo.getIdmiscelaneas();
-                ob[1] = pojo.getNombre();
+                ob[1] = pojo.getNombre().toUpperCase();
                 ob[2] = pojo.getTipo();
 
                 dt.addRow(ob);
@@ -259,7 +259,7 @@ public class MiscelaneasDao {
                 Object ob[] = new Object[3];
                 Miscelaneas pojo = inflaPOJO(rs);
                 ob[0] = pojo.getIdmiscelaneas();
-                ob[1] = pojo.getNombre();
+                ob[1] = pojo.getNombre().toUpperCase();
                 ob[2] = pojo.getTipo();
 
                 dt.addRow(ob);

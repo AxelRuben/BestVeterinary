@@ -111,8 +111,8 @@ public class TipoAnimalDao {
                 Object ob[] = new Object[3];
                 TipoAnimal pojo = inflaPOJO(rs);
                 ob[0] = pojo.getIdtipoAnimal();
-                ob[1] = pojo.getTipo();
-                ob[2] = pojo.getRaza();
+                ob[1] = pojo.getTipo().toUpperCase();
+                ob[2] = pojo.getRaza().toUpperCase();
 
                 dt.addRow(ob);
             }
@@ -168,6 +168,7 @@ public class TipoAnimalDao {
         }
         return dt;
     }
+    
     private static TipoAnimal inflaPOJO(ResultSet rs) {
 
         TipoAnimal POJO = new TipoAnimal();

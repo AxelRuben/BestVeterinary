@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -28,7 +28,7 @@ public class ClienteDao {
             st = con.prepareStatement("CALL insert_cliente(?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
             st.setString(1, pojo.getNombre());
             st.setString(2, sexoDM(pojo));
-            st.setInt(3, pojo.getEdad());
+            st.setDate(3, pojo.getCumpleani());
             st.setString(4, pojo.getContacto());
             st.setString(5, pojo.getCorreo());
             st.setString(6, pojo.getDireccion());
@@ -59,7 +59,7 @@ public class ClienteDao {
             st.setInt(1, cliente.getIdcliente());
             st.setString(2, cliente.getNombre());
             st.setString(3, sexoDM(POJO));
-            st.setInt(4, cliente.getEdad());
+            st.setDate(4, cliente.getCumpleani());
             st.setString(5, cliente.getContacto());
             st.setString(6, cliente.getCorreo());
             st.setString(7, cliente.getDireccion());
@@ -148,7 +148,7 @@ public class ClienteDao {
                 Object ob[] = new Object[3];
                 Cliente pojo = inflaPOJO(rs);
                 ob[0] = pojo.getIdcliente();
-                ob[1] = pojo.getNombre();
+                ob[1] = pojo.getNombre().toUpperCase();
                 ob[2] = pojo.getContacto();
 
                 dt.addRow(ob);
@@ -189,7 +189,7 @@ public class ClienteDao {
             POJO.setIdcliente(rs.getInt("idcliente"));
             POJO.setNombre(rs.getString("nombre"));
             POJO.setSexo(rs.getString("sexo"));
-            POJO.setEdad(rs.getInt("edad"));
+            POJO.setCumpleani(rs.getDate("cumplea"));
             POJO.setContacto(rs.getString("contacto"));
             POJO.setCorreo(rs.getString("correo"));
             POJO.setDireccion(rs.getString("direccion"));

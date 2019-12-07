@@ -11,9 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import pojo.Cliente;
+import pojo.Usuario;
 
 public class UsuarioDao {
-    public int insertar(Cliente pojo) throws SQLException {
+    public int insertar(Usuario pojo) throws SQLException {
         Connection con = null;
         PreparedStatement st = null;
         int id = 0;
@@ -21,11 +22,7 @@ public class UsuarioDao {
             con = Conexion.getConnection();
             st = con.prepareStatement("call insert_cliente(?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
             st.setString(1, pojo.getNombre());
-            st.setString(2, sexoD(pojo));
-            st.setInt(3, pojo.getEdad());
-            st.setString(4, pojo.getContacto());
-            st.setString(5, pojo.getCorreo());
-            st.setString(6, pojo.getDireccion());
+            st.setString(2, pojo.getContrasena());
             
             id = st.executeUpdate();
             ResultSet rs = st.getGeneratedKeys();
@@ -43,54 +40,14 @@ public class UsuarioDao {
         return id;
     }
     
-    public String sexoD(Cliente pojo) {
-        String sexA = pojo.getSexo();
-        String sex = "";
-        if (sexA.equalsIgnoreCase("Femenino")) {
-            sex = "F";
-        } else if (sexA.equalsIgnoreCase("Masculino")) {
-            sex = "M";
-        }
-        return sex;
-    }
-    
-    public DefaultTableModel cargarModelo() {
+    public Usuario selectedCliente(String nom) {
         Connection con = null;
         PreparedStatement st = null;
-        DefaultTableModel dt = null;
-        String encabezados[] = {"Id", "Name", "Phone"};
+         Usuario pojo = new Usuario();
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("select*from friend");
-            dt = new DefaultTableModel();
-            dt.setColumnIdentifiers(encabezados);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Object ob[] = new Object[3];
-                Cliente pojo = inflaPOJO(rs);
-                ob[0] = pojo.getIdcliente();
-                ob[1] = pojo.getNombre();
-                ob[2] = pojo.getContacto();
-
-                dt.addRow(ob);
-            }
-            rs.close();
-        } catch (Exception e) {
-            System.out.println("Error al cargar la tabla Dueño " + e);
-        } finally {
-            Conexion.close(con);
-            Conexion.close(st);
-        }
-        return dt;
-    }
-     public Cliente selectedFriend(int id) {
-        Connection con = null;
-        PreparedStatement st = null;
-         Cliente pojo = new Cliente();
-        try {
-            con = Conexion.getConnection();
-            st = con.prepareStatement("CALL select_a_friend(?)");
-            st.setInt(1, id);
+            st = con.prepareStatement("select * from usuario where nombre=?");
+            st.setString(1, nom);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 pojo = inflaPOJO(rs);
@@ -103,17 +60,14 @@ public class UsuarioDao {
         }
         return pojo;
     }
-    private static Cliente inflaPOJO(ResultSet rs) {
+    
+    private static Usuario inflaPOJO(ResultSet rs) {
 
-        Cliente POJO = new Cliente();
+        Usuario POJO = new Usuario();
         try {
-            POJO.setIdcliente(rs.getInt("idcliente"));
+            POJO.setIdUsuario(rs.getInt("idusuario"));
             POJO.setNombre(rs.getString("nombre"));
-            POJO.setSexo(rs.getString("sexo"));
-            POJO.setEdad(rs.getInt("edad"));
-            POJO.setContacto(rs.getString("contacto"));
-            POJO.setCorreo(rs.getString("correo"));
-            POJO.setDireccion(rs.getString("direccion"));
+            POJO.setContrasena(rs.getString("contrasena"));
             //POJO.setImage(rs.getString("phone"));
         } catch (SQLException ex) {
             System.out.println("Error al inflar pojo Dueño: " + ex);

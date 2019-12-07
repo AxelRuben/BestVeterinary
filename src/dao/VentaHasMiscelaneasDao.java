@@ -10,26 +10,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
-import pojo.Cliente;
+import pojo.Venta_has_Miscelaneas;
 
 /**
  *
  * @author blanc
  */
 public class VentaHasMiscelaneasDao {
-    public int insertar(Cliente pojo) throws SQLException {
+    public int insertar(Venta_has_Miscelaneas pojo) throws SQLException {
         Connection con = null;
         PreparedStatement st = null;
         int id = 0;
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("call insert_cliente(?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
-            st.setString(1, pojo.getNombre());
-            st.setString(2, sexoD(pojo));
-            st.setInt(3, pojo.getEdad());
-            st.setString(4, pojo.getContacto());
-            st.setString(5, pojo.getCorreo());
-            st.setString(6, pojo.getDireccion());
+            st = con.prepareStatement("INSERT INTO venta_has_miscelaneas(venta_idventa, miscelaneas_idmiscelaneas) VALUES (?,?);", PreparedStatement.RETURN_GENERATED_KEYS);
+            st.setInt(1, pojo.getVenta_idventa());
+            st.setInt(2, pojo.getArticulo_idarticulo());
             
             id = st.executeUpdate();
             ResultSet rs = st.getGeneratedKeys();
@@ -47,78 +43,33 @@ public class VentaHasMiscelaneasDao {
         return id;
     }
     
-    public String sexoD(Cliente pojo) {
-        String sexA = pojo.getSexo();
-        String sex = "";
-        if (sexA.equalsIgnoreCase("Femenino")) {
-            sex = "F";
-        } else if (sexA.equalsIgnoreCase("Masculino")) {
-            sex = "M";
-        }
-        return sex;
-    }
+//     public Venta_has_Miscelaneas selectedFriend(int id) {
+//        Connection con = null;
+//        PreparedStatement st = null;
+//         Venta_has_Miscelaneas pojo = new Venta_has_Miscelaneas();
+//        try {
+//            con = Conexion.getConnection();
+//            st = con.prepareStatement("select * from venta where id=?");
+//            st.setInt(1, id);
+//            ResultSet rs = st.executeQuery();
+//            while (rs.next()) {
+//                pojo = inflaPOJO(rs);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Error al consultar Dueno " + e);
+//        } finally {
+//            Conexion.close(con);
+//            Conexion.close(st);
+//        }
+//        return pojo;
+//    }
     
-    public DefaultTableModel cargarModelo() {
-        Connection con = null;
-        PreparedStatement st = null;
-        DefaultTableModel dt = null;
-        String encabezados[] = {"Id", "Name", "Phone"};
-        try {
-            con = Conexion.getConnection();
-            st = con.prepareStatement("select*from friend");
-            dt = new DefaultTableModel();
-            dt.setColumnIdentifiers(encabezados);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Object ob[] = new Object[3];
-                Cliente pojo = inflaPOJO(rs);
-                ob[0] = pojo.getIdcliente();
-                ob[1] = pojo.getNombre();
-                ob[2] = pojo.getContacto();
+    private static Venta_has_Miscelaneas inflaPOJO(ResultSet rs) {
 
-                dt.addRow(ob);
-            }
-            rs.close();
-        } catch (Exception e) {
-            System.out.println("Error al cargar la tabla Dueño " + e);
-        } finally {
-            Conexion.close(con);
-            Conexion.close(st);
-        }
-        return dt;
-    }
-     public Cliente selectedFriend(int id) {
-        Connection con = null;
-        PreparedStatement st = null;
-         Cliente pojo = new Cliente();
+        Venta_has_Miscelaneas POJO = new Venta_has_Miscelaneas();
         try {
-            con = Conexion.getConnection();
-            st = con.prepareStatement("CALL select_a_friend(?)");
-            st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                pojo = inflaPOJO(rs);
-            }
-        } catch (Exception e) {
-            System.out.println("Error al consultar Dueno " + e);
-        } finally {
-            Conexion.close(con);
-            Conexion.close(st);
-        }
-        return pojo;
-    }
-    private static Cliente inflaPOJO(ResultSet rs) {
-
-        Cliente POJO = new Cliente();
-        try {
-            POJO.setIdcliente(rs.getInt("idcliente"));
-            POJO.setNombre(rs.getString("nombre"));
-            POJO.setSexo(rs.getString("sexo"));
-            POJO.setEdad(rs.getInt("edad"));
-            POJO.setContacto(rs.getString("contacto"));
-            POJO.setCorreo(rs.getString("correo"));
-            POJO.setDireccion(rs.getString("direccion"));
-            //POJO.setImage(rs.getString("phone"));
+            POJO.setVenta_idventa(rs.getInt("venta_idventa"));
+            POJO.setArticulo_idarticulo(rs.getInt("miscelaneas_idmiscelaneas"));
         } catch (SQLException ex) {
             System.out.println("Error al inflar pojo Dueño: " + ex);
         }

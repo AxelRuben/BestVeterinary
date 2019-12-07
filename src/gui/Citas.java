@@ -75,8 +75,9 @@ public void loadCombooC() {
     
     void editarDatos(int id){
         update.setSize(510, 470);
-        update.setTitle("Añadir paciente");
+        update.setTitle("Añadir cita");
         update.setVisible(true);
+        update.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         update.setLocationRelativeTo(null);
         Cita cita = citaDao.selectedCita(id);
 //        Cita cita=citaDao.selectedCita(citaas.getSelectedRow());
@@ -481,6 +482,11 @@ public void loadModel() {
                 jTextField1ActionPerformed(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 285, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lupa.png"))); // NOI18N
@@ -544,6 +550,11 @@ public void loadModel() {
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png"))); // NOI18N
         jButton4.setToolTipText("Eliminar");
         jButton4.setContentAreaFilled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 410, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Citas-Fondo.png"))); // NOI18N
@@ -576,15 +587,16 @@ public void loadModel() {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         add.setSize(510, 470);
-        add.setTitle("Añadir paciente");
+        add.setTitle("Añadir cita");
         add.setVisible(true);
+        add.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         add.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         view.setSize(510, 470);
-        view.setTitle("Visualizar");
+        view.setTitle("Visualizar cita");
         view.setVisible(true);
         view.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -643,7 +655,7 @@ public void loadModel() {
     Date fec= new java.sql.Date(fecha1.getDate().getTime());
         Cita cita1 = new Cita(id, fec, as, clien2);
         if (citaDao.actualizar_cita(cita1)) {
-            JOptionPane.showMessageDialog(this, "La cita se modificó con exito");
+            JOptionPane.showMessageDialog(this, "La cita se modificó con éxito");
             asunto1.setText("");
             update.dispose();
             loadModel();
@@ -660,6 +672,30 @@ public void loadModel() {
         // TODO add your handling code here:
     }//GEN-LAST:event_asunto1ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+         // TODO add your handling code here:
+         int row = citaas.getSelectedRow(); //Se obtiene la linea seleccionada
+         int id= (int) citaas.getValueAt(row, 0); //Obtengo el ID del amigo
+//         if (delete(id)) {
+//            JOptionPane.showMessageDialog(null, "Éxito al eliminar");
+//            loadModel();
+//        }else{
+//             JOptionPane.showMessageDialog(null, "Error al eliminar");
+//         }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        filter();
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    
+    public void filter(){
+                try{
+                    sorter.setRowFilter(RowFilter.regexFilter(jTextField1.getText().toUpperCase()));
+                }catch(Exception e){
+                    System.out.println("Texto vacío" + e);
+                }
+            }
     /**
      * @param args the command line arguments
      */
