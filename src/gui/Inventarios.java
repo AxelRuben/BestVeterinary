@@ -197,7 +197,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         proveedoresInfo = new javax.swing.JTable();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
         pUdp = new javax.swing.JDialog();
         jPanel6 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
@@ -257,6 +257,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
 
         cancelarS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         cancelarS.setContentAreaFilled(false);
+        cancelarS.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelarS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelarSActionPerformed(evt);
@@ -265,6 +266,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
 
         guardarS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
         guardarS.setContentAreaFilled(false);
+        guardarS.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         guardarS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 guardarSActionPerformed(evt);
@@ -359,6 +361,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         jRadioButton7.setText("Servicio");
 
         jButton9.setText("Aceptar");
+        jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
@@ -390,7 +393,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 111, Short.MAX_VALUE)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel10Layout.createSequentialGroup()
                     .addGap(6, 6, 6)
@@ -400,7 +403,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
                         .addComponent(jRadioButton5)
                         .addComponent(jRadioButton6)
                         .addComponent(jRadioButton7))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                     .addComponent(jButton9)
                     .addGap(6, 6, 6)))
         );
@@ -413,7 +416,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         );
         InputingLayout.setVerticalGroup(
             InputingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         addMOA.setBackground(new java.awt.Color(249, 209, 255));
@@ -540,18 +543,17 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel4.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel4.setBackground(new java.awt.Color(204, 255, 255));
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel9.setText("Nombre");
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel13.setText("Contacto");
 
         jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
         jButton13.setContentAreaFilled(false);
+        jButton13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton13ActionPerformed(evt);
@@ -560,6 +562,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
 
         jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         jButton14.setContentAreaFilled(false);
+        jButton14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton14ActionPerformed(evt);
@@ -618,6 +621,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         proveedores.setResizable(false);
 
         jPanel5.setBackground(new java.awt.Color(204, 255, 255));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         proveedoresInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -629,67 +633,38 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         ));
         jScrollPane3.setViewportView(proveedoresInfo);
 
+        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 251, 286));
+
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mas.png"))); // NOI18N
         jButton7.setToolTipText("Agregar");
         jButton7.setContentAreaFilled(false);
+        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
+        jPanel5.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, -1, -1));
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lapiz.png"))); // NOI18N
         jButton8.setToolTipText("Modificar");
         jButton8.setContentAreaFilled(false);
+        jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
             }
         });
+        jPanel5.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, -1, -1));
 
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png"))); // NOI18N
-        jButton10.setToolTipText("Borrar");
-        jButton10.setContentAreaFilled(false);
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton7)
-                    .addComponent(jButton8)
-                    .addComponent(jButton10))
-                .addContainerGap(159, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jButton7)
-                        .addGap(7, 7, 7)
-                        .addComponent(jButton8)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton10))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(108, Short.MAX_VALUE))
-        );
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/proveedores-Fondo.jpg"))); // NOI18N
+        jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, -1));
 
         javax.swing.GroupLayout proveedoresLayout = new javax.swing.GroupLayout(proveedores.getContentPane());
         proveedores.getContentPane().setLayout(proveedoresLayout);
         proveedoresLayout.setHorizontalGroup(
             proveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         proveedoresLayout.setVerticalGroup(
             proveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -698,12 +673,12 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
 
         jPanel6.setBackground(new java.awt.Color(204, 255, 255));
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel15.setText("Nombre");
 
         jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
         jButton15.setContentAreaFilled(false);
+        jButton15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton15ActionPerformed(evt);
@@ -712,14 +687,14 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
 
         jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         jButton16.setContentAreaFilled(false);
+        jButton16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton16ActionPerformed(evt);
             }
         });
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel17.setText("Contacto");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -1024,11 +999,13 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png"))); // NOI18N
         jButton4.setToolTipText("Borrar");
         jButton4.setContentAreaFilled(false);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 460, 70, -1));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojo.png"))); // NOI18N
         jButton3.setToolTipText("Visualizar");
         jButton3.setContentAreaFilled(false);
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -1039,6 +1016,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lapiz.png"))); // NOI18N
         jButton2.setToolTipText("Modificar");
         jButton2.setContentAreaFilled(false);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -1049,6 +1027,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mas.png"))); // NOI18N
         jButton1.setToolTipText("Agregar");
         jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -1058,6 +1037,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casa (GR).png"))); // NOI18N
         jButton6.setContentAreaFilled(false);
+        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -1127,8 +1107,9 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
 //        opcion=JOptionPane.showInputDialog("�Qu� quiere introducir? \n1.- Medicamento \n2.-Servicios \n3.-Art�culos");
 
 Inputing.setVisible(true);
-Inputing.setSize(300, 150);
+Inputing.setSize(295, 150);
 Inputing.setTitle("Opciones");
+Inputing.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
 Inputing.setLocationRelativeTo(null);
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -1170,6 +1151,7 @@ Inputing.setLocationRelativeTo(null);
         }else if (jRadioButton5.isSelected()) {
             opcion="Medicamento";
             addMOA.setVisible(true);
+            addMOA.setTitle("Agregar Medicamento");
             addMOA.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
             addMOA.setSize(571, 310);
             addMOA.setLocationRelativeTo(null);
@@ -1177,6 +1159,7 @@ Inputing.setLocationRelativeTo(null);
             
         }else if (jRadioButton6.isSelected()) {
             opcion="Articulos";
+            addMOA.setTitle("Agregar Artículo");
             addMOA.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
             addMOA.setVisible(true);
             addMOA.setSize(571, 310);
@@ -1184,6 +1167,7 @@ Inputing.setLocationRelativeTo(null);
             Inputing.dispose();
         }else if (jRadioButton7.isSelected()) {
             opcion="Servicios";
+            addS.setTitle("Agregar Servicio");
             addS.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
             addS.setVisible(true);
             addS.setSize(571, 350);
@@ -1200,10 +1184,10 @@ Inputing.setLocationRelativeTo(null);
     private void guardarMOAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarMOAActionPerformed
         try {
             if (addMiscelaneaMOA()!=0) {
-            JOptionPane.showMessageDialog(null, "�xito");
+            JOptionPane.showMessageDialog(null, "El medicamento o artículo se ha insertado con éxito");
             addMOA.dispose();
         }else{
-            JOptionPane.showMessageDialog(null, "Error");
+            JOptionPane.showMessageDialog(null, "Error al intentar insertar un medicamento o artículo");
         }
         } catch (SQLException ex) {
         Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
@@ -1213,10 +1197,10 @@ Inputing.setLocationRelativeTo(null);
     private void guardarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarSActionPerformed
         try {
             if (addMiscelaneaS()!=0) {
-            JOptionPane.showMessageDialog(null, "�xito");
+            JOptionPane.showMessageDialog(null, "El servicio se ha insertado con éxito");
             addS.dispose();
         }else{
-            JOptionPane.showMessageDialog(null, "Error");
+            JOptionPane.showMessageDialog(null, "Error al intentar insertar un servicio");
         }
         } catch (SQLException ex) {
         Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
@@ -1233,12 +1217,12 @@ Inputing.setLocationRelativeTo(null);
          // TODO add your handling code here:
         try {
             if (addProveedor()!=0) {
-                JOptionPane.showMessageDialog(null, "Éxito");
+                JOptionPane.showMessageDialog(null, "Éxito al insertar proveedor");
                 pAdd.dispose();
             jTextField1.setText("");
             jTextField2.setText("");
             }else{
-                JOptionPane.showMessageDialog(null, "Error");
+                JOptionPane.showMessageDialog(null, "Error al intentar insertar proveedor");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Inventarios.class.getName()).log(Level.SEVERE, null, ex);
@@ -1267,7 +1251,7 @@ Inputing.setLocationRelativeTo(null);
         String contactoU=jTextField4.getText();
         Proveedor proveedor = new Proveedor(id, nombreU, contactoU);
         if (proveedorDao.actualizar(proveedor)) {
-            JOptionPane.showMessageDialog(this, "El Proveedor se modific� con exito");
+            JOptionPane.showMessageDialog(this, "El Proveedor se modificó con exito");
             jTextField3.setText("");
             jTextField4.setText("");
             pUdp.dispose();
@@ -1314,18 +1298,6 @@ Inputing.setLocationRelativeTo(null);
         pUdp.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-        int row = proveedoresInfo.getSelectedRow(); //Se obtiene la linea seleccionada
-         int id= (int) proveedoresInfo.getValueAt(row, 0); //Obtengo el ID del amigo
-         if (delete_p(id)) {
-            JOptionPane.showMessageDialog(null, "Éxito al eliminar cliente");
-            loadModelProveedor();
-        }else{
-             JOptionPane.showMessageDialog(null, "Error al eliminar cliente");
-         }
-    }//GEN-LAST:event_jButton10ActionPerformed
-
     private void cancelarS1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarS1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cancelarS1ActionPerformed
@@ -1337,11 +1309,11 @@ Inputing.setLocationRelativeTo(null);
             Miscelaneas miscelaneas = new Miscelaneas(id, nombreS1.getText(), Double.parseDouble(costoS1.getText().toString()), tipo, descripcionS1.getText());
             miscelaneasDao.actualizar_miscelaneas(miscelaneas);
             loadModelIn();
-            JOptionPane.showMessageDialog(null, "éxito al actualizar servicio");
+            JOptionPane.showMessageDialog(null, "Éxito al actualizar servicio");
             updateS.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(Inventarios.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Error");
+            JOptionPane.showMessageDialog(null, "Error al intentar actualizar ervicio");
         }
     }//GEN-LAST:event_guardarS1ActionPerformed
 
@@ -1357,7 +1329,7 @@ Inputing.setLocationRelativeTo(null);
             Miscelaneas miscelaneas2 = new Miscelaneas(id, nombreMOA1.getText(), Double.parseDouble(costoMOA1.getText()), proveedorMOA1.getSelectedIndex(), Integer.parseInt(stockMOA1.getText()),tipo, cum);
             miscelaneasDao.actualizar_miscelaneas(miscelaneas2);
             loadModelIn();
-            JOptionPane.showMessageDialog(null, "éxito al actualizar");
+            JOptionPane.showMessageDialog(null, "Éxito al actualizar");
         } catch (SQLException ex) {
             Logger.getLogger(Inventarios.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error");
@@ -1368,9 +1340,13 @@ Inputing.setLocationRelativeTo(null);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton17ActionPerformed
 public void proveedoresA(){
+    this.dispose();
+    addMOA.dispose();
     proveedores.setVisible(true);
-    proveedores.setSize(523, 449);
+    proveedores.setSize(405, 470);
     proveedores.setLocationRelativeTo(null);
+    proveedores.setTitle("Proveedores");
+    proveedores.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
 }
     /**
      * @param args the command line arguments
@@ -1433,7 +1409,6 @@ public void proveedoresA(){
     private javax.swing.JButton guardarS1;
     private javax.swing.ButtonGroup inventarios;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
@@ -1467,6 +1442,7 @@ public void proveedoresA(){
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

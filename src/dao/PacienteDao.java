@@ -23,6 +23,7 @@ import pojo.Paciente;
  */
 public class PacienteDao {
         String sex = "";
+        ClienteDao clienteDao = new ClienteDao();
     public int insertar(Paciente pojo) throws SQLException {
         Connection con = null;
         PreparedStatement st = null;
@@ -166,19 +167,24 @@ public class PacienteDao {
         Connection con = null;
         PreparedStatement st = null;
         DefaultTableModel dt = null;
-        String encabezados[] = {"ID", "Nombre", "Dueño"};
+        String encabezados[] = {"ID", "Nombre", "Dueño", "Tipo", "Actividad"};
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("select*from paciente");
+            st = con.prepareStatement("select p.idpaciente, p.nombre, c.nombre, tp.tipo, p.activo from paciente p, cliente c, tipoanimal tp where c.idCliente=p.cliente_idcliente and tp.idtipoAnimal=p.tipoAnimal_idtipoAnimal;");
             dt = new DefaultTableModel();
             dt.setColumnIdentifiers(encabezados);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object ob[] = new Object[3];
-                Paciente pojo = inflaPOJO(rs);
-                ob[0] = pojo.getIdpaciente();
-                ob[1] = pojo.getNombre().toUpperCase();
-                ob[2] = pojo.getCliente_idcliente();
+                Object ob[] = new Object[5];
+                ob[0] = rs.getInt(1);
+                ob[1] = rs.getString(2).toUpperCase();
+                ob[2] = rs.getString(3).toUpperCase();
+                ob[3] = rs.getString(4).toUpperCase();
+                if (rs.getBoolean(5)) {
+                ob[4] = "Activo";
+                }else{
+                ob[4] = "Inactivo";
+                }
 
                 dt.addRow(ob);
             }
@@ -203,6 +209,7 @@ public class PacienteDao {
             POJO.setCliente_idcliente(rs.getInt("cliente_idcliente"));
             POJO.setTipoAnimal_idtipoAnimal(rs.getInt("tipoAnimal_idtipoAnimal"));
             POJO.setCumple(rs.getDate("cumpleanios"));
+            POJO.setActivo(rs.getBoolean("activo"));
         } catch (SQLException ex) {
             System.out.println("Error al inflar pojo Paciente: " + ex);
         }

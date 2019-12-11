@@ -97,19 +97,19 @@ public class CitaDao {
         Connection con = null;
         PreparedStatement st = null;
         DefaultTableModel dt = null;
-        String encabezados[] = {"Id", "Fecha", "Cliente"};
+        String encabezados[] = {"Id", "Fecha", "Asunto", "Cliente"};
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("select*from cita");
+            st = con.prepareStatement("select ci.idcitas, ci.ultima_actualizacion, ci.asunto, c.nombre from cita ci, cliente c where ci.cliente_idcliente=c.idcliente;");
             dt = new DefaultTableModel();
             dt.setColumnIdentifiers(encabezados);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object ob[] = new Object[3];
-                Cita pojo = inflaPOJO(rs);
-                ob[0] = pojo.getIdcita();
-                ob[1] = pojo.getFecha_hora();
-                ob[2] = pojo.getCliente_idcliente();
+                Object ob[] = new Object[4];
+                ob[0] = rs.getInt(1);
+                ob[1] = rs.getDate(2);
+                ob[2] = rs.getString(3);
+                ob[3] = rs.getString(4);
 
                 dt.addRow(ob);
             }

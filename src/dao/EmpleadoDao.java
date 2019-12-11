@@ -30,7 +30,7 @@ public class EmpleadoDao {
             st.setString(1, pojo.getNombre());
             st.setString(2, sexoDM(pojo));
             st.setString(3, pojo.getEspecialidad());
-            st.setInt(4, pojo.getEdad());
+            st.setDate(4, pojo.getCumple());
             st.setString(5, pojo.getHorario());
             
             
@@ -62,7 +62,7 @@ public class EmpleadoDao {
             st.setString(2, empleado.getNombre());
             st.setString(3, sexoDM(POJO));
             st.setString(4, empleado.getEspecialidad());
-            st.setInt(5, empleado.getEdad());
+            st.setDate(5, empleado.getCumple());
             st.setString(6, empleado.getHorario());
 
             int x = st.executeUpdate();
@@ -169,7 +169,7 @@ public class EmpleadoDao {
             POJO.setNombre(rs.getString("nombre"));
             POJO.setSexo(rs.getString("sexo"));
             POJO.setEspecialidad(rs.getString("especialidad"));
-            POJO.setEdad(rs.getInt("edad"));
+            POJO.setCumple(rs.getDate("cumple"));
             POJO.setHorario(rs.getString("horario"));
         } catch (SQLException ex) {
             System.out.println("Error al inflar pojo Empleado: " + ex);

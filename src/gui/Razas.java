@@ -52,7 +52,16 @@ String path="";
     int id = tipoAnimalDao.insertar(tipoAnimal);
     return id;   
 }
-    
+    void cargarDatosV(int id) {
+        view.setSize(420, 180);
+        view.setTitle("Visualizar raza");
+        view.setVisible(true);
+        view.setLocationRelativeTo(null);
+        view.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
+        TipoAnimal tipoAnimal = tipoAnimalDao.selectedAnimal(id);
+        jLabel21.setText(tipoAnimal.getRaza());
+        jLabel20.setText(tipoAnimal.getTipo());
+    }
     
     public void loadModel() {
         DefaultTableModel dt = tipoAnimalDao.cargarModelo();
@@ -68,25 +77,17 @@ String path="";
     
      void cargarDatos(int id){
        update.setSize(427, 220);
-        update.setTitle("Añadir Raza");
+        update.setTitle("Editar raza");
         update.setVisible(true);
         update.setLocationRelativeTo(null);
+        update.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         TipoAnimal tipoAnimal = tipoAnimalDao.selectedAnimal(id);
         nombre1.setText(tipoAnimal.getRaza());
 //        sexo1.setText(sexoDI(cliente.getSexo()));
         nombre1.setText(tipoAnimal.getRaza());
     }
      
-     boolean delete(int id){
-        int option = JOptionPane.showConfirmDialog(null, "¿Seguro desea eliminar la raza?","Confirmación",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-        boolean result= false;
-        System.out.println(option);
-        if (option==0) {
-            result= tipoAnimalDao.delete_raza(id);
-        }
-        return result;
-    }
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,17 +117,14 @@ String path="";
         jPanel4 = new javax.swing.JPanel();
         jButton10 = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         datos = new javax.swing.JTable();
         jButton14 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
-        jButton16 = new javax.swing.JButton();
         jButton17 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -143,7 +141,7 @@ String path="";
                 jButton6ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, -1, -1));
+        jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, -1, -1));
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
         jButton7.setContentAreaFilled(false);
@@ -189,7 +187,7 @@ String path="";
                 jButton8ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 110, 70, -1));
+        jPanel3.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 70, -1));
 
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
         jButton9.setContentAreaFilled(false);
@@ -198,7 +196,7 @@ String path="";
                 jButton9ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 60, -1));
+        jPanel3.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 60, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Nombre");
@@ -220,53 +218,49 @@ String path="";
         );
         updateLayout.setVerticalGroup(
             updateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jPanel4.setBackground(new java.awt.Color(204, 170, 204));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hecho.png"))); // NOI18N
+        jButton10.setToolTipText("Hecho");
         jButton10.setContentAreaFilled(false);
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton10ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, -1, -1));
+        jPanel4.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 70, -1));
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel14.setText("Nombre");
         jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 76, -1));
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel15.setText("Imagen");
-        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 76, -1));
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel16.setText("Tipo");
         jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 76, -1));
 
+        jLabel20.setBackground(new java.awt.Color(255, 255, 255));
         jLabel20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel20.setOpaque(true);
         jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 166, 28));
 
+        jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel21.setOpaque(true);
         jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 166, 28));
-
-        jLabel22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 290, 196));
 
         javax.swing.GroupLayout viewLayout = new javax.swing.GroupLayout(view.getContentPane());
         view.getContentPane().setLayout(viewLayout);
         viewLayout.setHorizontalGroup(
             viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         viewLayout.setVerticalGroup(
             viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -297,6 +291,7 @@ String path="";
         jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mas.png"))); // NOI18N
         jButton14.setToolTipText("Agregar");
         jButton14.setContentAreaFilled(false);
+        jButton14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton14ActionPerformed(evt);
@@ -307,6 +302,7 @@ String path="";
         jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lapiz.png"))); // NOI18N
         jButton15.setToolTipText("Modificar");
         jButton15.setContentAreaFilled(false);
+        jButton15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton15ActionPerformed(evt);
@@ -314,25 +310,16 @@ String path="";
         });
         jPanel1.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 70, -1));
 
-        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png"))); // NOI18N
-        jButton16.setToolTipText("Eliminar");
-        jButton16.setContentAreaFilled(false);
-        jButton16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton16ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton16, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 400, 70, -1));
-
-        jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casa (2).png"))); // NOI18N
+        jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casa (1).png"))); // NOI18N
         jButton17.setToolTipText("Home");
         jButton17.setContentAreaFilled(false);
+        jButton17.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton17ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 70, 60));
+        jPanel1.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 70, 70));
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -347,6 +334,7 @@ String path="";
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojo.png"))); // NOI18N
         jButton3.setToolTipText("Ver");
         jButton3.setContentAreaFilled(false);
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -373,10 +361,12 @@ String path="";
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         // TODO add your handling code here:
-        add.setSize(500, 300);
-        add.setTitle("Añadir Raza");
+        add.setSize(485, 230);
+        add.setTitle("Añadir raza");
         add.setVisible(true);
         add.setLocationRelativeTo(null);
+        nombre.requestFocus();
+        add.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
@@ -401,11 +391,13 @@ String path="";
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        view.setSize(670, 500);
-        view.setTitle("Visualizar Raza");
-        view.setVisible(true);
-        view.setLocationRelativeTo(null);
+         // TODO add your handling code here:
+         
+         if (datos.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un dato");
+        } else {
+            cargarDatosV(Integer.parseInt(datos.getValueAt(datos.getSelectedRow(), 0).toString()));
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
@@ -427,18 +419,6 @@ String path="";
             JOptionPane.showMessageDialog(this, "Verifique sus datos");
         }
     }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-         // TODO add your handling code here:
-         int row = datos.getSelectedRow(); //Se obtiene la linea seleccionada
-         int id= (int) datos.getValueAt(row, 0); //Obtengo el ID del amigo
-         if (delete(id)) {
-            JOptionPane.showMessageDialog(null, "Éxito al eliminar raza");
-            loadModel();
-        }else{
-             JOptionPane.showMessageDialog(null, "Error al eliminar raza");
-         }
-    }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
@@ -515,7 +495,6 @@ String path="";
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
@@ -525,13 +504,11 @@ String path="";
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
@@ -547,4 +524,6 @@ String path="";
     private javax.swing.JDialog update;
     private javax.swing.JDialog view;
     // End of variables declaration//GEN-END:variables
+
+    
 }

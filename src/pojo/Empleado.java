@@ -5,6 +5,8 @@
  */
 package pojo;
 
+import java.sql.Date;
+
 /**
  *
  * @author blanc
@@ -14,23 +16,23 @@ public class Empleado {
     private String nombre;
     private String sexo;
     private String especialidad;
-    private int edad;
+    private Date cumple;
     private String horario;
 
-    public Empleado(int idempleado, String nombre, String sexo, String especialidad, int edad, String horario) {
+    public Empleado(int idempleado, String nombre, String sexo, String especialidad, Date cumple, String horario) {
         this.idempleado = idempleado;
         this.nombre = nombre;
         this.sexo = sexo;
         this.especialidad = especialidad;
-        this.edad = edad;
+        this.cumple = cumple;
         this.horario = horario;
     }
 
-    public Empleado(String nombre, String sexo, String especialidad, int edad, String horario) {
+    public Empleado( String nombre, String sexo, String especialidad, Date cumple, String horario) {
         this.nombre = nombre;
         this.sexo = sexo;
         this.especialidad = especialidad;
-        this.edad = edad;
+        this.cumple = cumple;
         this.horario = horario;
     }
 
@@ -69,12 +71,12 @@ public class Empleado {
         this.especialidad = especialidad;
     }
 
-    public int getEdad() {
-        return edad;
+    public Date getCumple() {
+        return cumple;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setCumple(Date cumple) {
+        this.cumple = cumple;
     }
 
     public String getHorario() {
@@ -84,11 +86,10 @@ public class Empleado {
     public void setHorario(String horario) {
         this.horario = horario;
     }
-
-    @Override
+    
+@Override
     public String toString() {
         return getNombre();
     }
-    
     
 }

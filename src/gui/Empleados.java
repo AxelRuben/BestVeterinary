@@ -26,12 +26,16 @@ import pojo.Empleado;
 public class Empleados extends javax.swing.JFrame {
 TableRowSorter<TableModel> sorter;
     EmpleadoDao empleadoDao;
+    
+    
+    java.util.Date fecha;
     /**
      * Creates new form empleados
      */
     public Empleados() {
         initComponents();
         empleadoDao = new EmpleadoDao();
+        fecha = new java.util.Date();
         this.setTitle("Empleados");
         this.setLocationRelativeTo(null);
         loadModel();
@@ -57,9 +61,18 @@ TableRowSorter<TableModel> sorter;
         }
         return sex;
     }
+    public String sexoDV(String sexoo) {
+        String sex="";
+        if (sexoo.equals("F")) {
+            sex = "Femenino";
+        } else if (sexoo.equals("M")) {
+            sex = "Masculino";
+        }
+        return sex;
+    }
     
     void cargarDatosV(int id){
-        view.setSize(550, 400);
+        view.setSize(550, 350);
         view.setTitle("Visualizar empleado");
         view.setVisible(true);
         view.setLocationRelativeTo(null);
@@ -67,25 +80,48 @@ TableRowSorter<TableModel> sorter;
         Empleado empleado= empleadoDao.selectedEmpleado(id);
         jnombre2.setText(empleado.getNombre());
 //        sexo1.setText(sexoDI(cliente.getSexo()));
-        jedad2.setText(""+empleado.getEdad());
-        jsexo2.setSelectedItem(sexoDI(empleado.getSexo()));
+        aniV.setText("" + calcularA(calcularDias(empleado.getCumple())));
+        jsexo2.setText(sexoDV(empleado.getSexo()));
         jespecialidad2.setText(empleado.getEspecialidad());
-        jedad2.setText(""+empleado.getEdad());
         jhorario2.setText(empleado.getHorario());
 //        jcontacto2.setText(cliente.getContacto());
 //        jcorreo2.setText(cliente.getCorreo());
 //        jdireccion2.setText(cliente.getDireccion());
     }
     
+    int calcularDias(java.util.Date cumpleanios) {
+        int dias = 0;
+        int anio = cumpleanios.getYear();
+        int mes = cumpleanios.getMonth();
+        int dia = cumpleanios.getDate();
+        java.util.Date fechaHoy = new java.util.Date();
+        while (true) {
+            if (cumpleanios.compareTo(fechaHoy) >= 0) {
+                break;
+            } else {
+                dias++;
+                dia++;
+                cumpleanios = new java.util.Date(anio, mes, dia);
+            }
+        }
+     
+        return dias;
+    }
+
+    int calcularA(int diass) {
+        int anioss = diass / 365;
+        return anioss;
+    }
+    
     void cargarDatos(int id){
-        update.setSize(690, 520);
+        update.setSize(560, 300);
         update.setTitle("Editar empleado");
         update.setVisible(true);
         update.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         update.setLocationRelativeTo(null);
         Empleado empleado = empleadoDao.selectedEmpleado(id);
         nombre1.setText(empleado.getNombre());
-        edad1.setText(""+empleado.getEdad());
+        cumpleanios1.setDate(empleado.getCumple());
         especialidad1.setText(empleado.getEspecialidad());
     }
     
@@ -96,9 +132,9 @@ TableRowSorter<TableModel> sorter;
     String name = jnombre.getText();
     String sex= jsexo.getSelectedItem().toString();
     String esp= jespecialidad.getText();
-    int ed = Integer.parseInt(jedad.getText());
+        java.sql.Date cumpll = new java.sql.Date(cumpleanios.getDate().getTime());
     String hor= jhorario.getSelectedItem().toString();
-        Empleado empleado = new Empleado(name, sex, esp, ed, hor);
+        Empleado empleado = new Empleado(name, sex, esp, cumpll, hor);
     int id = empleadoDao.insertar(empleado);
     empleadoos.setModel(empleadoDao.cargarModelo());
     return id;
@@ -125,7 +161,6 @@ TableRowSorter<TableModel> sorter;
         jLabel3 = new javax.swing.JLabel();
         jnombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jedad = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jespecialidad = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -134,12 +169,12 @@ TableRowSorter<TableModel> sorter;
         jLabel15 = new javax.swing.JLabel();
         jsexo = new javax.swing.JComboBox<>();
         jhorario = new javax.swing.JComboBox<>();
+        cumpleanios = new com.toedter.calendar.JDateChooser();
         update = new javax.swing.JDialog();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         nombre1 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        edad1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         especialidad1 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -148,6 +183,7 @@ TableRowSorter<TableModel> sorter;
         jLabel16 = new javax.swing.JLabel();
         sexo1 = new javax.swing.JComboBox<>();
         horario1 = new javax.swing.JComboBox<>();
+        cumpleanios1 = new com.toedter.calendar.JDateChooser();
         view = new javax.swing.JDialog();
         jPanel4 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -159,8 +195,8 @@ TableRowSorter<TableModel> sorter;
         jnombre2 = new javax.swing.JLabel();
         jespecialidad2 = new javax.swing.JLabel();
         jhorario2 = new javax.swing.JLabel();
-        jedad2 = new javax.swing.JLabel();
-        jsexo2 = new javax.swing.JComboBox<>();
+        aniV = new javax.swing.JLabel();
+        jsexo2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -176,22 +212,21 @@ TableRowSorter<TableModel> sorter;
         jPanel2.setBackground(new java.awt.Color(196, 250, 251));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel3.setText("Nombre");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
         jPanel2.add(jnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 227, 29));
 
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel4.setText("Edad");
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel4.setText("Cumpleaños");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
-        jPanel2.add(jedad, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 227, 29));
 
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel5.setText("Sexo");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
         jPanel2.add(jespecialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 227, 29));
 
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel7.setText("Especialidad");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
 
@@ -213,7 +248,7 @@ TableRowSorter<TableModel> sorter;
         });
         jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, -1, -1));
 
-        jLabel15.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel15.setText("Horario");
         jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
@@ -222,6 +257,7 @@ TableRowSorter<TableModel> sorter;
 
         jhorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matutino", "Vespertino" }));
         jPanel2.add(jhorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 227, 31));
+        jPanel2.add(cumpleanios, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 230, 30));
 
         javax.swing.GroupLayout addLayout = new javax.swing.GroupLayout(add.getContentPane());
         add.getContentPane().setLayout(addLayout);
@@ -243,9 +279,8 @@ TableRowSorter<TableModel> sorter;
         jPanel3.add(nombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 227, 29));
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel9.setText("Edad");
+        jLabel9.setText("Cumpleaños");
         jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
-        jPanel3.add(edad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 227, 29));
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel10.setText("Sexo");
@@ -283,6 +318,7 @@ TableRowSorter<TableModel> sorter;
 
         horario1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matutino", "Vespertino" }));
         jPanel3.add(horario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 227, 31));
+        jPanel3.add(cumpleanios1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 230, 30));
 
         javax.swing.GroupLayout updateLayout = new javax.swing.GroupLayout(update.getContentPane());
         update.getContentPane().setLayout(updateLayout);
@@ -301,7 +337,7 @@ TableRowSorter<TableModel> sorter;
         jLabel13.setText("Nombre");
 
         jLabel14.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jLabel14.setText("Edad");
+        jLabel14.setText("Años");
 
         jLabel17.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel17.setText("Sexo");
@@ -321,27 +357,19 @@ TableRowSorter<TableModel> sorter;
         jLabel19.setText("Horario");
 
         jnombre2.setBackground(new java.awt.Color(255, 255, 255));
-        jnombre2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jnombre2.setEnabled(false);
         jnombre2.setOpaque(true);
 
         jespecialidad2.setBackground(new java.awt.Color(255, 255, 255));
-        jespecialidad2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jespecialidad2.setEnabled(false);
         jespecialidad2.setOpaque(true);
 
         jhorario2.setBackground(new java.awt.Color(255, 255, 255));
-        jhorario2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jhorario2.setEnabled(false);
         jhorario2.setOpaque(true);
 
-        jedad2.setBackground(new java.awt.Color(255, 255, 255));
-        jedad2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jedad2.setEnabled(false);
-        jedad2.setOpaque(true);
+        aniV.setBackground(new java.awt.Color(255, 255, 255));
+        aniV.setOpaque(true);
 
-        jsexo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
-        jsexo2.setEnabled(false);
+        jsexo2.setBackground(new java.awt.Color(255, 255, 255));
+        jsexo2.setOpaque(true);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -350,14 +378,6 @@ TableRowSorter<TableModel> sorter;
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addGap(32, 32, 32)
-                        .addComponent(jespecialidad2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel19)
-                        .addGap(73, 73, 73)
-                        .addComponent(jhorario2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
@@ -368,12 +388,27 @@ TableRowSorter<TableModel> sorter;
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel17)
                                 .addGap(91, 91, 91)))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jsexo2, javax.swing.GroupLayout.Alignment.LEADING, 0, 235, Short.MAX_VALUE)
-                            .addComponent(jnombre2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jedad2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(55, 55, 55)
-                        .addComponent(jButton11))))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jnombre2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(aniV, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton11))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jsexo2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addGap(73, 73, 73)
+                                .addComponent(jhorario2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addGap(32, 32, 32)
+                                .addComponent(jespecialidad2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,23 +416,25 @@ TableRowSorter<TableModel> sorter;
                 .addGap(30, 30, 30)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel14))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(31, 31, 31)
+                                .addComponent(jLabel14))
+                            .addComponent(jButton11))
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel17))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jnombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)
-                        .addComponent(jedad2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton11))
-                .addGap(17, 17, 17)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(jsexo2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                        .addGap(18, 18, 18)
+                        .addComponent(aniV, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jsexo2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel18)
                     .addComponent(jespecialidad2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel19)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -424,6 +461,7 @@ TableRowSorter<TableModel> sorter;
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mas.png"))); // NOI18N
         jButton1.setToolTipText("Agregar");
         jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -434,6 +472,7 @@ TableRowSorter<TableModel> sorter;
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lapiz.png"))); // NOI18N
         jButton2.setToolTipText("Modificar");
         jButton2.setContentAreaFilled(false);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -444,6 +483,7 @@ TableRowSorter<TableModel> sorter;
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojo.png"))); // NOI18N
         jButton3.setToolTipText("Visualizar");
         jButton3.setContentAreaFilled(false);
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -452,12 +492,15 @@ TableRowSorter<TableModel> sorter;
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 310, 70, 50));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png"))); // NOI18N
-        jButton4.setToolTipText("Borrar");
+        jButton4.setToolTipText("Dar de baja");
         jButton4.setContentAreaFilled(false);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 370, 70, -1));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casa (GR).png"))); // NOI18N
+        jButton6.setToolTipText("Inicio");
         jButton6.setContentAreaFilled(false);
+        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -505,7 +548,7 @@ TableRowSorter<TableModel> sorter;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        add.setSize(690, 520);
+        add.setSize(520, 320);
         add.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         add.setVisible(true);
         add.setLocationRelativeTo(null);
@@ -534,20 +577,20 @@ TableRowSorter<TableModel> sorter;
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        try {
-            if (addTrabajadores()!=0) {
-                JOptionPane.showMessageDialog(null, "Éxito");
+         try {
+            if (jnombre.getText().equals("")||jespecialidad.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Porfavor inserte los datos");
+            }else if (addTrabajadores()!=0) {
+                JOptionPane.showMessageDialog(null, "Éxito al insertar empleado");
                 add.dispose();
                 jnombre.setText("");
-                jedad.setText("");
+                cumpleanios.setDate(fecha);
                 jsexo.setSelectedIndex(0);
                 jhorario.setSelectedIndex(0);
                 jespecialidad.setText("");
-            }else{
-                JOptionPane.showMessageDialog(null, "Error");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al insertar empleado" + ex);
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -558,30 +601,41 @@ TableRowSorter<TableModel> sorter;
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
          // TODO add your handling code here:
-         int row = empleadoos.getSelectedRow();
+         
+        if (nombre1.getText().equals("")||especialidad1.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Por favor inserte datos");
+        }else{
+        int row = empleadoos.getSelectedRow();
         
         int id= (int) empleadoos.getValueAt(row, 0);
         String nombreU=nombre1.getText();
         String sexoU=sexo1.getSelectedItem().toString();
         String especialidadU=especialidad1.getText();
-        int edadU= Integer.parseInt(edad1.getText());
+        java.sql.Date cump = new java.sql.Date(cumpleanios1.getDate().getTime());
         String horarioU=horario1.getSelectedItem().toString();
-        Empleado empleado = new Empleado(id, nombreU, sexoU, especialidadU, edadU, horarioU);
+        Empleado empleado = new Empleado(id, nombreU, sexoU, especialidadU, cump, horarioU);
+        
         if (empleadoDao.actualizar_empleado(empleado)) {
             JOptionPane.showMessageDialog(this, "El empleado se modificó con éxito");
             nombre1.setText("");
             especialidad1.setText("");
-            edad1.setText("");
+            cumpleanios1.setDate(fecha);
             update.dispose();
             loadModel();
         } else {
             JOptionPane.showMessageDialog(this, "Verifique sus datos");
         }
+        }
+        
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          // TODO add your handling code here:
-        cargarDatos(Integer.parseInt(empleadoos.getValueAt(empleadoos.getSelectedRow(), 0).toString()));
+        if (empleadoos.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un dato");
+        } else {
+            cargarDatos(Integer.parseInt(empleadoos.getValueAt(empleadoos.getSelectedRow(), 0).toString()));
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -646,7 +700,9 @@ TableRowSorter<TableModel> sorter;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog add;
-    private javax.swing.JTextField edad1;
+    private javax.swing.JLabel aniV;
+    private com.toedter.calendar.JDateChooser cumpleanios;
+    private com.toedter.calendar.JDateChooser cumpleanios1;
     private javax.swing.JTable empleadoos;
     private javax.swing.JTextField especialidad1;
     private javax.swing.JComboBox<String> horario1;
@@ -683,8 +739,6 @@ TableRowSorter<TableModel> sorter;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jedad;
-    private javax.swing.JLabel jedad2;
     private javax.swing.JTextField jespecialidad;
     private javax.swing.JLabel jespecialidad2;
     private javax.swing.JComboBox<String> jhorario;
@@ -692,7 +746,7 @@ TableRowSorter<TableModel> sorter;
     private javax.swing.JTextField jnombre;
     private javax.swing.JLabel jnombre2;
     private javax.swing.JComboBox<String> jsexo;
-    private javax.swing.JComboBox<String> jsexo2;
+    private javax.swing.JLabel jsexo2;
     private javax.swing.JTextField nombre1;
     private javax.swing.JComboBox<String> sexo1;
     private javax.swing.JDialog update;

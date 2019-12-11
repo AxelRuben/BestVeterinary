@@ -141,5 +141,9 @@ public class Expediente {
     public void setObervaciones(String obervaciones) {
         this.obervaciones = obervaciones;
     }
-   
+    
+   @Override
+    public String toString() {
+        return getObervaciones();
+    }
 }

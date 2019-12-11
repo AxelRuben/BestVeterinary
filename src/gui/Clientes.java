@@ -317,22 +317,22 @@ public class Clientes extends javax.swing.JFrame {
         jLabel14.setText("Correo");
 
         aniV.setBackground(new java.awt.Color(255, 255, 255));
-        aniV.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        aniV.setOpaque(true);
 
         jLabel22.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel22.setText("Años");
 
         jnombre2.setBackground(new java.awt.Color(255, 255, 255));
-        jnombre2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jnombre2.setOpaque(true);
 
         jcontacto2.setBackground(new java.awt.Color(255, 255, 255));
-        jcontacto2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jcontacto2.setOpaque(true);
 
         jcorreo2.setBackground(new java.awt.Color(255, 255, 255));
-        jcorreo2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jcorreo2.setOpaque(true);
 
         jdireccion2.setBackground(new java.awt.Color(255, 255, 255));
-        jdireccion2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jdireccion2.setOpaque(true);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -523,7 +523,7 @@ public class Clientes extends javax.swing.JFrame {
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 280, -1, -1));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojo.png"))); // NOI18N
-        jButton3.setToolTipText("Ver");
+        jButton3.setToolTipText("Visualizar");
         jButton3.setContentAreaFilled(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

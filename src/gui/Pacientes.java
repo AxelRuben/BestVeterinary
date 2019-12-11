@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -60,6 +61,7 @@ public class Pacientes extends javax.swing.JFrame {
         loadCombooC();
         loadCombooR();
         setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
+        
        jButton1.setCursor(new Cursor(HAND_CURSOR));
     jButton2.setCursor(new Cursor(HAND_CURSOR));
     jButton3.setCursor(new Cursor(HAND_CURSOR));
@@ -98,6 +100,7 @@ public void filter(){
     }
 
     int addPaciente() throws SQLException {
+        
         Cliente cliente = (Cliente) jdueno.getSelectedItem();
         TipoAnimal tipoAnimal = (TipoAnimal) jtipo.getSelectedItem();
         String name = jnombre.getText();
@@ -114,12 +117,13 @@ public void filter(){
         return id;
 
     }
+    
     public int sexoDI(String sexoo) {
         int sex=0;
         if (sexoo.equals("M")) {
-            sex = 1;
+            sex = 0;
         } else if (sexoo.equals("H")) {
-            sex = 2;
+            sex = 1;
         }
         return sex;
     }
@@ -127,11 +131,20 @@ public void filter(){
     public String sexoDM(String sexoo) {
         String sex="";
         if (sexoo.equals("M")) {
-            sex = "Mujer";
+            sex = "Macho";
         } else if (sexoo.equals("H")) {
-            sex = "Hombre";
+            sex = "Hembra";
         }
         return sex;
+    }
+    public String activoDM(boolean actio) {
+        String des="";
+        if (isActive()==true) {
+            des = "Activo";
+        } else if (isActive()==false) {
+            des = "Desactivado";
+        }
+        return des;
     }
     
     
@@ -198,19 +211,27 @@ public void filter(){
         update.setTitle("Modificar paciente");
         update.setVisible(true);
         update.setLocationRelativeTo(null);
+        
         update.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         Paciente paciente = pacienteDao.selectedPaciente(id);
+        System.out.println(paciente.getNombre());
+        jCheckBox1.setSelected(paciente.isActivo());
         jnombre2.setText(paciente.getNombre());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/YYYY");
         cumpleUp.setDate(paciente.getCumple());
-        jsexo2.setSelectedIndex(sexoDI(paciente.getSexo())-1);
+        jsexo2.setSelectedIndex(sexoDI(paciente.getSexo()));
         jtipo2.setSelectedIndex(paciente.getTipoAnimal_idtipoAnimal());
         jdueno2.setSelectedIndex(paciente.getCliente_idcliente());
         jTextArea4.setText(paciente.getDescripcion());
-        jCheckBox1.setSelected(paciente.isActivo());
+//        
     }
+    
+    
+    
+    
+    
     void cargarDatosV(int id){
-        view.setSize(650, 400);
+        view.setSize(540, 500);
         view.setTitle("Modificar paciente");
         view.setVisible(true);
         view.setLocationRelativeTo(null);
@@ -224,12 +245,13 @@ public void filter(){
         jdueno2.setSelectedIndex(paciente.getCliente_idcliente());
         java.util.Date cum = new java.util.Date(paciente.getCumple().getYear(), paciente.getCumple().getMonth(), paciente.getCumple().getDate());
         calcularAyM(calcularDias(cum));
-        jTextArea4.setText(paciente.getDescripcion());
+        des.setText(paciente.getDescripcion());
+        ac.setText(""+(activoDM(paciente.isActivo())));
     }
     
     
     boolean delete(int id){
-        int option = JOptionPane.showConfirmDialog(null, "¿Seguro desea eliminar el paciente?","Confirmación",
+        int option = JOptionPane.showConfirmDialog(null, "¿Desea dar de baja a este paciente?","Confirmación",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
         boolean result= false;
         System.out.println(option);
@@ -276,15 +298,18 @@ public void filter(){
         jButton9 = new javax.swing.JButton();
         cum = new javax.swing.JLabel();
         nom = new javax.swing.JLabel();
-        sex = new javax.swing.JLabel();
+        ac = new javax.swing.JLabel();
         raz = new javax.swing.JLabel();
         due = new javax.swing.JLabel();
-        des = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        sex = new javax.swing.JLabel();
         aniV = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         mesV = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        des = new javax.swing.JTextArea();
         update = new javax.swing.JDialog();
         jPanel5 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
@@ -444,41 +469,34 @@ public void filter(){
         nombr.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, -1, -1));
 
         cum.setBackground(new java.awt.Color(255, 255, 255));
-        cum.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         cum.setOpaque(true);
         nombr.add(cum, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 246, 22));
 
         nom.setBackground(new java.awt.Color(255, 255, 255));
-        nom.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         nom.setOpaque(true);
         nombr.add(nom, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 246, 22));
 
-        sex.setBackground(new java.awt.Color(255, 255, 255));
-        sex.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        sex.setOpaque(true);
-        nombr.add(sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 246, 22));
+        ac.setBackground(new java.awt.Color(255, 255, 255));
+        ac.setOpaque(true);
+        nombr.add(ac, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 410, 246, 22));
 
         raz.setBackground(new java.awt.Color(255, 255, 255));
-        raz.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         raz.setOpaque(true);
         nombr.add(raz, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 246, 22));
 
         due.setBackground(new java.awt.Color(255, 255, 255));
-        due.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         due.setOpaque(true);
         nombr.add(due, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 246, 22));
-
-        des.setBackground(new java.awt.Color(255, 255, 255));
-        des.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        des.setOpaque(true);
-        nombr.add(des, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 246, 111));
 
         jLabel24.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel24.setText("Años");
         nombr.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, -1, -1));
 
+        sex.setBackground(new java.awt.Color(255, 255, 255));
+        sex.setOpaque(true);
+        nombr.add(sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 246, 22));
+
         aniV.setBackground(new java.awt.Color(255, 255, 255));
-        aniV.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         aniV.setOpaque(true);
         nombr.add(aniV, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 70, 22));
 
@@ -487,13 +505,25 @@ public void filter(){
         nombr.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
 
         mesV.setBackground(new java.awt.Color(255, 255, 255));
-        mesV.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         mesV.setOpaque(true);
         nombr.add(mesV, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 70, 22));
 
         jLabel33.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel33.setText("Meses");
         nombr.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel9.setText("Activo");
+        nombr.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, -1, -1));
+
+        jScrollPane2.setEnabled(false);
+        jScrollPane2.setFocusable(false);
+
+        des.setColumns(20);
+        des.setRows(5);
+        jScrollPane2.setViewportView(des);
+
+        nombr.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 280, 130));
 
         javax.swing.GroupLayout viewLayout = new javax.swing.GroupLayout(view.getContentPane());
         view.getContentPane().setLayout(viewLayout);
@@ -503,7 +533,7 @@ public void filter(){
         );
         viewLayout.setVerticalGroup(
             viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(nombr, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
+            .addComponent(nombr, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
         );
 
         jPanel5.setBackground(new java.awt.Color(251, 230, 229));
@@ -704,7 +734,7 @@ public void filter(){
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+         // TODO add your handling code here:
         cargarDatosV(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -736,8 +766,13 @@ public void filter(){
         int raz2 = tipoAnimal2.getIdtipoAnimal();
 //        Date cum2 = (Date) cumpleUp.getDate();
         java.sql.Date cum2 = new java.sql.Date(cumpleUp.getDate().getTime());
-        boolean activ = jCheckBox1.isSelected();
-        Paciente paciente = new Paciente(id, nombreU, descrU, sexoU, cli2, raz2, cum2, activ);
+        boolean ds;
+        if (jCheckBox1.isSelected()) {
+            ds=true;
+        }else{
+            ds=false;
+        }
+        Paciente paciente = new Paciente(id, nombreU, descrU, sexoU, cli2, raz2, cum2, ds);
         
         if (pacienteDao.actualizar_paciente(paciente)) {
             JOptionPane.showMessageDialog(this, "El Paciente se modificó con exito");
@@ -786,15 +821,19 @@ public void filter(){
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void guardarAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarAddActionPerformed
+        
         try {
-            addPaciente();
-            JOptionPane.showMessageDialog(null, "El paciente se insertó con exito");
+            if (jnombre.getText().equals("")||jTextArea1.getText().equals("")||jdueno.getSelectedIndex()<1||jtipo.getSelectedIndex()<1) {
+                JOptionPane.showMessageDialog(null, "Porfavor inserte los datos");
+                
+            }else if (addPaciente()!=0) {
+                JOptionPane.showMessageDialog(null, "El paciente se insertó con exito");
             jTable1.setModel(pacienteDao.cargarModelo());
             add.dispose();
             jnombre.setText("");
+            }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al insertar paciente");
-            Logger.getLogger(Pacientes.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al insertar paciente");
         }
     }//GEN-LAST:event_guardarAddActionPerformed
 
@@ -882,12 +921,13 @@ public void filter(){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ac;
     private javax.swing.JDialog add;
     private javax.swing.JLabel aniV;
     private javax.swing.JLabel cum;
     private com.toedter.calendar.JDateChooser cumpleUp;
     private com.toedter.calendar.JDateChooser cumplea;
-    private javax.swing.JLabel des;
+    private javax.swing.JTextArea des;
     private javax.swing.JLabel due;
     private javax.swing.JButton guardarAdd;
     private javax.swing.JButton guardarUpda;
@@ -925,10 +965,12 @@ public void filter(){
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea4;
