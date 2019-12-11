@@ -43,6 +43,37 @@ public class VentaHasMiscelaneasDao {
         return id;
     }
     
+    public DefaultTableModel cargarModelo(int id) {
+        Connection con = null;
+        PreparedStatement st = null;
+        DefaultTableModel dt = null;
+        String encabezados[] = {"Id", "Nombre", "Costo","Tipo"};
+        try {
+            con = Conexion.getConnection();
+            st = con.prepareStatement("select m.idmiscelaneas, m.nombre, m.costo, m.tipo from venta_has_miscelaneas vhm, miscelaneas m where m.idmiscelaneas=vhm.miscelaneas_idmiscelaneas and vhm.venta_idventa=?");
+            st.setInt(1, id);
+            dt = new DefaultTableModel();
+            dt.setColumnIdentifiers(encabezados);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Object ob[] = new Object[4];
+                ob[0] = rs.getInt(1);
+                ob[1] = rs.getString(2).toUpperCase();
+                ob[2] = rs.getDouble(3);
+                ob[3] = rs.getString(4).toUpperCase();
+
+                dt.addRow(ob);
+            }
+            rs.close();
+        } catch (Exception e) {
+            System.out.println("Error al cargar la tabla Dueño " + e);
+        } finally {
+            Conexion.close(con);
+            Conexion.close(st);
+        }
+        return dt;
+    }
+    
 //     public Venta_has_Miscelaneas selectedFriend(int id) {
 //        Connection con = null;
 //        PreparedStatement st = null;

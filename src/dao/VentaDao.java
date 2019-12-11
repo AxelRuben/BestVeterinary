@@ -52,17 +52,16 @@ public class VentaDao {
         String encabezados[] = {"Id", "Total", "Empleado","Cliente"};
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("select*from friend");
+            st = con.prepareStatement("select v.idVenta, v.total, c.nombre, e.nombre from venta v, cliente c, empleado e where e.idempleado=v.empleado_idempleado and c.idCliente=v.cliente_idcliente;");
             dt = new DefaultTableModel();
             dt.setColumnIdentifiers(encabezados);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object ob[] = new Object[3];
-                Venta pojo = inflaPOJO(rs);
-                ob[0] = pojo.getIdventa();
-                ob[1] = pojo.getTotal();
-                ob[2] = pojo.getEmpleado_idempleado();
-                ob[3] = pojo.getCliente_idcliente();
+                Object ob[] = new Object[4];
+                ob[0] = rs.getInt(1);
+                ob[1] = rs.getDouble(2);
+                ob[2] = rs.getString(3).toUpperCase();
+                ob[3] = rs.getString(4).toUpperCase();
 
                 dt.addRow(ob);
             }

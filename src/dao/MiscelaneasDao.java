@@ -273,6 +273,37 @@ public class MiscelaneasDao {
         }
         return dt;
     }
+    public DefaultTableModel cargarModeloV() {
+        Connection con = null;
+        PreparedStatement st = null;
+        DefaultTableModel dt = null;
+        String encabezados[] = {"Id", "Nombre", "Tipo", "Costo"};
+        try {
+            con = Conexion.getConnection();
+            st = con.prepareStatement("select*from miscelaneas");
+            dt = new DefaultTableModel();
+            dt.setColumnIdentifiers(encabezados);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Object ob[] = new Object[4];
+                Miscelaneas pojo = inflaPOJO(rs);
+                ob[0] = pojo.getIdmiscelaneas();
+                ob[1] = pojo.getNombre().toUpperCase();
+                ob[2] = pojo.getTipo();
+                ob[3] = pojo.getCosto();
+                
+
+                dt.addRow(ob);
+            }
+            rs.close();
+        } catch (Exception e) {
+            System.out.println("Error al cargar la tabla Miscelaneas " + e);
+        } finally {
+            Conexion.close(con);
+            Conexion.close(st);
+        }
+        return dt;
+    }
      public Miscelaneas selectedMiscelaneas(int id) {
         Connection con = null;
         PreparedStatement st = null;
