@@ -197,6 +197,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         proveedoresInfo = new javax.swing.JTable();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         pUdp = new javax.swing.JDialog();
         jPanel6 = new javax.swing.JPanel();
@@ -656,6 +657,17 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
             }
         });
         jPanel5.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, -1, -1));
+
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/izq.png"))); // NOI18N
+        jButton10.setToolTipText("Volver");
+        jButton10.setContentAreaFilled(false);
+        jButton10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, -1, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/proveedores-Fondo.jpg"))); // NOI18N
         jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, -1));
@@ -1208,9 +1220,11 @@ Inputing.setLocationRelativeTo(null);
     }//GEN-LAST:event_guardarSActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        pAdd.setSize(436, 186);
+        pAdd.setSize(436, 190);
         pAdd.setVisible(true);
         pAdd.setLocationRelativeTo(null);
+        pAdd.setTitle("Agregar Proveedor");
+        pAdd.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
@@ -1293,9 +1307,11 @@ Inputing.setLocationRelativeTo(null);
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
          // TODO add your handling code here:
-          pUdp.setSize(436, 200);
+          pUdp.setSize(436, 210);
         pUdp.setVisible(true);
         pUdp.setLocationRelativeTo(null);
+        pUdp.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
+        pUdp.setTitle("Editar  Proveedor");
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void cancelarS1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarS1ActionPerformed
@@ -1339,6 +1355,12 @@ Inputing.setLocationRelativeTo(null);
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+         // TODO add your handling code here:
+         proveedores.dispose();
+         this.setVisible(true);
+    }//GEN-LAST:event_jButton10ActionPerformed
 public void proveedoresA(){
     this.dispose();
     addMOA.dispose();
@@ -1409,6 +1431,7 @@ public void proveedoresA(){
     private javax.swing.JButton guardarS1;
     private javax.swing.ButtonGroup inventarios;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;

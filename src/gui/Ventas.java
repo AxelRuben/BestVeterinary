@@ -273,6 +273,7 @@ public class Ventas extends javax.swing.JFrame {
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casa (GR).png"))); // NOI18N
         jButton6.setContentAreaFilled(false);
+        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -283,6 +284,7 @@ public class Ventas extends javax.swing.JFrame {
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/der1.png"))); // NOI18N
         jButton5.setToolTipText("Agregar producto");
         jButton5.setContentAreaFilled(false);
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -293,6 +295,7 @@ public class Ventas extends javax.swing.JFrame {
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/izq1.png"))); // NOI18N
         jButton7.setToolTipText("Cancelar producto");
         jButton7.setContentAreaFilled(false);
+        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, 80, 50));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -310,6 +313,7 @@ public class Ventas extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hecho.png"))); // NOI18N
         jButton1.setToolTipText("Guardar Venta");
         jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -356,6 +360,7 @@ public class Ventas extends javax.swing.JFrame {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojo.png"))); // NOI18N
         jButton2.setToolTipText("Visualizar ventas");
         jButton2.setContentAreaFilled(false);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);

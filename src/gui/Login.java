@@ -65,12 +65,13 @@ public class Login extends javax.swing.JFrame {
         jButton1.setToolTipText("Salir");
         jButton1.setBorder(null);
         jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 90, 70));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 360, 90, 70));
 
         jButton2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -78,12 +79,13 @@ public class Login extends javax.swing.JFrame {
         jButton2.setToolTipText("Ingresar");
         jButton2.setBorder(null);
         jButton2.setContentAreaFilled(false);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 360, 80, 70));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 80, 70));
 
         contrasena.setToolTipText("Ingresa la Contraseña");
         contrasena.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
