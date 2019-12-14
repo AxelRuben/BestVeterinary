@@ -24,10 +24,12 @@ public class VentaDao {
         int id = 0;
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("INSERT INTO venta(total, empleado_idempleado, cliente_idcliente) VALUES (?,?,?);", PreparedStatement.RETURN_GENERATED_KEYS);
+            st = con.prepareStatement("INSERT INTO venta(total, empleado_idempleado, cliente_idcliente,cambio, pago) VALUES (?,?,?,?,?);", PreparedStatement.RETURN_GENERATED_KEYS);
             st.setDouble(1, pojo.getTotal());
             st.setInt(2, pojo.getEmpleado_idempleado());
             st.setInt(3, pojo.getCliente_idcliente());
+            st.setDouble(4, pojo.getCambio());
+            st.setDouble(5, pojo.getPago());
             
             id = st.executeUpdate();
             ResultSet rs = st.getGeneratedKeys();
@@ -74,20 +76,20 @@ public class VentaDao {
         }
         return dt;
     }
-     public Venta selectedFriend(int id) {
+     public Venta selectedVenta(int id) {
         Connection con = null;
         PreparedStatement st = null;
          Venta pojo = new Venta();
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("select * from venta where id=?");
+            st = con.prepareStatement("select * from venta where idventa=?");
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 pojo = inflaPOJO(rs);
             }
         } catch (Exception e) {
-            System.out.println("Error al consultar Dueno " + e);
+            System.out.println("Error al consultar venta " + e);
         } finally {
             Conexion.close(con);
             Conexion.close(st);
@@ -102,6 +104,8 @@ public class VentaDao {
             POJO.setTotal(rs.getDouble("total"));
             POJO.setEmpleado_idempleado(rs.getInt("empleado_idempleado"));
             POJO.setCliente_idcliente(rs.getInt("cliente_idcliente"));
+            POJO.setPago(rs.getInt("pago"));
+            POJO.setCambio(rs.getInt("cambio"));
         } catch (SQLException ex) {
             System.out.println("Error al inflar pojo Dueño: " + ex);
         }

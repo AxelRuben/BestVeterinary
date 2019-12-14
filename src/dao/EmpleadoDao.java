@@ -55,23 +55,25 @@ public class EmpleadoDao {
         Connection con = null;
         PreparedStatement st = null;
         Empleado empleado = POJO;
+        int id = 0;
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("CALL update_empleado(?,?,?,?,?,?)");
+            st = con.prepareStatement("CALL update_empleado(?,?,?,?,?,?,?)");
             st.setInt(1, empleado.getIdempleado());
             st.setString(2, empleado.getNombre());
             st.setString(3, sexoDM(POJO));
             st.setString(4, empleado.getEspecialidad());
             st.setDate(5, empleado.getCumple());
             st.setString(6, empleado.getHorario());
+            st.setBoolean(7, empleado.isActivo());
+            id = st.executeUpdate();
 
             int x = st.executeUpdate();
             if (x == 0) {
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("Error al actualizar Cliente " + e);
-
+            System.out.println("Error al actualizar empleado " + e);
         } finally {
             Conexion.close(con);
             Conexion.close(st);
@@ -84,7 +86,7 @@ public class EmpleadoDao {
         PreparedStatement st = null;
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("CALL delete_empleado(?)");
+            st = con.prepareStatement("CALL desactive_empleado(?)");
             st.setInt(1, id);
             int num = st.executeUpdate();
             if (num == 0) {
@@ -116,7 +118,7 @@ public class EmpleadoDao {
         Connection con = null;
         PreparedStatement st = null;
         DefaultTableModel dt = null;
-        String encabezados[] = {"Id", "Nombre", "Turno"};
+        String encabezados[] = {"Id", "Nombre", "Turno", "Estado"};
         try {
             con = Conexion.getConnection();
             st = con.prepareStatement("select*from empleado");
@@ -124,11 +126,16 @@ public class EmpleadoDao {
             dt.setColumnIdentifiers(encabezados);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object ob[] = new Object[3];
+                Object ob[] = new Object[4];
                 Empleado pojo = inflaPOJO(rs);
                 ob[0] = pojo.getIdempleado();
                 ob[1] = pojo.getNombre().toUpperCase();
                 ob[2] = pojo.getHorario();
+                if (pojo.isActivo()) {
+                ob[3] = "Activo";
+                }else{
+                ob[3] = "Inactivo";
+                }
 
                 dt.addRow(ob);
             }
@@ -171,6 +178,7 @@ public class EmpleadoDao {
             POJO.setEspecialidad(rs.getString("especialidad"));
             POJO.setCumple(rs.getDate("cumple"));
             POJO.setHorario(rs.getString("horario"));
+            POJO.setActivo(rs.getBoolean("activo"));
         } catch (SQLException ex) {
             System.out.println("Error al inflar pojo Empleado: " + ex);
         }

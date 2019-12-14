@@ -55,7 +55,7 @@ public class ClienteDao {
         Cliente cliente = POJO;
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("CALL update_cliente(?,?,?,?,?,?,?)");
+            st = con.prepareStatement("CALL update_cliente(?,?,?,?,?,?,?,?)");
             st.setInt(1, cliente.getIdcliente());
             st.setString(2, cliente.getNombre());
             st.setString(3, sexoDM(POJO));
@@ -63,6 +63,7 @@ public class ClienteDao {
             st.setString(5, cliente.getContacto());
             st.setString(6, cliente.getCorreo());
             st.setString(7, cliente.getDireccion());
+            st.setBoolean(8, cliente.isActivo());
 
             int x = st.executeUpdate();
             if (x == 0) {
@@ -117,7 +118,7 @@ public class ClienteDao {
         PreparedStatement st = null;
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("CALL delete_cliente(?)");
+            st = con.prepareStatement("CALL desactive_cliente(?)");
             st.setInt(1, id);
             int num = st.executeUpdate();
             if (num == 0) {
@@ -133,6 +134,41 @@ public class ClienteDao {
         return true;
     }
     
+    public DefaultTableModel cargarModeloA(boolean activo) {
+        Connection con = null;
+        PreparedStatement st = null;
+        DefaultTableModel dt = null;
+        String encabezados[] = {"Id", "Nombre", "Contacto", "Estado"};
+        try {
+            con = Conexion.getConnection();
+            st = con.prepareStatement("select*from cliente where activo=?");
+            st.setBoolean(1, activo);
+            dt = new DefaultTableModel();
+            dt.setColumnIdentifiers(encabezados);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Object ob[] = new Object[4];
+                Cliente pojo = inflaPOJO(rs);
+                ob[0] = pojo.getIdcliente();
+                ob[1] = pojo.getNombre().toUpperCase();
+                ob[2] = pojo.getContacto();
+            if (rs.getBoolean(4)) {
+                ob[3] = "Activo";
+                }else{
+                ob[3] = "Inactivo";
+                }
+
+                dt.addRow(ob);
+            }          
+            rs.close();
+        } catch (Exception e) {
+            System.out.println("Error al cargar la tabla Dueño " + e);
+        } finally {
+            Conexion.close(con);
+            Conexion.close(st);
+        }
+        return dt;
+    }
     public DefaultTableModel cargarModelo() {
         Connection con = null;
         PreparedStatement st = null;
@@ -193,6 +229,7 @@ public class ClienteDao {
             POJO.setContacto(rs.getString("contacto"));
             POJO.setCorreo(rs.getString("correo"));
             POJO.setDireccion(rs.getString("direccion"));
+            POJO.setActivo(rs.getBoolean("activo"));
         } catch (SQLException ex) {
             System.out.println("Error al inflar pojo Dueño: " + ex);
         }

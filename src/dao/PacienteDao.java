@@ -125,14 +125,14 @@ public class PacienteDao {
         PreparedStatement st = null;
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("CALL delete_paciente(?)");
+            st = con.prepareStatement("CALL desactive_paciente(?)");
             st.setInt(1, id);
             int num = st.executeUpdate();
             if (num == 0) {
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("Error al eliminar Paciente: " + e);
+            System.out.println("Error al dar de baja al Paciente: " + e);
             return false;
         } finally {
             Conexion.close(con);
@@ -163,7 +163,42 @@ public class PacienteDao {
     }
     
     
-    public DefaultTableModel cargarModelo() {
+    public DefaultTableModel cargarModeloA(boolean activo) {
+        Connection con = null;
+        PreparedStatement st = null;
+        DefaultTableModel dt = null;
+        String encabezados[] = {"ID", "Nombre", "Dueño", "Tipo", "Estado"};
+        try {
+            con = Conexion.getConnection();
+            st = con.prepareStatement("select p.idpaciente, p.nombre, c.nombre, tp.tipo, p.activo from paciente p, cliente c, tipoanimal tp where c.idCliente=p.cliente_idcliente and tp.idtipoAnimal=p.tipoAnimal_idtipoAnimal and p.activo=?;");
+            st.setBoolean(1, activo);
+            dt = new DefaultTableModel();
+            dt.setColumnIdentifiers(encabezados);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Object ob[] = new Object[5];
+                ob[0] = rs.getInt(1);
+                ob[1] = rs.getString(2).toUpperCase();
+                ob[2] = rs.getString(3).toUpperCase();
+                ob[3] = rs.getString(4).toUpperCase();
+                if (rs.getBoolean(5)) {
+                ob[4] = "Activo";
+                }else{
+                ob[4] = "Inactivo";
+                }
+
+                dt.addRow(ob);
+            }
+            rs.close();
+        } catch (Exception e) {
+            System.out.println("Error al cargar la tabla Paciente " + e);
+        } finally {
+            Conexion.close(con);
+            Conexion.close(st);
+        }
+        return dt;
+    }
+     public DefaultTableModel cargarModelo() {
         Connection con = null;
         PreparedStatement st = null;
         DefaultTableModel dt = null;
@@ -210,6 +245,7 @@ public class PacienteDao {
             POJO.setTipoAnimal_idtipoAnimal(rs.getInt("tipoAnimal_idtipoAnimal"));
             POJO.setCumple(rs.getDate("cumpleanios"));
             POJO.setActivo(rs.getBoolean("activo"));
+            POJO.setAct(rs.getInt("activo"));
         } catch (SQLException ex) {
             System.out.println("Error al inflar pojo Paciente: " + ex);
         }

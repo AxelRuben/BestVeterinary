@@ -18,25 +18,42 @@ public class Empleado {
     private String especialidad;
     private Date cumple;
     private String horario;
+    private boolean activo;
 
-    public Empleado(int idempleado, String nombre, String sexo, String especialidad, Date cumple, String horario) {
+    public Empleado() {
+    }
+
+    public Empleado(int idempleado, String nombre, String sexo, String especialidad, Date cumple, String horario, boolean activo) {
         this.idempleado = idempleado;
         this.nombre = nombre;
         this.sexo = sexo;
         this.especialidad = especialidad;
         this.cumple = cumple;
         this.horario = horario;
+        this.activo = activo;
     }
 
-    public Empleado( String nombre, String sexo, String especialidad, Date cumple, String horario) {
+    public Empleado(String nombre, String sexo, String especialidad, Date cumple, String horario, boolean activo) {
+        
+        this.nombre = nombre;
+        this.sexo = sexo;
+        this.especialidad = especialidad;
+        this.cumple = cumple;
+        this.horario = horario;
+        this.activo = activo;
+    }
+    public Empleado(String nombre, String sexo, String especialidad, Date cumple, String horario) {
+        
         this.nombre = nombre;
         this.sexo = sexo;
         this.especialidad = especialidad;
         this.cumple = cumple;
         this.horario = horario;
     }
-
-    public Empleado() {
+    
+@Override
+    public String toString() {
+        return getNombre();
     }
 
     public int getIdempleado() {
@@ -86,10 +103,13 @@ public class Empleado {
     public void setHorario(String horario) {
         this.horario = horario;
     }
-    
-@Override
-    public String toString() {
-        return getNombre();
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
     
 }

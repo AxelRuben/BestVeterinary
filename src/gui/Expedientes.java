@@ -49,6 +49,8 @@ TipoAnimalDao tipoAnimalDao;
         jButton1.setCursor(new Cursor(HAND_CURSOR));
         jButton3.setCursor(new Cursor(HAND_CURSOR));
         jButton6.setCursor(new Cursor(HAND_CURSOR));
+        this.setResizable(false);
+        this.setSize(926,610);
     }
     Inicio inicio = new Inicio();
     
@@ -98,7 +100,7 @@ TipoAnimalDao tipoAnimalDao;
     
     void cargarDatosV(int id) {
         view.setSize(630, 620);
-        view.setTitle("Visualizar cliente");
+        view.setTitle("Visualizar expediente");
         view.setVisible(true);
         view.setLocationRelativeTo(null);
         view.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
@@ -221,9 +223,49 @@ TipoAnimalDao tipoAnimalDao;
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
+
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
+            }
+        });
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField2KeyReleased(evt);
+            }
+        });
+
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField4KeyReleased(evt);
+            }
+        });
+
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
+            }
+        });
+        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField7KeyReleased(evt);
+            }
+        });
+
+        jTextField8.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField8KeyReleased(evt);
+            }
+        });
+
+        jTextField9.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField9KeyReleased(evt);
             }
         });
 
@@ -618,7 +660,11 @@ TipoAnimalDao tipoAnimalDao;
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-//GUARDAR EXPEDIENTE      
+//GUARDAR EXPEDIENTE    
+
+        if (jTextField1.getText().equals("")&&jTextField2.getText().equals("")&&jTextField3.getText().equals("")&&jTextField4.getText().equals("")&&jTextField5.getText().equals("")&&jTextField6.getText().equals("")&&jTextField7.getText().equals("")&&jTextField8.getText().equals("")&&jTextField9.getText().equals("")&&jTextArea1.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese los datos requeridos");
+        } else {
 try {
             addExpediente();
             JOptionPane.showMessageDialog(null, "Éxito al añadir expediente");
@@ -637,6 +683,7 @@ try {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al añair expediente");
             Logger.getLogger(Pacientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -667,6 +714,53 @@ try {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        if (jTextField1.getText().length() > 10) {
+            JOptionPane.showMessageDialog(null, "El campo unicamente debe contener 10 digitos");
+            jTextField1.setText(jTextField1.getText().substring(0, 10));
+
+        }
+        jTextField1.setText(isInt(jTextField1.getText()));
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
+        jTextField2.setText(isInt(jTextField2.getText()));
+    }//GEN-LAST:event_jTextField2KeyReleased
+
+    private void jTextField4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyReleased
+        jTextField4.setText(isInt(jTextField4.getText()));
+    }//GEN-LAST:event_jTextField4KeyReleased
+
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+
+    }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void jTextField8KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyReleased
+        jTextField8.setText(isInt(jTextField8.getText()));
+    }//GEN-LAST:event_jTextField8KeyReleased
+
+    private void jTextField9KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField9KeyReleased
+        jTextField9.setText(isInt(jTextField9.getText()));
+    }//GEN-LAST:event_jTextField9KeyReleased
+
+    private void jTextField7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyReleased
+        jTextField7.setText(isInt(jTextField7.getText()));
+    }//GEN-LAST:event_jTextField7KeyReleased
+
+    
+    String isInt(String ps) {
+        String f = ps;
+        if (ps.length() != 0) {
+            try {
+                long n = Long.parseLong(ps);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "El campo ocupa unicamente caracteres numéricos");
+                f = ps.substring(0, ps.length() - 1);
+            }
+        }
+        return f;
+    }
+    
     
     public void filter(){
                 try{

@@ -129,6 +129,18 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         }
         return result;
     }
+     String isInt(String ps) {
+        String f = ps;
+        if (ps.length() != 0) {
+            try {
+                long n = Long.parseLong(ps);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "El campo ocupa unicamente caracteres numéricos");
+                f = ps.substring(0, ps.length() - 1);
+            }
+        }
+        return f;
+    }
     
 //    void cargarDatosMOA(int id){
 //        updateMOA.setSize(600, 300);
@@ -234,6 +246,30 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         jLabel24 = new javax.swing.JLabel();
         caduucidad1 = new com.toedter.calendar.JDateChooser();
         jPanel9 = new javax.swing.JPanel();
+        viewMOA = new javax.swing.JDialog();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        guardarMOA2 = new javax.swing.JButton();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        viewS = new javax.swing.JDialog();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        guardarS2 = new javax.swing.JButton();
+        jLabel31 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        descripcionS2 = new javax.swing.JTextArea();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -552,6 +588,12 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         jLabel13.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel13.setText("Contacto");
 
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField2KeyReleased(evt);
+            }
+        });
+
         jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
         jButton13.setContentAreaFilled(false);
         jButton13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -688,6 +730,12 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         jLabel15.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel15.setText("Nombre");
 
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField4KeyReleased(evt);
+            }
+        });
+
         jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
         jButton15.setContentAreaFilled(false);
         jButton15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -768,6 +816,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
 
         cancelarS1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         cancelarS1.setContentAreaFilled(false);
+        cancelarS1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelarS1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelarS1ActionPerformed(evt);
@@ -776,6 +825,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
 
         guardarS1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
         guardarS1.setContentAreaFilled(false);
+        guardarS1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         guardarS1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 guardarS1ActionPerformed(evt);
@@ -988,6 +1038,228 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        viewMOA.setBackground(new java.awt.Color(249, 209, 255));
+
+        jPanel11.setBackground(new java.awt.Color(249, 209, 255));
+
+        jLabel18.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel18.setText("Nombre");
+
+        jLabel25.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel25.setText("Costo");
+
+        jLabel26.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel26.setText("Proveedor");
+
+        jLabel27.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel27.setText("Stock");
+
+        guardarMOA2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hecho.png"))); // NOI18N
+        guardarMOA2.setContentAreaFilled(false);
+        guardarMOA2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        guardarMOA2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarMOA2ActionPerformed(evt);
+            }
+        });
+
+        jLabel28.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel28.setText("Caducidad");
+
+        jLabel32.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel32.setToolTipText("");
+        jLabel32.setOpaque(true);
+
+        jLabel33.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel33.setToolTipText("");
+        jLabel33.setOpaque(true);
+
+        jLabel34.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel34.setToolTipText("");
+        jLabel34.setOpaque(true);
+
+        jLabel35.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel35.setToolTipText("");
+        jLabel35.setOpaque(true);
+
+        jLabel36.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel36.setToolTipText("");
+        jLabel36.setOpaque(true);
+
+        jLabel37.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel37.setToolTipText("");
+        jLabel37.setOpaque(true);
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel28)
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel25)
+                        .addComponent(jLabel26)
+                        .addComponent(jLabel27)
+                        .addComponent(jLabel18)))
+                .addGap(65, 65, 65)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(guardarMOA2))
+                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel25))
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(guardarMOA2)))
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel26)))
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel27)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(66, 66, 66))))
+        );
+
+        javax.swing.GroupLayout viewMOALayout = new javax.swing.GroupLayout(viewMOA.getContentPane());
+        viewMOA.getContentPane().setLayout(viewMOALayout);
+        viewMOALayout.setHorizontalGroup(
+            viewMOALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        viewMOALayout.setVerticalGroup(
+            viewMOALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel12.setBackground(new java.awt.Color(249, 209, 255));
+        jPanel12.setEnabled(false);
+
+        jLabel29.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel29.setText("Nombre");
+
+        jLabel30.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel30.setText("Costo");
+
+        guardarS2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hecho.png"))); // NOI18N
+        guardarS2.setContentAreaFilled(false);
+        guardarS2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        guardarS2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarS2ActionPerformed(evt);
+            }
+        });
+
+        jLabel31.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel31.setText("Descripcion");
+
+        descripcionS2.setColumns(20);
+        descripcionS2.setRows(5);
+        descripcionS2.setEnabled(false);
+        jScrollPane5.setViewportView(descripcionS2);
+
+        jLabel38.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel38.setOpaque(true);
+
+        jLabel39.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel39.setOpaque(true);
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addComponent(jLabel30)
+                        .addGap(121, 121, 121))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addComponent(jLabel29)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addComponent(jLabel31))
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                            .addComponent(jLabel39, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(64, 64, 64)
+                        .addComponent(guardarS2))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel29)
+                            .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel30))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel31)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(guardarS2)))
+                .addGap(48, 48, 48))
+        );
+
+        javax.swing.GroupLayout viewSLayout = new javax.swing.GroupLayout(viewS.getContentPane());
+        viewS.getContentPane().setLayout(viewSLayout);
+        viewSLayout.setHorizontalGroup(
+            viewSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        viewSLayout.setVerticalGroup(
+            viewSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 153));
@@ -1123,11 +1395,38 @@ Inputing.setSize(295, 150);
 Inputing.setTitle("Opciones");
 Inputing.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
 Inputing.setLocationRelativeTo(null);
-
+jRadioButton6.setSelected(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        Miscelaneas miscelaneas = miscelaneasDao.selectedMiscelaneas(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
+        if (miscelaneas.getTipo().equals("Servicios")) {
+            viewS.setVisible(true);
+            viewS.setSize(571,350);
+            viewS.setLocationRelativeTo(null);
+            viewS.setResizable(false);
+            viewS.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
+            viewS.setTitle("Ver Miscelaneas");
+            jLabel38.setText(miscelaneas.getNombre());
+            jLabel39.setText(""+miscelaneas.getCosto());
+            descripcionS2.setText(miscelaneas.getDescripcionS());
+        } else if (miscelaneas.getTipo().equals("Medicamento")||miscelaneas.getTipo().equals("Articulos")) {
+            viewMOA.setVisible(true);
+            viewMOA.setSize(500,320); 
+            viewMOA.setLocationRelativeTo(null);
+            viewMOA.setResizable(false);
+            viewMOA.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
+            viewMOA.setTitle("Ver Miscelaneas");
+            Proveedor proveedor = proveedorDao.selectedProveedor(miscelaneas.getProveedor_idproveedor());
+            jLabel32.setText(miscelaneas.getNombre());
+            jLabel34.setText(""+miscelaneas.getCosto());
+            jLabel36.setText(""+proveedor.getNombre());
+            jLabel35.setText(""+miscelaneas.getStock());
+            jLabel37.setText(""+miscelaneas.getCaducidadMOA());
+        } else {
+            System.out.println("cayo aca");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -1163,6 +1462,7 @@ Inputing.setLocationRelativeTo(null);
         }else if (jRadioButton5.isSelected()) {
             opcion="Medicamento";
             addMOA.setVisible(true);
+            addMOA.setResizable(false);
             addMOA.setTitle("Agregar Medicamento");
             addMOA.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
             addMOA.setSize(571, 310);
@@ -1174,6 +1474,7 @@ Inputing.setLocationRelativeTo(null);
             addMOA.setTitle("Agregar Artículo");
             addMOA.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
             addMOA.setVisible(true);
+            addMOA.setResizable(false);
             addMOA.setSize(571, 310);
             addMOA.setLocationRelativeTo(null);
             Inputing.dispose();
@@ -1182,6 +1483,7 @@ Inputing.setLocationRelativeTo(null);
             addS.setTitle("Agregar Servicio");
             addS.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
             addS.setVisible(true);
+            addS.setResizable(false);
             addS.setSize(571, 350);
             addS.setLocationRelativeTo(null);
             Inputing.dispose();
@@ -1194,7 +1496,7 @@ Inputing.setLocationRelativeTo(null);
     }//GEN-LAST:event_cancelarMOAActionPerformed
 
     private void guardarMOAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarMOAActionPerformed
-        try {
+         try {
             if (addMiscelaneaMOA()!=0) {
             JOptionPane.showMessageDialog(null, "El medicamento o artículo se ha insertado con éxito");
             addMOA.dispose();
@@ -1229,12 +1531,13 @@ Inputing.setLocationRelativeTo(null);
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
          // TODO add your handling code here:
+         
         try {
             if (addProveedor()!=0) {
-                JOptionPane.showMessageDialog(null, "Éxito al insertar proveedor");
                 pAdd.dispose();
             jTextField1.setText("");
             jTextField2.setText("");
+                JOptionPane.showMessageDialog(null, "Éxito al insertar proveedor");
             }else{
                 JOptionPane.showMessageDialog(null, "Error al intentar insertar proveedor");
             }
@@ -1257,7 +1560,9 @@ Inputing.setLocationRelativeTo(null);
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
-        
+        if (jTextField3.getText().equals("")&&jTextField4.getText().equals("")) {
+             JOptionPane.showMessageDialog(null, "Inserte un Dato");
+        } else {
         int row = proveedoresInfo.getSelectedRow();
         
         int id= (int) proveedoresInfo.getValueAt(row, 0);
@@ -1273,6 +1578,7 @@ Inputing.setLocationRelativeTo(null);
         } else {
             JOptionPane.showMessageDialog(this, "Verifique sus datos");
         }
+        }
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
@@ -1282,20 +1588,30 @@ Inputing.setLocationRelativeTo(null);
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          // TODO add your handling code here:
-         
+         if (jTable1.getSelectedRow()==-1) {
+             JOptionPane.showMessageDialog(null, "Seleccione un dato");
+        } else {
         Miscelaneas miscelaneas = miscelaneasDao.selectedMiscelaneas(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
         id=Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
         tipo= miscelaneas.getTipo();
         proveedorMOA1.setModel(proveedorDao.cargarCombo());
         if (tipo.equalsIgnoreCase("Servicios")) {
-            updateS.setSize(600, 280);
+            updateS.setSize(550, 290);
             updateS.setVisible(true);
+            updateS.setResizable(false);
+            updateS.setLocationRelativeTo(null);
+            updateS.setTitle("Actualizar servicio");
+            updateS.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
             nombreS1.setText(miscelaneas.getNombre());
             costoS1.setText(""+miscelaneas.getCosto());
             descripcionS1.setText(miscelaneas.getDescripcionS());
         } else if (tipo.equalsIgnoreCase("Medicamento")||tipo.equalsIgnoreCase("Articulos")) {
             updateMOA.setSize(580, 300);
             updateMOA.setVisible(true);
+            updateMOA.setResizable(false);
+            updateMOA.setLocationRelativeTo(null);
+            updateMOA.setTitle("Actualizar medicamento o artículo");
+            updateMOA.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
             nombreMOA1.setText(miscelaneas.getNombre());
             costoMOA1.setText(""+miscelaneas.getCosto());
             stockMOA1.setText(""+miscelaneas.getStock());
@@ -1303,6 +1619,7 @@ Inputing.setLocationRelativeTo(null);
             caduucidad1.setDate(dates);
             proveedorMOA1.setSelectedIndex(miscelaneas.getProveedor_idproveedor());
         }
+         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -1312,10 +1629,19 @@ Inputing.setLocationRelativeTo(null);
         pUdp.setLocationRelativeTo(null);
         pUdp.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         pUdp.setTitle("Editar  Proveedor");
+        if (proveedoresInfo.getSelectedRow()==-1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un dato");
+        }else{
+            ProveedorDao proveedorDao1 = new ProveedorDao();
+            Proveedor proveedor = proveedorDao1.selectedProveedor(Integer.parseInt(proveedoresInfo.getValueAt(proveedoresInfo.getSelectedRow(), 0).toString()));
+            jTextField3.setText(proveedor.getNombre());
+            jTextField4.setText(proveedor.getContacto());
+        }
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void cancelarS1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarS1ActionPerformed
-        // TODO add your handling code here:
+         // TODO add your handling code here:
+         updateS.dispose();
     }//GEN-LAST:event_cancelarS1ActionPerformed
 
     private void guardarS1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarS1ActionPerformed
@@ -1335,6 +1661,7 @@ Inputing.setLocationRelativeTo(null);
 
     private void cancelarMOA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarMOA1ActionPerformed
         // TODO add your handling code here:
+        updateMOA.dispose();
     }//GEN-LAST:event_cancelarMOA1ActionPerformed
 
     private void guardarMOA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarMOA1ActionPerformed
@@ -1344,6 +1671,7 @@ Inputing.setLocationRelativeTo(null);
             java.sql.Date cum = new java.sql.Date(caduucidad1.getDate().getTime());
             Miscelaneas miscelaneas2 = new Miscelaneas(id, nombreMOA1.getText(), Double.parseDouble(costoMOA1.getText()), proveedorMOA1.getSelectedIndex(), Integer.parseInt(stockMOA1.getText()),tipo, cum);
             miscelaneasDao.actualizar_miscelaneas(miscelaneas2);
+           updateMOA.dispose();
             loadModelIn();
             JOptionPane.showMessageDialog(null, "Éxito al actualizar");
         } catch (SQLException ex) {
@@ -1361,6 +1689,36 @@ Inputing.setLocationRelativeTo(null);
          proveedores.dispose();
          this.setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
+         // TODO add your handling code here:
+         if (jTextField2.getText().length() > 10) {
+            JOptionPane.showMessageDialog(null, "El campo unicamente debe contener 10 digitos");
+            jTextField2.setText(jTextField2.getText().substring(0, 10));
+
+        }
+        jTextField2.setText(isInt(jTextField2.getText()));
+    }//GEN-LAST:event_jTextField2KeyReleased
+
+    private void jTextField4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyReleased
+         // TODO add your handling code here:
+         if (jTextField4.getText().length() > 10) {
+            JOptionPane.showMessageDialog(null, "El campo unicamente debe contener 10 digitos");
+            jTextField4.setText(jTextField4.getText().substring(0, 10));
+
+        }
+        jTextField4.setText(isInt(jTextField4.getText()));
+    }//GEN-LAST:event_jTextField4KeyReleased
+
+    private void guardarMOA2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarMOA2ActionPerformed
+         // TODO add your handling code here:
+         viewMOA.dispose();
+    }//GEN-LAST:event_guardarMOA2ActionPerformed
+
+    private void guardarS2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarS2ActionPerformed
+        // TODO add your handling code here:
+        viewS.dispose();
+    }//GEN-LAST:event_guardarS2ActionPerformed
 public void proveedoresA(){
     this.dispose();
     addMOA.dispose();
@@ -1425,10 +1783,13 @@ public void proveedoresA(){
     private javax.swing.JTextField costoS1;
     private javax.swing.JTextArea descripcionS;
     private javax.swing.JTextArea descripcionS1;
+    private javax.swing.JTextArea descripcionS2;
     private javax.swing.JButton guardarMOA;
     private javax.swing.JButton guardarMOA1;
+    private javax.swing.JButton guardarMOA2;
     private javax.swing.JButton guardarS;
     private javax.swing.JButton guardarS1;
+    private javax.swing.JButton guardarS2;
     private javax.swing.ButtonGroup inventarios;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -1454,6 +1815,7 @@ public void proveedoresA(){
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -1461,7 +1823,22 @@ public void proveedoresA(){
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1470,6 +1847,8 @@ public void proveedoresA(){
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1489,6 +1868,7 @@ public void proveedoresA(){
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
@@ -1508,6 +1888,8 @@ public void proveedoresA(){
     private javax.swing.JTextField stockMOA1;
     private javax.swing.JDialog updateMOA;
     private javax.swing.JDialog updateS;
+    private javax.swing.JDialog viewMOA;
+    private javax.swing.JDialog viewS;
     // End of variables declaration//GEN-END:variables
 
     @Override

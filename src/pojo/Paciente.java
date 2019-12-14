@@ -20,11 +20,23 @@ public class Paciente {
     private int tipoAnimal_idtipoAnimal;
     private Date cumple;
     private boolean activo;
+    private int act;
     
 
     public Paciente() {
     }
 
+    public Paciente(int idpaciente, String nombre, String descripcion, String sexo, int cliente_idcliente, int tipoAnimal_idtipoAnimal, Date cumple, int act) {
+        this.idpaciente = idpaciente;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.sexo = sexo;
+        this.cliente_idcliente = cliente_idcliente;
+        this.tipoAnimal_idtipoAnimal = tipoAnimal_idtipoAnimal;
+        this.cumple = cumple;
+        this.act = act;
+    }
+    
     public Paciente(int idpaciente, String nombre, String descripcion, String sexo, int cliente_idcliente, int tipoAnimal_idtipoAnimal, Date cumple, boolean activo) {
         this.idpaciente = idpaciente;
         this.nombre = nombre;
@@ -115,5 +127,15 @@ public class Paciente {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    public int getAct() {
+        return act;
+    }
+
+    public void setAct(int act) {
+        this.act = act;
+    }
+    
+    
 
 }

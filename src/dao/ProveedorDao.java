@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import pojo.Expediente;
 import pojo.Proveedor;
 import pojo.TipoAnimal;
 
@@ -93,7 +94,26 @@ public class ProveedorDao {
         }
         return true;
     }
-    
+    public Proveedor selectedProveedor(int id) {
+        Connection con = null;
+        PreparedStatement st = null;
+        Proveedor pojo = new Proveedor();
+        try {
+            con = Conexion.getConnection();
+            st = con.prepareStatement("select * from proveedor where idproveedor=?");
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                pojo = inflaPOJO(rs);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al consultar Proveedor " + e);
+        } finally {
+            Conexion.close(con);
+            Conexion.close(st);
+        }
+        return pojo;
+    }
     public boolean delete_proveedor(int id) {
         Connection con = null;
         PreparedStatement st = null;

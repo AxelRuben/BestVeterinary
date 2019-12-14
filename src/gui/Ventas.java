@@ -10,7 +10,17 @@ import dao.EmpleadoDao;
 import dao.MiscelaneasDao;
 import dao.VentaDao;
 import dao.VentaHasMiscelaneasDao;
+import fr.opensagres.xdocreport.core.XDocReportException;
+import fr.opensagres.xdocreport.document.IXDocReport;
+import fr.opensagres.xdocreport.document.registry.XDocReportRegistry;
+import fr.opensagres.xdocreport.template.IContext;
+import fr.opensagres.xdocreport.template.TemplateEngineKind;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +33,7 @@ import javax.swing.table.TableRowSorter;
 import pojo.Cliente;
 import pojo.Empleado;
 import pojo.Miscelaneas;
+import pojo.Paciente;
 import pojo.Venta;
 import pojo.Venta_has_Miscelaneas;
 
@@ -43,6 +54,7 @@ public class Ventas extends javax.swing.JFrame {
     ClienteDao clienteDao = new ClienteDao();
     VentaDao ventaDao = new VentaDao();
     DefaultComboBoxModel defaultComboBoxModel = new DefaultComboBoxModel();
+    int idV;
 
     /**
      * Creates new form Ventas
@@ -54,6 +66,8 @@ public class Ventas extends javax.swing.JFrame {
         miscelaneasDao = new MiscelaneasDao();
         loadModelIn();
         loadComEmp();
+        this.setResizable(false);
+        this.setSize(926, 610);
         loadComCli();
         setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
     }
@@ -66,7 +80,7 @@ public class Ventas extends javax.swing.JFrame {
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setRowSorter(sorter);
     }
-    
+
 //    public int insertarVenta() {
 //        Venta venta = new Venta();
 //        int id = new VentaDAO().insertar(venta);
@@ -92,8 +106,7 @@ public class Ventas extends javax.swing.JFrame {
 //        cargarModelo();
 //        return id;
 //    }
-
-    void agregarVenta() {
+    void agregarVenta() throws SQLException {
         DefaultTableModel table2 = (DefaultTableModel) jTable2.getModel();
         DefaultTableModel tabla1 = (DefaultTableModel) jTable1.getModel();
         int row = jTable1.getSelectedRow();
@@ -107,42 +120,66 @@ public class Ventas extends javax.swing.JFrame {
             table2.addRow(producto);
             tabla1.removeRow(row);
             total.setText(calcularTotal() + "");
-            
-        }else if (tipo.equalsIgnoreCase("Medicamento")||tipo.equalsIgnoreCase("Articulos")) {
-        cantidad = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántos desea llevar?"));
-        int stock = miscelaneas.getStock();
-        double subtotal = precio * cantidad;
 
-        if (verificarStock(cantidad, stock)) {
-            Object producto[] = {id, nombre, subtotal};
-            table2.addRow(producto);
-            tabla1.removeRow(row);
-            total.setText(calcularTotal() + "");
+        } else if (tipo.equalsIgnoreCase("Medicamento") || tipo.equalsIgnoreCase("Articulos")) {
+            cantidad = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántos desea llevar?"));
+            int stock = miscelaneas.getStock();
+            double subtotal = precio * cantidad;
+
+            if (verificarStock(cantidad, stock)) {
+                Object producto[] = {id, nombre, subtotal};
+                table2.addRow(producto);
+                tabla1.removeRow(row);
+                total.setText(calcularTotal() + "");
+                if (!miscelaneasDao.actualizar_stock(id, stock-cantidad)) {
+                    JOptionPane.showMessageDialog(null, "Error al actualizar Stock");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay existencias suficientes");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "No hay existencias suficientes");
-        }
-        }else{
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error fatality");
         }
     }
-    
-    
-    
-    
+
     void removerVenta() {
         DefaultTableModel table2 = (DefaultTableModel) jTable2.getModel();
         DefaultTableModel tabla1 = (DefaultTableModel) jTable1.getModel();
         int row = jTable2.getSelectedRow();
         Miscelaneas miscelaneas = miscelaneasDao.selectedMiscelaneas(Integer.parseInt(jTable2.getValueAt(row, 0).toString()));
-            Object producto[] = {miscelaneas.getIdmiscelaneas(), miscelaneas.getNombre(), miscelaneas.getTipo(), miscelaneas.getCosto()};
+        Object producto[] = {miscelaneas.getIdmiscelaneas(), miscelaneas.getNombre(), miscelaneas.getTipo(), miscelaneas.getCosto()};
         table2.removeRow(row);
         tabla1.addRow(producto);
     }
-    
-    
-    
-    
-    
+    String articulos = "";
+
+    void exportFormat() throws IOException, XDocReportException {
+        InputStream in = Pacientes.class.getResourceAsStream("ventasFormato.docx");
+        IXDocReport report = XDocReportRegistry.getRegistry().loadReport(
+                in, TemplateEngineKind.Velocity);
+        IContext context = report.createContext();
+        Venta venta = ventaDao.selectedVenta(idV);
+        java.util.Date date = new java.util.Date();
+        Cliente cliente1 = clienteDao.selectedCliente(venta.getCliente_idcliente());
+        context.put("nombrec", jTable3.getValueAt(jTable3.getSelectedRow(), 3));
+        context.put("fechac", date.getDate() + "-" + date.getMonth() + date.getYear());
+        context.put("empleadoc", jTable3.getValueAt(jTable3.getSelectedRow(), 2));
+        context.put("totalc", t.getText());
+        context.put("pagoc", p.getText());
+        context.put("cambioc", c.getText());
+
+        for (int i = 0; i < tablaVenta.getRowCount(); i++) {
+            articulos += (String) tablaVenta.getValueAt(i, 1) + "\n";
+        }
+        context.put("articulosc", articulos);
+
+    String nombreSalida="Venta "+(date.getYear()+1900)+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+"-"+date.getMinutes()+".docx";
+        
+        OutputStream out = new FileOutputStream(new File("C:/Users/blanc/Desktop/" + nombreSalida));
+        report.process(context, out);
+        System.out.println("Creado con éxito");
+        JOptionPane.showMessageDialog(null, "Éxito al exportar el ticket");
+    }
 
     boolean verificarStock(int cantidad, int stock) {
         int restante = stock - cantidad;
@@ -152,11 +189,12 @@ public class Ventas extends javax.swing.JFrame {
             return false;
         }
     }
-    
+
     public void loadComEmp() {
         defaultComboBoxModel = empleadoDao.cargarCombo();
         jComboBox1.setModel(defaultComboBoxModel);
     }
+
     public void loadComCli() {
         defaultComboBoxModel = clienteDao.cargarCombo();
         jComboBox2.setModel(defaultComboBoxModel);
@@ -177,7 +215,6 @@ public class Ventas extends javax.swing.JFrame {
         double cambio = pag - tot;
         return cambio;
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -203,6 +240,14 @@ public class Ventas extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jButton10 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        t = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        p = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        c = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -228,6 +273,7 @@ public class Ventas extends javax.swing.JFrame {
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/izq.png"))); // NOI18N
         jButton4.setToolTipText("Regresar a Ventas");
         jButton4.setContentAreaFilled(false);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -238,6 +284,7 @@ public class Ventas extends javax.swing.JFrame {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojo.png"))); // NOI18N
         jButton3.setToolTipText("Visualizar");
         jButton3.setContentAreaFilled(false);
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -260,6 +307,7 @@ public class Ventas extends javax.swing.JFrame {
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casa (GR).png"))); // NOI18N
         jButton8.setToolTipText("Inicio");
         jButton8.setContentAreaFilled(false);
+        jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
@@ -281,6 +329,8 @@ public class Ventas extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jPanel3.setBackground(new java.awt.Color(222, 165, 164));
+
         tablaVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -295,52 +345,114 @@ public class Ventas extends javax.swing.JFrame {
         jScrollPane4.setViewportView(tablaVenta);
 
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/izq.png"))); // NOI18N
+        jButton9.setToolTipText("Regresar");
         jButton9.setContentAreaFilled(false);
+        jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Productos adquiridos en la venta: ");
+
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/export.png"))); // NOI18N
+        jButton10.setToolTipText("Exportar");
+        jButton10.setContentAreaFilled(false);
+        jButton10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Total:");
+
+        t.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel11.setText("Pago:");
+
+        p.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel13.setText("Cambio:");
+
+        c.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton9))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(t, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(p, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(c, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(119, Short.MAX_VALUE))
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)))
+                .addGap(50, 50, 50))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton9)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24))
+                    .addComponent(jButton9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                            .addComponent(t, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(p, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(c, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout viewLayout = new javax.swing.GroupLayout(view.getContentPane());
         view.getContentPane().setLayout(viewLayout);
         viewLayout.setHorizontalGroup(
             viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(viewLayout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         viewLayout.setVerticalGroup(
             viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,6 +460,8 @@ public class Ventas extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        jLabel8.setText("jLabel8");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -364,7 +478,7 @@ public class Ventas extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 290, 340));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 330, 410));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casa (GR).png"))); // NOI18N
         jButton6.setContentAreaFilled(false);
@@ -452,10 +566,10 @@ public class Ventas extends javax.swing.JFrame {
         jPanel1.add(pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(528, 401, 227, 27));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 210, 28));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 210, 28));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 510, 200, 28));
+        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 20, 200, 28));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojo.png"))); // NOI18N
         jButton2.setToolTipText("Visualizar ventas");
@@ -492,14 +606,18 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        agregarVenta();
+        try {
+            // TODO add your handling code here:
+            agregarVenta();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al insertar Venta");
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void pagoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pagoKeyReleased
         // TODO add your handling code here:
         if ((pago.getText()).equals("")) {
-            JOptionPane.showMessageDialog(null, "Porfavor ingrese un pago");
+            JOptionPane.showMessageDialog(null, "Por favor ingrese un pago");
         } else {
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                 cambio.setText(calcularCambio() + "");
@@ -512,26 +630,38 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_pagoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            insertar_ven();
-            JOptionPane.showMessageDialog(null, "Exito al guardar venta");
-        } catch (SQLException ex) {
-            System.out.println("Error al insertar venta " + ex);;
+        if (jTable2.getRowCount() == 0 || jComboBox1.getSelectedIndex() == 0 || jComboBox2.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione un dato");
+
+        } else {
+            try {
+                insertar_ven();
+                JOptionPane.showMessageDialog(null, "Exito al guardar venta");
+            } catch (SQLException ex) {
+                System.out.println("Error al insertar venta " + ex);;
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-         // TODO add your handling code here:
+        // TODO add your handling code here:
         if (jTable3.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Seleccione un dato");
         } else {
+            ventasMenu.dispose();
             view.setVisible(true);
-            view.setSize(500,500);
+            view.setSize(800, 500);
             view.setLocationRelativeTo(null);
             view.setTitle("Detalles de Venta");
+            view.setResizable(false);
+            view.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
             VentaHasMiscelaneasDao vHMD = new VentaHasMiscelaneasDao();
+            Venta venta = ventaDao.selectedVenta(Integer.parseInt(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString()));
             tablaVenta.setModel(vHMD.cargarModelo(Integer.parseInt(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString())));
             jLabel7.setText(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString());
+            t.setText("" + venta.getTotal());
+            p.setText("" + venta.getPago());
+            c.setText("" + venta.getCambio());
 //            cargarDatosV(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -547,17 +677,18 @@ public class Ventas extends javax.swing.JFrame {
         ventasMenu.setVisible(true);
         ventasMenu.setTitle("Ventas");
         ventasMenu.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
-        ventasMenu.setSize(935, 620);
+        ventasMenu.setSize(925, 600);
+        ventasMenu.setResizable(false);
         ventasMenu.setLocationRelativeTo(null);
         this.setVisible(false);
         jTable3.setModel(ventaDao.cargarModelo());
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-         // TODO add your handling code here:
-         ventasMenu.dispose();
-         inicio.setVisible(true);
+        // TODO add your handling code here:
+        ventasMenu.dispose();
+        inicio.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -566,26 +697,40 @@ public class Ventas extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-        tablaVenta.setVisible(false);
+        view.dispose();
         ventasMenu.setVisible(true);
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        try {
+            exportFormat();
+        } catch (IOException ex) {
+            Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (XDocReportException ex) {
+            Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     void insertar_ven() throws SQLException {
         VentaDao ventaDao = new VentaDao();
         Venta_has_Miscelaneas vHM;
         VentaHasMiscelaneasDao vHMd = new VentaHasMiscelaneasDao();
-        Empleado empleado = (Empleado)jComboBox1.getSelectedItem();
+        Empleado empleado = (Empleado) jComboBox1.getSelectedItem();
         int idemp = empleado.getIdempleado();
-        Cliente cliente = (Cliente)jComboBox2.getSelectedItem();
+        Cliente cliente = (Cliente) jComboBox2.getSelectedItem();
         int idclio = cliente.getIdcliente();
         double to = Double.parseDouble(total.getText());
-        Venta venta = new Venta(to, idemp, idclio);
+        double pa = Double.parseDouble(pago.getText());
+        double cam = Double.parseDouble(cambio.getText());
+        Venta venta = new Venta(to, idemp, idclio, cam, pa);
         int id = ventaDao.insertar(venta);
         for (int i = 0; i < jTable2.getRowCount(); i++) {
             vHM = new Venta_has_Miscelaneas(id, Integer.parseInt(jTable2.getValueAt(i, 0).toString()));
             vHMd.insertar(vHM);
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -622,8 +767,10 @@ public class Ventas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel c;
     private javax.swing.JLabel cambio;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -635,12 +782,16 @@ public class Ventas extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -651,7 +802,9 @@ public class Ventas extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JLabel p;
     private javax.swing.JTextField pago;
+    private javax.swing.JLabel t;
     private javax.swing.JTable tablaVenta;
     private javax.swing.JLabel total;
     private javax.swing.JDialog ventasMenu;

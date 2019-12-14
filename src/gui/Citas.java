@@ -85,11 +85,23 @@ public void loadModel() {
         citaas.setAutoCreateRowSorter(true);
         citaas.setRowSorter(sorter);
     }
+boolean delete(int id){
+        int option = JOptionPane.showConfirmDialog(null, "¿Desea dar de baja a este paciente?","Confirmación",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        boolean result= false;
+        System.out.println(option);
+        if (option==0) {
+            result= citaDao.delete_cita(id);
+        }
+        return result;
+    }
 void cargarDatosV(int id){
         view.setSize(510, 212);
         view.setTitle("Visualizar cita");
         view.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         view.setVisible(true);
+        this.setResizable(false);
+        this.setSize(926,610);
         view.setLocationRelativeTo(null);
         Cita cita = citaDao.selectedCita(id);
         fechaV.setText(""+cita.getFecha_hora());
@@ -644,12 +656,12 @@ if (asunto1.getText().equals("")||fecha1.getDate().toString().equals("")) {
          // TODO add your handling code here:
          int row = citaas.getSelectedRow(); //Se obtiene la linea seleccionada
          int id= (int) citaas.getValueAt(row, 0); //Obtengo el ID del amigo
-//         if (delete(id)) {
-//            JOptionPane.showMessageDialog(null, "Éxito al eliminar");
-//            loadModel();
-//        }else{
-//             JOptionPane.showMessageDialog(null, "Error al eliminar");
-//         }
+         if (delete(id)) {
+            JOptionPane.showMessageDialog(null, "Éxito al eliminar");
+            loadModel();
+        }else{
+             JOptionPane.showMessageDialog(null, "Error al eliminar");
+         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased

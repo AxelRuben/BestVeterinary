@@ -32,7 +32,9 @@ public class Inicio extends javax.swing.JFrame {
         jButton5.setCursor(new Cursor(HAND_CURSOR));
         jButton6.setCursor(new Cursor(HAND_CURSOR));
         jButton7.setCursor(new Cursor(HAND_CURSOR));
-        jButton8.setCursor(new Cursor(HAND_CURSOR));
+        jButton9.setCursor(new Cursor(HAND_CURSOR));
+        this.setResizable(false);
+        this.setSize(926,610);
     }
     public void inicioV(){
         Inicio inicio = new Inicio();
@@ -99,7 +101,7 @@ public class Inicio extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -175,7 +177,7 @@ public class Inicio extends javax.swing.JFrame {
         jButton7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir-button (1).png"))); // NOI18N
-        jButton7.setToolTipText("Salie al login");
+        jButton7.setToolTipText("Salir al login");
         jButton7.setContentAreaFilled(false);
         jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -195,15 +197,15 @@ public class Inicio extends javax.swing.JFrame {
         });
         jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 220, 70));
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/citas-button.png"))); // NOI18N
-        jButton8.setToolTipText("Ir a la pestaña citas");
-        jButton8.setContentAreaFilled(false);
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/citas-button.png"))); // NOI18N
+        jButton9.setToolTipText("Ir a la pestaña de citas");
+        jButton9.setContentAreaFilled(false);
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                jButton9ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 210, -1));
+        jPanel1.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 210, 70));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/inicio-Fondo.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -255,12 +257,16 @@ public class Inicio extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
          // TODO add your handling code here:
          trabajadores();
+         
+          
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-        citas();
-    }//GEN-LAST:event_jButton8ActionPerformed
+        Citas citas = new Citas();
+          citas.setVisible(true);
+          this.dispose();
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,7 +311,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

@@ -14,23 +14,28 @@ public class Venta {
     private double total;
     private int empleado_idempleado;
     private int cliente_idcliente;
+    private double cambio;
+    private double pago;
 
-    public Venta(int idventa, double total, int empleado_idempleado, int cliente_idcliente) {
+    public Venta() {
+    }
+
+    public Venta(int idventa, double total, int empleado_idempleado, int cliente_idcliente, double cambio, double pago) {
         this.idventa = idventa;
         this.total = total;
         this.empleado_idempleado = empleado_idempleado;
         this.cliente_idcliente = cliente_idcliente;
+        this.cambio = cambio;
+        this.pago = pago;
     }
+public Venta(double total, int empleado_idempleado, int cliente_idcliente, double cambio, double pago) {
 
-    public Venta(double total, int empleado_idempleado, int cliente_idcliente) {
         this.total = total;
         this.empleado_idempleado = empleado_idempleado;
         this.cliente_idcliente = cliente_idcliente;
+        this.cambio = cambio;
+        this.pago = pago;
     }
-
-    public Venta() {
-    }
-    
 
     public int getIdventa() {
         return idventa;
@@ -63,6 +68,23 @@ public class Venta {
     public void setCliente_idcliente(int cliente_idcliente) {
         this.cliente_idcliente = cliente_idcliente;
     }
+
+    public double getCambio() {
+        return cambio;
+    }
+
+    public void setCambio(double cambio) {
+        this.cambio = cambio;
+    }
+
+    public double getPago() {
+        return pago;
+    }
+
+    public void setPago(double pago) {
+        this.pago = pago;
+    }
+  
     
     
 }

@@ -10,6 +10,7 @@ import com.sun.awt.AWTUtilities;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
@@ -23,6 +24,7 @@ private Timer t;
     /** Creates new form Splash */
     public Splash() {
         initComponents();
+        setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         Login login = new Login();
         UIManager.put( "nimbusOrange", new Color( 128, 155, 255 ) );
         al = new ActionListener() {

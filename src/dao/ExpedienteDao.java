@@ -114,15 +114,14 @@ public class ExpedienteDao {
         String encabezados[] = {"Id", "Paciente"};
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("SELECT*FROM expediente");
+            st = con.prepareStatement("select ex.idexpediente, p.nombre from expediente ex, paciente p where ex.paciente_idpaciente=p.idpaciente;");
             dt = new DefaultTableModel();
             dt.setColumnIdentifiers(encabezados);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Object ob[] = new Object[2];
-                Expediente pojo = inflaPOJO(rs);
-                ob[0] = pojo.getIdexpediente();
-                ob[1] = pojo.getPaciente_idpaciente();
+                ob[0] = rs.getInt(1);
+                ob[1] = rs.getString(2).toUpperCase();
 
                 dt.addRow(ob);
             }
@@ -141,7 +140,7 @@ public class ExpedienteDao {
          Expediente pojo = new Expediente();
         try {
             con = Conexion.getConnection();
-            st = con.prepareStatement("CALL select_a_expediente(?)");
+            st = con.prepareStatement("select * from expediente where idexpediente=?");
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {

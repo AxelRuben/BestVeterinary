@@ -24,6 +24,8 @@ public class Login extends javax.swing.JFrame {
         this.setTitle("Login");
         usuarioDao = new UsuarioDao();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setSize(406,470);
         setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
     }
     Inicio inicio = new Inicio();
@@ -87,7 +89,7 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 80, 70));
 
-        contrasena.setToolTipText("Ingresa la Contraseña");
+        contrasena.setToolTipText("Ingresa la contraseña");
         contrasena.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 230, 30));
 
@@ -117,14 +119,14 @@ public class Login extends javax.swing.JFrame {
         try {
         Usuario usuario1 =usuarioDao.selectedCliente(usuario.getText());
             if (usuario1.getContrasena().equalsIgnoreCase(contrasena.getText())) {
-            JOptionPane.showMessageDialog(null, "Acceso Concedido");
+            JOptionPane.showMessageDialog(null, "Acceso concedido");
             inicio.inicioV();
             this.dispose();
             }else{
-            JOptionPane.showMessageDialog(null, "El usuario o contraseña estan incorrectos");
+            JOptionPane.showMessageDialog(null, "El usuario o contraseña son incorrectos");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "El usuario o contraseña estan incorrectos");
+            JOptionPane.showMessageDialog(null, "El usuario o contraseña son incorrectos");
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed

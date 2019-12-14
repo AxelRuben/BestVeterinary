@@ -16,8 +16,9 @@ public class Cliente {
     private String contacto;
     private String correo;
     private String direccion;
+    private boolean activo;
 
-    public Cliente(int idcliente, String nombre, String sexo, Date cumpleani, String contacto, String correo, String direccion) {
+    public Cliente(int idcliente, String nombre, String sexo, Date cumpleani, String contacto, String correo, String direccion, boolean activo) {
         this.idcliente = idcliente;
         this.nombre = nombre;
         this.sexo = sexo;
@@ -25,7 +26,19 @@ public class Cliente {
         this.contacto = contacto;
         this.correo = correo;
         this.direccion = direccion;
+        this.activo = activo;
     }
+    
+    public Cliente(String nombre, String sexo, Date cumpleani, String contacto, String correo, String direccion, boolean activo) {
+        this.nombre = nombre;
+        this.sexo = sexo;
+        this.cumpleani = cumpleani;
+        this.contacto = contacto;
+        this.correo = correo;
+        this.direccion = direccion;
+        this.activo = activo;
+    }
+    
     public Cliente(String nombre, String sexo, Date cumpleani, String contacto, String correo, String direccion) {
         this.nombre = nombre;
         this.sexo = sexo;
@@ -34,12 +47,15 @@ public class Cliente {
         this.correo = correo;
         this.direccion = direccion;
     }
+
     public Cliente() {
     }
-    
-    
-    
 
+   
+    @Override
+    public String toString() {
+        return getNombre();
+    }
 
     public int getIdcliente() {
         return idcliente;
@@ -96,8 +112,12 @@ public class Cliente {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-    @Override
-    public String toString() {
-        return getNombre();
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

@@ -135,14 +135,13 @@ public class MiscelaneasDao {
             }
                 } else if (tipo.equals("Servicios")) {
                     try{
-                    st = con.prepareStatement("UPDATE miscelaneas SET nombre=?, costo=?, proveedor_idproveedor=?, stock=?, tipo=?, descripcionS=? WHERE idmiscelaneas=?", PreparedStatement.RETURN_GENERATED_KEYS);
+                    st = con.prepareStatement("UPDATE miscelaneas SET nombre=?, costo=?, stock=?, tipo=?, descripcionS=? WHERE idmiscelaneas=?", PreparedStatement.RETURN_GENERATED_KEYS);
             st.setString(1, mis.getNombre());
             st.setDouble(2, mis.getCosto());
-            st.setInt(3, mis.getProveedor_idproveedor());
-            st.setInt(4, mis.getStock());
-            st.setString(5, tipo);
-            st.setString(6, mis.getDescripcionS());
-            st.setInt(7, mis.getIdmiscelaneas());
+            st.setInt(3, mis.getStock());
+            st.setString(4, tipo);
+            st.setString(5, mis.getDescripcionS());
+            st.setInt(6, mis.getIdmiscelaneas());
             
              int x = st.executeUpdate();
             if (x == 0) {
@@ -161,6 +160,41 @@ public class MiscelaneasDao {
             }
         return true;
     }
+    
+    
+    
+    
+    
+    public boolean actualizar_stock(int id, int cant) {
+        
+        Connection con = null;
+        PreparedStatement st = null;
+        int idd=0;
+        try {
+            con = Conexion.getConnection();
+            st = con.prepareStatement("CALL actualizar_stock(?,?)");
+            st.setInt(1, id);
+            st.setInt(2, cant);
+            idd = st.executeUpdate();
+
+            int x = st.executeUpdate();
+            if (x == 0) {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error al actualizar empleado " + e);
+        } finally {
+            Conexion.close(con);
+            Conexion.close(st);
+        }
+        return true;
+    }
+    
+    
+    
+    
+    
+    
     
     public boolean delete_miscelanea(int id) {
         Connection con = null;

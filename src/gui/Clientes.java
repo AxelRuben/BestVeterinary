@@ -45,11 +45,15 @@ public class Clientes extends javax.swing.JFrame {
         TableColumnModel columnModel = jTable1.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(2);
         setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
+        todos.setSelected(true);
         jButton1.setCursor(new Cursor(HAND_CURSOR));
         jButton2.setCursor(new Cursor(HAND_CURSOR));
         jButton3.setCursor(new Cursor(HAND_CURSOR));
         jButton4.setCursor(new Cursor(HAND_CURSOR));
         jButton5.setCursor(new Cursor(HAND_CURSOR));
+        this.setResizable(false);
+        this.setSize(930,610);
+        
 
     }
 
@@ -100,6 +104,7 @@ public class Clientes extends javax.swing.JFrame {
         update.setTitle("Modificar cliente");
         update.setVisible(true);
         update.setLocationRelativeTo(null);
+        update.setResizable(false);
         update.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         Cliente cliente = clienteDao.selectedCliente(id);
         nombre1.setText(cliente.getNombre());
@@ -109,12 +114,20 @@ public class Clientes extends javax.swing.JFrame {
         contacto1.setText(cliente.getContacto());
         correo1.setText(cliente.getCorreo());
         direccion1.setText(cliente.getDireccion());
+        if (cliente.isActivo()) {
+        jCheckBox1.setSelected(true);
+            System.out.println("Entro aqui");
+        }else{
+        jCheckBox1.setSelected(false);
+            System.out.println("Entro aca");
+        }
     }
 
     void cargarDatosV(int id) {
         view.setSize(525, 455);
         view.setTitle("Visualizar cliente");
         view.setVisible(true);
+        view.setResizable(false);
         view.setLocationRelativeTo(null);
         view.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         Cliente clientela = clienteDao.selectedCliente(id);
@@ -129,7 +142,7 @@ public class Clientes extends javax.swing.JFrame {
     }
 
     boolean delete(int id) {
-        int option = JOptionPane.showConfirmDialog(null, "¿Seguro desea eliminar el cliente?", "Confirmación",
+        int option = JOptionPane.showConfirmDialog(null, "¿Seguro desea dar de baja al cliente?", "Confirmación",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
         boolean result = false;
         System.out.println(option);
@@ -137,6 +150,16 @@ public class Clientes extends javax.swing.JFrame {
             result = clienteDao.delete_cliente(id);
         }
         return result;
+    }
+    
+    public String activoDM(boolean actio) {
+        String des="";
+        if (isActive()==true) {
+            des = "Activo";
+        } else if (isActive()==false) {
+            des = "Desactivado";
+        }
+        return des;
     }
 
     /**
@@ -180,6 +203,8 @@ public class Clientes extends javax.swing.JFrame {
         jcontacto2 = new javax.swing.JLabel();
         jcorreo2 = new javax.swing.JLabel();
         jdireccion2 = new javax.swing.JLabel();
+        jactivo = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
         update = new javax.swing.JDialog();
         jPanel4 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -195,7 +220,10 @@ public class Clientes extends javax.swing.JFrame {
         sexo1 = new javax.swing.JComboBox<>();
         correo1 = new javax.swing.JTextField();
         direccion1 = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
         cumUp = new com.toedter.calendar.JDateChooser();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -206,6 +234,9 @@ public class Clientes extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jTextField9 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        activo = new javax.swing.JRadioButton();
+        todos = new javax.swing.JRadioButton();
+        inactivo = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
 
         jPanel2.setBackground(new java.awt.Color(191, 255, 173));
@@ -267,6 +298,11 @@ public class Clientes extends javax.swing.JFrame {
         jPanel2.add(direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 230, 29));
 
         contacto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0"))));
+        contacto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contactoActionPerformed(evt);
+            }
+        });
         contacto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 contactoKeyReleased(evt);
@@ -301,7 +337,7 @@ public class Clientes extends javax.swing.JFrame {
         jLabel12.setText("Contacto");
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jLabel13.setText("Dirección");
+        jLabel13.setText("Activo");
 
         jsexo2.setForeground(new java.awt.Color(255, 255, 255));
         jsexo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino" }));
@@ -337,6 +373,12 @@ public class Clientes extends javax.swing.JFrame {
         jdireccion2.setBackground(new java.awt.Color(255, 255, 255));
         jdireccion2.setOpaque(true);
 
+        jactivo.setBackground(new java.awt.Color(255, 255, 255));
+        jactivo.setOpaque(true);
+
+        jLabel24.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel24.setText("Dirección");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -349,7 +391,8 @@ public class Clientes extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(jLabel12)
                     .addComponent(jLabel13)
-                    .addComponent(jLabel14))
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel24))
                 .addGap(46, 46, 46)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -363,7 +406,8 @@ public class Clientes extends javax.swing.JFrame {
                             .addComponent(jsexo2, javax.swing.GroupLayout.Alignment.LEADING, 0, 227, Short.MAX_VALUE)
                             .addComponent(jnombre2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jcorreo2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jdireccion2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jdireccion2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jactivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addComponent(jButton8)))
                 .addContainerGap())
@@ -399,10 +443,16 @@ public class Clientes extends javax.swing.JFrame {
                     .addComponent(jLabel14)
                     .addComponent(jcorreo2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel13)
-                    .addComponent(jdireccion2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel24)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel13))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jdireccion2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jactivo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(42, 42, 42))
         );
 
         javax.swing.GroupLayout viewLayout = new javax.swing.GroupLayout(view.getContentPane());
@@ -430,16 +480,16 @@ public class Clientes extends javax.swing.JFrame {
 
         jLabel18.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel18.setText("Sexo");
-        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
+        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
         jPanel4.add(contacto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 227, 29));
 
         jLabel19.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel19.setText("Contacto");
-        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
 
         jLabel20.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jLabel20.setText("Dirección");
-        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 75, -1));
+        jLabel20.setText("Activo");
+        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 75, -1));
 
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         jButton9.setContentAreaFilled(false);
@@ -474,7 +524,12 @@ public class Clientes extends javax.swing.JFrame {
         jPanel4.add(sexo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 227, 31));
         jPanel4.add(correo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 227, 29));
         jPanel4.add(direccion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 227, 29));
+
+        jLabel23.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel23.setText("Dirección");
+        jPanel4.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 75, -1));
         jPanel4.add(cumUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 230, 30));
+        jPanel4.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, -1, -1));
 
         javax.swing.GroupLayout updateLayout = new javax.swing.GroupLayout(update.getContentPane());
         update.getContentPane().setLayout(updateLayout);
@@ -484,7 +539,7 @@ public class Clientes extends javax.swing.JFrame {
         );
         updateLayout.setVerticalGroup(
             updateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -577,6 +632,36 @@ public class Clientes extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lupa.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 40, -1));
 
+        buttonGroup1.add(activo);
+        activo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        activo.setText("Activo");
+        activo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                activoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(activo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 110, -1, -1));
+
+        buttonGroup1.add(todos);
+        todos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        todos.setText("Todos");
+        todos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                todosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(todos, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 170, -1, -1));
+
+        buttonGroup1.add(inactivo);
+        inactivo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        inactivo.setText("Inactivo");
+        inactivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inactivoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(inactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 140, -1, -1));
+
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clientes-Fondo.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 580));
 
@@ -620,21 +705,24 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+         // TODO add your handling code here:
         try {
-            if (addCliente() != 0) {
-                JOptionPane.showMessageDialog(null, "El cliente se insertó con éxito");
+            if (nombre.getText().equals("")||cumplea.getDate()==null||contacto.getText().equals("")||correo.getText().equals("")||direccion.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Porfavor inserte los datos");
+                
+            }else if (addCliente()!=0) {
+                JOptionPane.showMessageDialog(null, "El paciente se insertó con éxito");
+            jTable1.setModel(clienteDao.cargarModelo());
+            add.dispose();
                 nombre.setText("");
                 cumplea.setDate(fecha);
                 direccion.setText("");
                 contacto.setText("");
                 correo.setText("");
                 add.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al insertar cliente");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al insertar paciente");
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -644,6 +732,7 @@ public class Clientes extends javax.swing.JFrame {
         add.setTitle("Añadir Cliente");
         add.setSize(531, 450);
         add.setLocationRelativeTo(null);
+        add.setResizable(false);
         add.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -657,7 +746,10 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
+         // TODO add your handling code here:
+         if (nombre1.getText().equals("")||cumUp.getDate()==null||contacto1.getText().equals("")||correo1.getText().equals("")||direccion1.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Seleccione un dato");
+        } else{
         int row = jTable1.getSelectedRow();
 
         int id = (int) jTable1.getValueAt(row, 0);
@@ -667,7 +759,9 @@ public class Clientes extends javax.swing.JFrame {
         String contactoU = contacto1.getText();
         String correoU = correo1.getText();
         String dirU = direccion1.getText();
-        Cliente cliente1 = new Cliente(id, nombreU, sexoU, cumpU, contactoU, correoU, dirU);
+        boolean ds=jCheckBox1.isSelected();
+        
+        Cliente cliente1 = new Cliente(id, nombreU, sexoU, cumpU, contactoU, correoU, dirU,ds);
         if (clienteDao.actualizar_cliente(cliente1)) {
 
             JOptionPane.showMessageDialog(this, "El cliente se modificó con éxito");
@@ -681,6 +775,7 @@ public class Clientes extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Verifique sus datos");
         }
+        }
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void sexo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sexo1ActionPerformed
@@ -688,7 +783,7 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_sexo1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+         // TODO add your handling code here:
         if (jTable1.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Seleccione un dato");
         } else {
@@ -707,6 +802,9 @@ public class Clientes extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        if (jTable1.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un dato");
+        } else {
         int row = jTable1.getSelectedRow(); //Se obtiene la linea seleccionada
         int id = (int) jTable1.getValueAt(row, 0); //Obtengo el ID del amigo
         if (delete(id)) {
@@ -714,6 +812,7 @@ public class Clientes extends javax.swing.JFrame {
             loadModel();
         } else {
             JOptionPane.showMessageDialog(null, "Error al dar de baja a un cliente");
+        }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -725,6 +824,25 @@ public class Clientes extends javax.swing.JFrame {
         }
         contacto.setText(isInt(contacto.getText()));
     }//GEN-LAST:event_contactoKeyReleased
+
+    private void activoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activoActionPerformed
+         // TODO add your handling code here:
+         jTable1.setModel(clienteDao.cargarModeloA(true));
+    }//GEN-LAST:event_activoActionPerformed
+
+    private void inactivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inactivoActionPerformed
+         // TODO add your handling code here:
+         jTable1.setModel(clienteDao.cargarModeloA(false));
+    }//GEN-LAST:event_inactivoActionPerformed
+
+    private void todosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_todosActionPerformed
+         // TODO add your handling code here:
+         jTable1.setModel(clienteDao.cargarModelo());
+    }//GEN-LAST:event_todosActionPerformed
+
+    private void contactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contactoActionPerformed
 
     String isInt(String ps) {
         String f = ps;
@@ -800,8 +918,10 @@ public class Clientes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton activo;
     private javax.swing.JDialog add;
     private javax.swing.JLabel aniV;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JFormattedTextField contacto;
     private javax.swing.JTextField contacto1;
     private javax.swing.JTextField correo;
@@ -810,6 +930,7 @@ public class Clientes extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser cumplea;
     private javax.swing.JTextField direccion;
     private javax.swing.JTextField direccion1;
+    private javax.swing.JRadioButton inactivo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
@@ -820,6 +941,7 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -835,6 +957,8 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -848,6 +972,7 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JLabel jactivo;
     private javax.swing.JLabel jcontacto2;
     private javax.swing.JLabel jcorreo2;
     private javax.swing.JLabel jdireccion2;
@@ -857,6 +982,7 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JTextField nombre1;
     private javax.swing.JComboBox<String> sexo;
     private javax.swing.JComboBox<String> sexo1;
+    private javax.swing.JRadioButton todos;
     private javax.swing.JDialog update;
     private javax.swing.JDialog view;
     // End of variables declaration//GEN-END:variables

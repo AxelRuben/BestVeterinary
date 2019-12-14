@@ -32,7 +32,7 @@ String path="";
     public Razas() {
         initComponents();
         this.setTitle("Razas");
-        this.setSize(425,525);
+        this.setSize(425,520);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         tipoAnimalDao= new TipoAnimalDao();
@@ -56,6 +56,7 @@ String path="";
         view.setSize(420, 180);
         view.setTitle("Visualizar raza");
         view.setVisible(true);
+        view.setResizable(false);
         view.setLocationRelativeTo(null);
         view.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         TipoAnimal tipoAnimal = tipoAnimalDao.selectedAnimal(id);
@@ -80,6 +81,7 @@ String path="";
         update.setTitle("Editar raza");
         update.setVisible(true);
         update.setLocationRelativeTo(null);
+        update.setResizable(false);
         update.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
         TipoAnimal tipoAnimal = tipoAnimalDao.selectedAnimal(id);
         nombre1.setText(tipoAnimal.getRaza());
@@ -129,6 +131,7 @@ String path="";
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
 
         jPanel2.setBackground(new java.awt.Color(204, 170, 204));
@@ -136,6 +139,7 @@ String path="";
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         jButton6.setContentAreaFilled(false);
+        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -145,6 +149,7 @@ String path="";
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
         jButton7.setContentAreaFilled(false);
+        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -182,6 +187,7 @@ String path="";
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         jButton8.setContentAreaFilled(false);
+        jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
@@ -191,6 +197,7 @@ String path="";
 
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
         jButton9.setContentAreaFilled(false);
+        jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
@@ -227,6 +234,7 @@ String path="";
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hecho.png"))); // NOI18N
         jButton10.setToolTipText("Hecho");
         jButton10.setContentAreaFilled(false);
+        jButton10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton10ActionPerformed(evt);
@@ -311,7 +319,7 @@ String path="";
         jPanel1.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 70, -1));
 
         jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casa (1).png"))); // NOI18N
-        jButton17.setToolTipText("Home");
+        jButton17.setToolTipText("Inicio");
         jButton17.setContentAreaFilled(false);
         jButton17.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton17.addActionListener(new java.awt.event.ActionListener() {
@@ -319,17 +327,17 @@ String path="";
                 jButton17ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 70, 70));
+        jPanel1.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 70, 70));
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField1KeyReleased(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 120, 30));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 140, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lupa.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 40, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 40, -1));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojo.png"))); // NOI18N
         jButton3.setToolTipText("Ver");
@@ -342,8 +350,19 @@ String path="";
         });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, 70, 40));
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/izq.png"))); // NOI18N
+        jButton1.setToolTipText("Regresar");
+        jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, 70, 50));
+
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/razas-Fondo.png"))); // NOI18N
-        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 490));
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 490));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -360,11 +379,12 @@ String path="";
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        // TODO add your handling code here:
+         // TODO add your handling code here:
         add.setSize(485, 230);
         add.setTitle("Añadir raza");
         add.setVisible(true);
         add.setLocationRelativeTo(null);
+        add.setResizable(false);
         nombre.requestFocus();
         add.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
     }//GEN-LAST:event_jButton14ActionPerformed
@@ -377,6 +397,7 @@ String path="";
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
+        nombre.setText("");
         update.dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -387,7 +408,11 @@ String path="";
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
          // TODO add your handling code here:
+         if (datos.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un dato");
+        } else {
         cargarDatos(Integer.parseInt(datos.getValueAt(datos.getSelectedRow(), 0).toString()));
+         }
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -402,15 +427,18 @@ String path="";
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
          // TODO add your handling code here:
+         if (nombre1.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Inserte un dato");
+        } else{
          int row = datos.getSelectedRow();
-        
         int id= (int) datos.getValueAt(row, 0);
         String razaU=raza1.getSelectedItem().toString();
         String imagenU=path;
         String nombreU=nombre1.getText();
         TipoAnimal tipoAnimal = new TipoAnimal(id, razaU, imagenU, nombreU);
-        if (tipoAnimalDao.actualizar_TipoAnimal(tipoAnimal)) {
-            JOptionPane.showMessageDialog(this, "La raza se modificó con exito");
+         
+             if (tipoAnimalDao.actualizar_TipoAnimal(tipoAnimal)) {
+            JOptionPane.showMessageDialog(this, "La raza se modificó con éxito");
             nombre1.setText("");
             update.dispose();
             update.setSize(427,215);
@@ -418,33 +446,47 @@ String path="";
         } else {
             JOptionPane.showMessageDialog(this, "Verifique sus datos");
         }
+         }
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        try {
-            // SAVE
-            if (addRaza()!=0) {
+         try {
+            if (nombre.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Por favor inserte los datos");
+                
+            }else if (addRaza()!=0) {
                 JOptionPane.showMessageDialog(null, "Éxito al insertar raza");
                 add.dispose();
                 datos.setModel(tipoAnimalDao.cargarModelo());
                 nombre.setText("");
+     
+        
             }else{
-                JOptionPane.showMessageDialog(null, "Error");
+                JOptionPane.showMessageDialog(null, "Error al intentar insertar raza");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Razas.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        nombre.setText("");
         add.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         filter();
     }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         // TODO add your handling code here:
+         this.dispose();
+         Pacientes pacientes = new Pacientes();
+         pacientes.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     
     public void filter(){
@@ -492,6 +534,7 @@ String path="";
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog add;
     private javax.swing.JTable datos;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
