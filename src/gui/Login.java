@@ -117,7 +117,7 @@ public class Login extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try {
-        Usuario usuario1 =usuarioDao.selectedCliente(usuario.getText());
+        Usuario usuario1 =usuarioDao.selectedUsuario(usuario.getText());
             if (usuario1.getContrasena().equalsIgnoreCase(contrasena.getText())) {
             JOptionPane.showMessageDialog(null, "Acceso concedido");
             inicio.inicioV();

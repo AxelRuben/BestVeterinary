@@ -202,7 +202,7 @@ public class PacienteDao {
         Connection con = null;
         PreparedStatement st = null;
         DefaultTableModel dt = null;
-        String encabezados[] = {"ID", "Nombre", "Dueño", "Tipo", "Actividad"};
+        String encabezados[] = {"ID", "Nombre", "Dueño", "Tipo", "Estado"};
         try {
             con = Conexion.getConnection();
             st = con.prepareStatement("select p.idpaciente, p.nombre, c.nombre, tp.tipo, p.activo from paciente p, cliente c, tipoanimal tp where c.idCliente=p.cliente_idcliente and tp.idtipoAnimal=p.tipoAnimal_idtipoAnimal;");

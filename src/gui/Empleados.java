@@ -39,6 +39,7 @@ TableRowSorter<TableModel> sorter;
         this.setTitle("Empleados");
         this.setLocationRelativeTo(null);
         loadModel();
+        jRadioButton1.setSelected(true);
         this.setResizable(false);
         this.setSize(926,610);
         TableColumnModel columnModel = empleadoos.getColumnModel();
@@ -46,6 +47,8 @@ TableRowSorter<TableModel> sorter;
     setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
     }
     Inicio inicio = new Inicio();
+    
+    
     public void filter(){
                 try{
                     sorter.setRowFilter(RowFilter.regexFilter(jTextField4.getText().toUpperCase()));
@@ -564,14 +567,29 @@ boolean delete(int id){
 
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setText("Todos");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 160, -1, -1));
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("Inactivo");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 130, -1, -1));
 
         buttonGroup1.add(jRadioButton3);
         jRadioButton3.setText("Activo");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 100, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/empleados-Fondo.png"))); // NOI18N
@@ -623,8 +641,8 @@ boolean delete(int id){
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
          try {
-            if (jnombre.getText().equals("")||jespecialidad.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Porfavor inserte los datos");
+            if (jnombre.getText().equals("")||cumpleanios.getDate()==null||jespecialidad.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Por favor inserte los datos");
             }else if (addTrabajadores()!=0) {
                 JOptionPane.showMessageDialog(null, "Éxito al insertar empleado");
                 add.dispose();
@@ -653,13 +671,20 @@ boolean delete(int id){
         int row = empleadoos.getSelectedRow();
         
         int id= (int) empleadoos.getValueAt(row, 0);
+            System.out.println(id);
         String nombreU=nombre1.getText();
+        System.out.println(nombreU);
         String sexoU=sexo1.getSelectedItem().toString();
+        System.out.println(sexoU);
         String especialidadU=especialidad1.getText();
+        System.out.println(especialidadU);
         java.sql.Date cump = new java.sql.Date(cumpleanios1.getDate().getTime());
+        System.out.println(cump);
         String horarioU=horario1.getSelectedItem().toString();
+        System.out.println(horarioU);
         boolean act=jCheckBox1.isSelected();
-        Empleado empleado = new Empleado(nombreU, sexoU, especialidadU, cump, horarioU,act);
+        System.out.println(act);
+        Empleado empleado = new Empleado(id, nombreU, sexoU, especialidadU, cump, horarioU,act);
         boolean op = empleadoDao.actualizar_empleado(empleado);
             System.out.println(""+op);
         if (op) {
@@ -710,6 +735,21 @@ boolean delete(int id){
          }
          }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+         // TODO add your handling code here:
+         empleadoos.setModel(empleadoDao.cargarModeloA(true));
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+         // TODO add your handling code here:
+         empleadoos.setModel(empleadoDao.cargarModeloA(false));
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+         // TODO add your handling code here:
+         empleadoos.setModel(empleadoDao.cargarModelo());
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     
     /**

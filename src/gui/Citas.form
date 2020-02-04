@@ -670,7 +670,7 @@
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/Citas-Fondo.png"/>
+              <Image iconType="3" name="/img/citas-Fondo.png"/>
             </Property>
           </Properties>
           <Constraints>

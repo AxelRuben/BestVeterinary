@@ -40,7 +40,7 @@ public class UsuarioDao {
         return id;
     }
     
-    public Usuario selectedCliente(String nom) {
+    public Usuario selectedUsuario(String nom) {
         Connection con = null;
         PreparedStatement st = null;
          Usuario pojo = new Usuario();

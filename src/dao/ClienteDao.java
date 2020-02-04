@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pojo.Cliente;
 
@@ -152,7 +153,7 @@ public class ClienteDao {
                 ob[0] = pojo.getIdcliente();
                 ob[1] = pojo.getNombre().toUpperCase();
                 ob[2] = pojo.getContacto();
-            if (rs.getBoolean(4)) {
+            if (pojo.isActivo()) {
                 ob[3] = "Activo";
                 }else{
                 ob[3] = "Inactivo";
@@ -162,7 +163,7 @@ public class ClienteDao {
             }          
             rs.close();
         } catch (Exception e) {
-            System.out.println("Error al cargar la tabla Dueño " + e);
+            System.out.println("Error al cargar la tabla Cliente " + e);
         } finally {
             Conexion.close(con);
             Conexion.close(st);
@@ -173,7 +174,7 @@ public class ClienteDao {
         Connection con = null;
         PreparedStatement st = null;
         DefaultTableModel dt = null;
-        String encabezados[] = {"Id", "Nombre", "Contacto"};
+        String encabezados[] = {"Id", "Nombre", "Contacto", "Estado"};
         try {
             con = Conexion.getConnection();
             st = con.prepareStatement("select*from cliente");
@@ -181,11 +182,16 @@ public class ClienteDao {
             dt.setColumnIdentifiers(encabezados);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Object ob[] = new Object[3];
+                Object ob[] = new Object[4];
                 Cliente pojo = inflaPOJO(rs);
                 ob[0] = pojo.getIdcliente();
                 ob[1] = pojo.getNombre().toUpperCase();
                 ob[2] = pojo.getContacto();
+                if (pojo.isActivo()) {
+                ob[3] = "Activo";
+                }else{
+                ob[3] = "Inactivo";
+                }
 
                 dt.addRow(ob);
             }

@@ -534,7 +534,7 @@ void cargarDatosV(int id){
         });
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 410, -1, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Citas-Fondo.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/citas-Fondo.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 580));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -572,7 +572,11 @@ void cargarDatosV(int id){
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        if (citaas.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un dato");
+        } else {
         cargarDatosV(Integer.parseInt(citaas.getValueAt(citaas.getSelectedRow(), 0).toString()));
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void cacelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cacelarActionPerformed
@@ -588,12 +592,17 @@ void cargarDatosV(int id){
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
          // TODO add your handling code here:
          try {
+             
         // SAVE
-        if (addCita()!=0) {
-            JOptionPane.showMessageDialog(null, "Éxito");
+        if (asunto.getText().equals("")||fecha.getDate()==null||clientee.getSelectedIndex()==0) {
+                JOptionPane.showMessageDialog(null, "Por favor inserte los datos");
+            }else if (addCita()!=0) {
+            JOptionPane.showMessageDialog(null, "Éxito al agregar cita");
             add.dispose();
+            fecha.setDate(null);
+            asunto.setText("");
         }else{
-            JOptionPane.showMessageDialog(null, "Error");
+            JOptionPane.showMessageDialog(null, "Error al intentar agregar cita");
         }
     } catch (SQLException ex) {
         Logger.getLogger(Citas.class.getName()).log(Level.SEVERE, null, ex);
@@ -606,8 +615,11 @@ void cargarDatosV(int id){
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          // TODO add your handling code here:
-         
+         if (citaas.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un dato");
+        } else {
         editarDatos(Integer.parseInt(citaas.getValueAt(citaas.getSelectedRow(), 0).toString()));
+         }
 //        Cita cita=citaDao.selectedCita(citaas.getSelectedRow());
 //        fecha1.setDate(cita.getFecha_hora());
 //        clientee1.setSelectedIndex(cita.getCliente_idcliente());
@@ -621,7 +633,7 @@ void cargarDatosV(int id){
 
     private void guardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardar1ActionPerformed
 
-if (asunto1.getText().equals("")||fecha1.getDate().toString().equals("")) {
+if (asunto1.getText().equals("")||fecha1.getDate().toString().equals("")||clientee.getSelectedIndex()==0) {
             JOptionPane.showMessageDialog(null, "Por favor inserte datos");
         }else{
         Cliente cliente2 = (Cliente) clientee1.getSelectedItem();

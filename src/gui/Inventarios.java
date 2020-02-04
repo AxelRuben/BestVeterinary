@@ -43,6 +43,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         this.setTitle("Inventario");
         this.setLocationRelativeTo(null);
         jRadioButton4.setSelected(true);
+        comestible.setSelected(true);
         loadModelIn();
         loadModelProveedor();
         loadComPro();
@@ -71,14 +72,25 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         proveedorMOA1.setModel(defaultComboBoxModel);
     }
 
-    int addMiscelaneaMOA() throws SQLException{
+    int addMiscelaneaMOAC() throws SQLException{
     Proveedor proveedor = (Proveedor) proveedorMOA.getSelectedItem();
     String nomb = nombreMOA.getText();
     double cos= Double.parseDouble(costoMOA.getText());
     int prove = proveedor.getIdproveedor();
     int sto= Integer.parseInt(stockMOA.getText());
-    Date cad= new java.sql.Date(caduucidad.getDate().getTime());
+    Date cad= new java.sql.Date(caducidad.getDate().getTime());
     Miscelaneas miscelaneas = new Miscelaneas(nomb, cos, prove, sto, opcion, cad);
+    int id = miscelaneasDao.insertar(miscelaneas);
+    jTable1.setModel(miscelaneasDao.cargarModeloIn());
+    return id;
+    }
+    int addMiscelaneaMOAA() throws SQLException{
+    Proveedor proveedor = (Proveedor) proveedorMOA.getSelectedItem();
+    String nomb = nombreMOA.getText();
+    double cos= Double.parseDouble(costoMOA.getText());
+    int prove = proveedor.getIdproveedor();
+    int sto= Integer.parseInt(stockMOA.getText());
+    Miscelaneas miscelaneas = new Miscelaneas(nomb, cos, prove, sto, opcion);
     int id = miscelaneasDao.insertar(miscelaneas);
     jTable1.setModel(miscelaneasDao.cargarModeloIn());
     return id;
@@ -141,6 +153,18 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         }
         return f;
     }
+     String isDouble(String ps) {
+        String f = ps;
+        if (ps.length() != 0) {
+            try {
+                Double n = Double.parseDouble(ps);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "El campo ocupa únicamente caracteres numéricos");
+                f = ps.substring(0, ps.length() - 1);
+            }
+        }
+        return f;
+    }
     
 //    void cargarDatosMOA(int id){
 //        updateMOA.setSize(600, 300);
@@ -194,7 +218,10 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         proveedorMOA = new javax.swing.JComboBox<>();
         jButton12 = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
-        caduucidad = new com.toedter.calendar.JDateChooser();
+        caducidad = new com.toedter.calendar.JDateChooser();
+        jPanel13 = new javax.swing.JPanel();
+        comestible = new javax.swing.JRadioButton();
+        accesorio = new javax.swing.JRadioButton();
         pAdd = new javax.swing.JDialog();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -244,8 +271,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         proveedorMOA1 = new javax.swing.JComboBox<>();
         jButton17 = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
-        caduucidad1 = new com.toedter.calendar.JDateChooser();
-        jPanel9 = new javax.swing.JPanel();
+        caducidad1 = new com.toedter.calendar.JDateChooser();
         viewMOA = new javax.swing.JDialog();
         jPanel11 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
@@ -270,10 +296,25 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         descripcionS2 = new javax.swing.JTextArea();
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
+        tipoaccesorio = new javax.swing.ButtonGroup();
+        addMOA1 = new javax.swing.JDialog();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel40 = new javax.swing.JLabel();
+        nombreMOA2 = new javax.swing.JTextField();
+        jLabel41 = new javax.swing.JLabel();
+        costoMOA2 = new javax.swing.JTextField();
+        jLabel42 = new javax.swing.JLabel();
+        stockMOA2 = new javax.swing.JTextField();
+        jLabel43 = new javax.swing.JLabel();
+        cancelarMOA2 = new javax.swing.JButton();
+        guardarMOA3 = new javax.swing.JButton();
+        proveedorMOA2 = new javax.swing.JComboBox<>();
+        jButton18 = new javax.swing.JButton();
+        jLabel44 = new javax.swing.JLabel();
+        caducidad2 = new com.toedter.calendar.JDateChooser();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -291,6 +332,12 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel4.setText("Costo");
+
+        costoS.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                costoSKeyReleased(evt);
+            }
+        });
 
         cancelarS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         cancelarS.setContentAreaFilled(false);
@@ -390,9 +437,14 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
 
         buttonGroup1.add(jRadioButton5);
         jRadioButton5.setText("Medicamento");
+        jRadioButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton5ActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(jRadioButton6);
-        jRadioButton6.setText("Articulo");
+        jRadioButton6.setText("Artículo");
 
         buttonGroup1.add(jRadioButton7);
         jRadioButton7.setText("Servicio");
@@ -459,18 +511,38 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         addMOA.setBackground(new java.awt.Color(249, 209, 255));
 
         jPanel3.setBackground(new java.awt.Color(249, 209, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel6.setText("Nombre");
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        jPanel3.add(nombreMOA, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 227, 29));
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel8.setText("Costo");
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
+
+        costoMOA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                costoMOAKeyReleased(evt);
+            }
+        });
+        jPanel3.add(costoMOA, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 227, 29));
 
         jLabel11.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel11.setText("Proveedor");
+        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+
+        stockMOA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                stockMOAKeyReleased(evt);
+            }
+        });
+        jPanel3.add(stockMOA, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 227, 29));
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel12.setText("Stock");
+        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, -1));
 
         cancelarMOA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         cancelarMOA.setContentAreaFilled(false);
@@ -479,6 +551,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
                 cancelarMOAActionPerformed(evt);
             }
         });
+        jPanel3.add(cancelarMOA, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, 77, -1));
 
         guardarMOA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
         guardarMOA.setContentAreaFilled(false);
@@ -487,8 +560,10 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
                 guardarMOAActionPerformed(evt);
             }
         });
+        jPanel3.add(guardarMOA, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, -1, -1));
 
         proveedorMOA.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DogChow", "Pedegree" }));
+        jPanel3.add(proveedorMOA, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 227, 31));
 
         jButton12.setText(". . .");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -496,78 +571,49 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
                 jButton12ActionPerformed(evt);
             }
         });
+        jPanel3.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, 37, -1));
 
         jLabel14.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel14.setText("Caducidad");
+        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, 29));
+        jPanel3.add(caducidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 227, 29));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(costoMOA, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
-                            .addComponent(nombreMOA, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(proveedorMOA, javax.swing.GroupLayout.Alignment.LEADING, 0, 227, Short.MAX_VALUE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                        .addComponent(stockMOA, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(caduucidad, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(cancelarMOA, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(guardarMOA))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jPanel13.setBackground(new java.awt.Color(249, 209, 255));
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 110, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(nombreMOA, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(costoMOA, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(proveedorMOA, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11)
-                            .addComponent(jButton12))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(stockMOA, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(guardarMOA)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cancelarMOA)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(caduucidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 72, Short.MAX_VALUE)
         );
+
+        jPanel3.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 110, -1));
+
+        tipoaccesorio.add(comestible);
+        comestible.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
+        comestible.setText("Comestible");
+        comestible.setContentAreaFilled(false);
+        comestible.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comestibleActionPerformed(evt);
+            }
+        });
+        jPanel3.add(comestible, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
+
+        tipoaccesorio.add(accesorio);
+        accesorio.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
+        accesorio.setText("Accesorio");
+        accesorio.setContentAreaFilled(false);
+        accesorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accesorioActionPerformed(evt);
+            }
+        });
+        jPanel3.add(accesorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, -1, -1));
 
         javax.swing.GroupLayout addMOALayout = new javax.swing.GroupLayout(addMOA.getContentPane());
         addMOA.getContentPane().setLayout(addMOALayout);
@@ -971,7 +1017,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel24)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(caduucidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(caducidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
@@ -1011,7 +1057,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
                         .addComponent(cancelarMOA1)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(caduucidad1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(caducidad1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1025,17 +1071,6 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         updateMOALayout.setVerticalGroup(
             updateMOALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
         );
 
         viewMOA.setBackground(new java.awt.Color(249, 209, 255));
@@ -1260,6 +1295,142 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
             .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        addMOA1.setBackground(new java.awt.Color(249, 209, 255));
+
+        jPanel9.setBackground(new java.awt.Color(249, 209, 255));
+
+        jLabel40.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel40.setText("Nombre");
+
+        jLabel41.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel41.setText("Costo");
+
+        costoMOA2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                costoMOA2KeyReleased(evt);
+            }
+        });
+
+        jLabel42.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel42.setText("Proveedor");
+
+        stockMOA2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                stockMOA2KeyReleased(evt);
+            }
+        });
+
+        jLabel43.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel43.setText("Stock");
+
+        cancelarMOA2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
+        cancelarMOA2.setContentAreaFilled(false);
+        cancelarMOA2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarMOA2ActionPerformed(evt);
+            }
+        });
+
+        guardarMOA3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/disco-flexible.png"))); // NOI18N
+        guardarMOA3.setContentAreaFilled(false);
+        guardarMOA3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarMOA3ActionPerformed(evt);
+            }
+        });
+
+        proveedorMOA2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DogChow", "Pedegree" }));
+
+        jButton18.setText(". . .");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
+
+        jLabel44.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jLabel44.setText("Caducidad");
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel40)
+                            .addComponent(jLabel41)
+                            .addComponent(jLabel42))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(costoMOA2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nombreMOA2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(proveedorMOA2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel43)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                        .addComponent(stockMOA2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel44)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(caducidad2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(cancelarMOA2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(guardarMOA3))
+                .addGap(22, 22, 22))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addContainerGap(34, Short.MAX_VALUE)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nombreMOA2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel40))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(costoMOA2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel41))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(proveedorMOA2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel42)
+                            .addComponent(jButton18))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(stockMOA2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel43))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(caducidad2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(guardarMOA3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelarMOA2)))
+                .addGap(57, 57, 57))
+        );
+
+        javax.swing.GroupLayout addMOA1Layout = new javax.swing.GroupLayout(addMOA1.getContentPane());
+        addMOA1.getContentPane().setLayout(addMOA1Layout);
+        addMOA1Layout.setHorizontalGroup(
+            addMOA1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        addMOA1Layout.setVerticalGroup(
+            addMOA1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 153));
@@ -1278,13 +1449,7 @@ public class Inventarios extends javax.swing.JFrame implements WindowListener{
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 207, 470, 370));
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png"))); // NOI18N
-        jButton4.setToolTipText("Borrar");
-        jButton4.setContentAreaFilled(false);
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 460, 70, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 470, 370));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojo.png"))); // NOI18N
         jButton3.setToolTipText("Visualizar");
@@ -1400,6 +1565,9 @@ jRadioButton6.setSelected(true);
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        if (jTable1.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un dato");
+        } else {
         Miscelaneas miscelaneas = miscelaneasDao.selectedMiscelaneas(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
         if (miscelaneas.getTipo().equals("Servicios")) {
             viewS.setVisible(true);
@@ -1427,6 +1595,7 @@ jRadioButton6.setSelected(true);
         } else {
             System.out.println("cayo aca");
         }
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -1445,7 +1614,7 @@ jRadioButton6.setSelected(true);
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        loadModelRe("Articulos");
+        loadModelRe("Artículos");
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
@@ -1467,6 +1636,7 @@ jRadioButton6.setSelected(true);
             addMOA.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
             addMOA.setSize(571, 310);
             addMOA.setLocationRelativeTo(null);
+            jPanel13.setVisible(true);
             Inputing.dispose();
             
         }else if (jRadioButton6.isSelected()) {
@@ -1475,9 +1645,11 @@ jRadioButton6.setSelected(true);
             addMOA.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
             addMOA.setVisible(true);
             addMOA.setResizable(false);
-            addMOA.setSize(571, 310);
+            addMOA.setSize(600, 300);
             addMOA.setLocationRelativeTo(null);
+            jPanel13.setVisible(false);
             Inputing.dispose();
+           
         }else if (jRadioButton7.isSelected()) {
             opcion="Servicios";
             addS.setTitle("Agregar Servicio");
@@ -1496,23 +1668,57 @@ jRadioButton6.setSelected(true);
     }//GEN-LAST:event_cancelarMOAActionPerformed
 
     private void guardarMOAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarMOAActionPerformed
-         try {
-            if (addMiscelaneaMOA()!=0) {
+         if (comestible.isSelected()) {
+             
+        try {
+             
+             if (nombreMOA.getText().equals("")||caducidad.getDate()==null||costoMOA.getText().equals("")||stockMOA.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Por favor inserte los datos");
+            }else  if (addMiscelaneaMOAC()!=0) {
             JOptionPane.showMessageDialog(null, "El medicamento o artículo se ha insertado con éxito");
             addMOA.dispose();
+            nombreMOA.setText("");
+            costoMOA.setText("");
+            stockMOA.setText("");
+            caducidad.setDate(null);
         }else{
             JOptionPane.showMessageDialog(null, "Error al intentar insertar un medicamento o artículo");
         }
         } catch (SQLException ex) {
         Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
+             }else{
+                 try {
+             
+             if (nombreMOA.getText().equals("")||costoMOA.getText().equals("")||stockMOA.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Por favor inserte los datos");
+            }else  if (addMiscelaneaMOAA()!=0) {
+            JOptionPane.showMessageDialog(null, "El medicamento o artículo se ha insertado con éxito");
+            addMOA.dispose();
+            nombreMOA.setText("");
+            costoMOA.setText("");
+            stockMOA.setText("");
+            caducidad.setDate(null);
+        }else{
+            JOptionPane.showMessageDialog(null, "Error al intentar insertar un medicamento o artículo");
+        }
+        } catch (SQLException ex) {
+        Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+             }
     }//GEN-LAST:event_guardarMOAActionPerformed
 
     private void guardarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarSActionPerformed
         try {
-            if (addMiscelaneaS()!=0) {
+             if (nombreS.getText().equals("")||costoS.getText().equals("")||descripcionS.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Por favor inserte los datos");
+            }else  if (addMiscelaneaS()!=0) {
             JOptionPane.showMessageDialog(null, "El servicio se ha insertado con éxito");
             addS.dispose();
+            nombreS.setText("");
+            costoS.setText("");
+            descripcionS.setText("");
         }else{
             JOptionPane.showMessageDialog(null, "Error al intentar insertar un servicio");
         }
@@ -1533,17 +1739,21 @@ jRadioButton6.setSelected(true);
          // TODO add your handling code here:
          
         try {
-            if (addProveedor()!=0) {
+            if (jTextField1.getText().equals("")||jTextField2.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Por favor inserte los datos");
+            }else if (addProveedor()!=0) {
                 pAdd.dispose();
             jTextField1.setText("");
             jTextField2.setText("");
                 JOptionPane.showMessageDialog(null, "Éxito al insertar proveedor");
+                loadModelProveedor();
             }else{
                 JOptionPane.showMessageDialog(null, "Error al intentar insertar proveedor");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Inventarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+    }
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
@@ -1555,13 +1765,16 @@ jRadioButton6.setSelected(true);
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
          // TODO add your handling code here:
+         this.dispose();
+         addMOA.dispose();
+         addS.dispose();
          proveedoresA();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
         if (jTextField3.getText().equals("")&&jTextField4.getText().equals("")) {
-             JOptionPane.showMessageDialog(null, "Inserte un Dato");
+             JOptionPane.showMessageDialog(null, "Inserte un dato");
         } else {
         int row = proveedoresInfo.getSelectedRow();
         
@@ -1570,7 +1783,7 @@ jRadioButton6.setSelected(true);
         String contactoU=jTextField4.getText();
         Proveedor proveedor = new Proveedor(id, nombreU, contactoU);
         if (proveedorDao.actualizar(proveedor)) {
-            JOptionPane.showMessageDialog(this, "El Proveedor se modificó con exito");
+            JOptionPane.showMessageDialog(this, "El proveedor se modificó con éxito");
             jTextField3.setText("");
             jTextField4.setText("");
             pUdp.dispose();
@@ -1616,7 +1829,7 @@ jRadioButton6.setSelected(true);
             costoMOA1.setText(""+miscelaneas.getCosto());
             stockMOA1.setText(""+miscelaneas.getStock());
             Date dates = miscelaneas.getCaducidadMOA();
-            caduucidad1.setDate(dates);
+            caducidad1.setDate(dates);
             proveedorMOA1.setSelectedIndex(miscelaneas.getProveedor_idproveedor());
         }
          }
@@ -1648,11 +1861,15 @@ jRadioButton6.setSelected(true);
         // TODO add your handling code here:
         
         try {
+            if (nombreS1.getText().equals("")||costoS1.getText().equals("")||descripcionS1.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Por favor inserte los datos");
+            }else{
             Miscelaneas miscelaneas = new Miscelaneas(id, nombreS1.getText(), Double.parseDouble(costoS1.getText().toString()), tipo, descripcionS1.getText());
             miscelaneasDao.actualizar_miscelaneas(miscelaneas);
             loadModelIn();
             JOptionPane.showMessageDialog(null, "Éxito al actualizar servicio");
             updateS.dispose();
+                         }
         } catch (SQLException ex) {
             Logger.getLogger(Inventarios.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error al intentar actualizar ervicio");
@@ -1668,12 +1885,16 @@ jRadioButton6.setSelected(true);
         // TODO add your handling code here:
         
         try {
-            java.sql.Date cum = new java.sql.Date(caduucidad1.getDate().getTime());
+            if (nombreMOA1.getText().equals("")||caducidad1.getDate()==null||costoMOA1.getText().equals("")||stockMOA1.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Por favor inserte los datos");
+            }else{
+            java.sql.Date cum = new java.sql.Date(caducidad1.getDate().getTime());
             Miscelaneas miscelaneas2 = new Miscelaneas(id, nombreMOA1.getText(), Double.parseDouble(costoMOA1.getText()), proveedorMOA1.getSelectedIndex(), Integer.parseInt(stockMOA1.getText()),tipo, cum);
             miscelaneasDao.actualizar_miscelaneas(miscelaneas2);
            updateMOA.dispose();
             loadModelIn();
             JOptionPane.showMessageDialog(null, "Éxito al actualizar");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Inventarios.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error");
@@ -1688,6 +1909,8 @@ jRadioButton6.setSelected(true);
          // TODO add your handling code here:
          proveedores.dispose();
          this.setVisible(true);
+         loadComPro();
+         loadComPro1();
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
@@ -1719,14 +1942,63 @@ jRadioButton6.setSelected(true);
         // TODO add your handling code here:
         viewS.dispose();
     }//GEN-LAST:event_guardarS2ActionPerformed
+
+    private void stockMOAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stockMOAKeyReleased
+         // TODO add your handling code here:
+         stockMOA.setText(isInt(stockMOA.getText()));
+    }//GEN-LAST:event_stockMOAKeyReleased
+
+    private void costoMOAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costoMOAKeyReleased
+         // TODO add your handling code here:
+         costoMOA.setText(isDouble(costoMOA.getText()));
+    }//GEN-LAST:event_costoMOAKeyReleased
+
+    private void costoSKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costoSKeyReleased
+         // TODO add your handling code here:
+         costoS.setText(isDouble(costoS.getText()));
+    }//GEN-LAST:event_costoSKeyReleased
+
+    private void comestibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comestibleActionPerformed
+         // TODO add your handling code here:
+         caducidad.setEnabled(true);
+    }//GEN-LAST:event_comestibleActionPerformed
+
+    private void accesorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accesorioActionPerformed
+         // TODO add your handling code here:
+         caducidad.setEnabled(false);
+    }//GEN-LAST:event_accesorioActionPerformed
+
+    private void costoMOA2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costoMOA2KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_costoMOA2KeyReleased
+
+    private void stockMOA2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stockMOA2KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stockMOA2KeyReleased
+
+    private void cancelarMOA2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarMOA2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelarMOA2ActionPerformed
+
+    private void guardarMOA3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarMOA3ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_guardarMOA3ActionPerformed
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton18ActionPerformed
+
+    private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
+    }//GEN-LAST:event_jRadioButton5ActionPerformed
 public void proveedoresA(){
-    this.dispose();
-    addMOA.dispose();
+    
     proveedores.setVisible(true);
     proveedores.setSize(405, 470);
     proveedores.setLocationRelativeTo(null);
     proveedores.setTitle("Proveedores");
     proveedores.setIconImage(new ImageIcon(this.getClass().getResource("/img/icon-V.png")).getImage());
+    loadModelProveedor();
 }
     /**
      * @param args the command line arguments
@@ -1768,17 +2040,23 @@ public void proveedoresA(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog Inputing;
+    private javax.swing.JRadioButton accesorio;
     private javax.swing.JDialog addMOA;
+    private javax.swing.JDialog addMOA1;
     private javax.swing.JDialog addS;
     private javax.swing.ButtonGroup buttonGroup1;
-    private com.toedter.calendar.JDateChooser caduucidad;
-    private com.toedter.calendar.JDateChooser caduucidad1;
+    private com.toedter.calendar.JDateChooser caducidad;
+    private com.toedter.calendar.JDateChooser caducidad1;
+    private com.toedter.calendar.JDateChooser caducidad2;
     private javax.swing.JButton cancelarMOA;
     private javax.swing.JButton cancelarMOA1;
+    private javax.swing.JButton cancelarMOA2;
     private javax.swing.JButton cancelarS;
     private javax.swing.JButton cancelarS1;
+    private javax.swing.JRadioButton comestible;
     private javax.swing.JTextField costoMOA;
     private javax.swing.JTextField costoMOA1;
+    private javax.swing.JTextField costoMOA2;
     private javax.swing.JTextField costoS;
     private javax.swing.JTextField costoS1;
     private javax.swing.JTextArea descripcionS;
@@ -1787,6 +2065,7 @@ public void proveedoresA(){
     private javax.swing.JButton guardarMOA;
     private javax.swing.JButton guardarMOA1;
     private javax.swing.JButton guardarMOA2;
+    private javax.swing.JButton guardarMOA3;
     private javax.swing.JButton guardarS;
     private javax.swing.JButton guardarS1;
     private javax.swing.JButton guardarS2;
@@ -1799,9 +2078,9 @@ public void proveedoresA(){
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
@@ -1840,6 +2119,11 @@ public void proveedoresA(){
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1849,6 +2133,7 @@ public void proveedoresA(){
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1876,16 +2161,20 @@ public void proveedoresA(){
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField nombreMOA;
     private javax.swing.JTextField nombreMOA1;
+    private javax.swing.JTextField nombreMOA2;
     private javax.swing.JTextField nombreS;
     private javax.swing.JTextField nombreS1;
     private javax.swing.JDialog pAdd;
     private javax.swing.JDialog pUdp;
     private javax.swing.JComboBox<String> proveedorMOA;
     private javax.swing.JComboBox<String> proveedorMOA1;
+    private javax.swing.JComboBox<String> proveedorMOA2;
     private javax.swing.JDialog proveedores;
     private javax.swing.JTable proveedoresInfo;
     private javax.swing.JTextField stockMOA;
     private javax.swing.JTextField stockMOA1;
+    private javax.swing.JTextField stockMOA2;
+    private javax.swing.ButtonGroup tipoaccesorio;
     private javax.swing.JDialog updateMOA;
     private javax.swing.JDialog updateS;
     private javax.swing.JDialog viewMOA;

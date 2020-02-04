@@ -707,11 +707,11 @@ public class Clientes extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
          // TODO add your handling code here:
         try {
-            if (nombre.getText().equals("")||cumplea.getDate()==null||contacto.getText().equals("")||correo.getText().equals("")||direccion.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Porfavor inserte los datos");
+            if (nombre.getText().equals("")||cumplea.getDate()==null||cumplea.getDate()==null||contacto.getText().equals("")||correo.getText().equals("")||direccion.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Por favor inserte los datos");
                 
             }else if (addCliente()!=0) {
-                JOptionPane.showMessageDialog(null, "El paciente se insertó con éxito");
+                JOptionPane.showMessageDialog(null, "El cliente se insertó con éxito");
             jTable1.setModel(clienteDao.cargarModelo());
             add.dispose();
                 nombre.setText("");
@@ -722,7 +722,7 @@ public class Clientes extends javax.swing.JFrame {
                 add.dispose();
             }
         } catch (SQLException ex) {
-            System.out.println("Error al insertar paciente");
+            System.out.println("Error al insertar cliente");
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 

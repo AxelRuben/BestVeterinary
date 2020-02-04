@@ -53,6 +53,7 @@ public class Ventas extends javax.swing.JFrame {
     EmpleadoDao empleadoDao = new EmpleadoDao();
     ClienteDao clienteDao = new ClienteDao();
     VentaDao ventaDao = new VentaDao();
+    DefaultTableModel dTMIn = new DefaultTableModel();
     DefaultComboBoxModel defaultComboBoxModel = new DefaultComboBoxModel();
     int idV;
 
@@ -64,6 +65,8 @@ public class Ventas extends javax.swing.JFrame {
         this.setTitle("Realizar venta");
         this.setLocationRelativeTo(null);
         miscelaneasDao = new MiscelaneasDao();
+        Object iden[] = {"Id", "Nombre", "Subtotal"} ;
+        dTMIn.setColumnIdentifiers(iden);
         loadModelIn();
         loadComEmp();
         this.setResizable(false);
@@ -141,15 +144,33 @@ public class Ventas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error fatality");
         }
     }
-
-    void removerVenta() {
+    
+    void regresarVenta() throws SQLException {
         DefaultTableModel table2 = (DefaultTableModel) jTable2.getModel();
         DefaultTableModel tabla1 = (DefaultTableModel) jTable1.getModel();
         int row = jTable2.getSelectedRow();
-        Miscelaneas miscelaneas = miscelaneasDao.selectedMiscelaneas(Integer.parseInt(jTable2.getValueAt(row, 0).toString()));
-        Object producto[] = {miscelaneas.getIdmiscelaneas(), miscelaneas.getNombre(), miscelaneas.getTipo(), miscelaneas.getCosto()};
-        table2.removeRow(row);
-        tabla1.addRow(producto);
+        int id = Integer.parseInt(jTable2.getValueAt(row, 0).toString());
+        Miscelaneas miscelaneas = miscelaneasDao.selectedMiscelaneas(id);
+        String tipo = miscelaneas.getTipo();
+        if (tipo.equalsIgnoreCase("Servicios")) {
+            Object producto[] = {id, miscelaneas.getNombre(), tipo, miscelaneas.getCosto()};
+            tabla1.addRow(producto);
+            table2.removeRow(row);
+            total.setText(calcularTotal() + "");
+
+        } else if (tipo.equalsIgnoreCase("Medicamento") || tipo.equalsIgnoreCase("Articulos")) {
+            cantidad = (int) (Double.parseDouble(jTable2.getValueAt(row, 2).toString())/Double.parseDouble(jTable2.getValueAt(row, 2).toString()));
+            int stock = miscelaneas.getStock();
+                Object producto[] = {id, miscelaneas.getNombre(), tipo, miscelaneas.getCosto()};
+                tabla1.addRow(producto);
+                table2.removeRow(row);
+                total.setText(calcularTotal() + "");
+                if (!miscelaneasDao.actualizar_stock(id, stock+cantidad)) {
+                    JOptionPane.showMessageDialog(null, "Error al actualizar Stock");
+                }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error fatality");
+        }
     }
     String articulos = "";
 
@@ -162,7 +183,7 @@ public class Ventas extends javax.swing.JFrame {
         java.util.Date date = new java.util.Date();
         Cliente cliente1 = clienteDao.selectedCliente(venta.getCliente_idcliente());
         context.put("nombrec", jTable3.getValueAt(jTable3.getSelectedRow(), 3));
-        context.put("fechac", date.getDate() + "-" + date.getMonth() + date.getYear());
+        context.put("fechac", date.getDate() + "-" + date.getMonth() +"-"+ date.getYear());
         context.put("empleadoc", jTable3.getValueAt(jTable3.getSelectedRow(), 2));
         context.put("totalc", t.getText());
         context.put("pagoc", p.getText());
@@ -172,10 +193,19 @@ public class Ventas extends javax.swing.JFrame {
             articulos += (String) tablaVenta.getValueAt(i, 1) + "\n";
         }
         context.put("articulosc", articulos);
-
-    String nombreSalida="Venta "+(date.getYear()+1900)+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+"-"+date.getMinutes()+".docx";
+            File file = new File(System.getProperty("user.home")+"\\OneDrive\\Documentos\\BestVeterinarySA");
+            if (!file.exists()) {
+            file.mkdir();
+                System.out.println("Creado");
+        }
+    File file1 = new File(System.getProperty("user.home")+"\\OneDrive\\Documentos\\BestVeterinarySA\\Tickets");
+            if (!file1.exists()) {
+            file1.mkdir();
+                System.out.println("Creado 2");
+        }
+    String nombreSalida="Venta-"+(date.getYear()+1900)+"-"+(date.getMonth()+1)+"-"+date.getDate()+"-"+date.getHours()+"-"+date.getMinutes()+".docx";
         
-        OutputStream out = new FileOutputStream(new File("C:/Users/blanc/Desktop/" + nombreSalida));
+        OutputStream out = new FileOutputStream(new File(System.getProperty("user.home")+"/OneDrive/Documentos/BestVeterinarySA/Tickets/" + nombreSalida));
         report.process(context, out);
         System.out.println("Creado con éxito");
         JOptionPane.showMessageDialog(null, "Éxito al exportar el ticket");
@@ -608,20 +638,24 @@ public class Ventas extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
             // TODO add your handling code here:
+            if (jTable1.getSelectedRow()==-1) {
+                JOptionPane.showMessageDialog(null, "Seleccione un dato");
+            } else {
             agregarVenta();
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al insertar Venta");
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void pagoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pagoKeyReleased
-        // TODO add your handling code here:
-        if ((pago.getText()).equals("")) {
-            JOptionPane.showMessageDialog(null, "Por favor ingrese un pago");
-        } else {
-            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        // TODO add your handling code here
+        try {
+        if (Double.parseDouble(total.getText())<=Double.parseDouble(pago.getText())) {
                 cambio.setText(calcularCambio() + "");
-            }
+        }
+        } catch (Exception e) {
+            cambio.setText("");
         }
     }//GEN-LAST:event_pagoKeyReleased
 
@@ -636,7 +670,8 @@ public class Ventas extends javax.swing.JFrame {
         } else {
             try {
                 insertar_ven();
-                JOptionPane.showMessageDialog(null, "Exito al guardar venta");
+                resetear();
+                JOptionPane.showMessageDialog(null, "Éxito al guardar venta");
             } catch (SQLException ex) {
                 System.out.println("Error al insertar venta " + ex);;
             }
@@ -692,7 +727,16 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            if (jTable2.getSelectedRow()==-1) {
+                JOptionPane.showMessageDialog(null, "Seleccione un dato");
+            } else {
+            regresarVenta();
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al insertar Venta "+ ex);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
@@ -712,6 +756,17 @@ public class Ventas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
+    void resetear(){
+        loadModelIn();
+        jTable2.setModel(dTMIn);
+        jComboBox1.setSelectedIndex(0);
+        jComboBox2.setSelectedIndex(0);
+        total.setText("");
+        pago.setText("");
+        cambio.setText("");
+    }
+    
+    
     void insertar_ven() throws SQLException {
         VentaDao ventaDao = new VentaDao();
         Venta_has_Miscelaneas vHM;

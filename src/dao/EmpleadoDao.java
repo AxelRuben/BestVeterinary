@@ -32,8 +32,6 @@ public class EmpleadoDao {
             st.setString(3, pojo.getEspecialidad());
             st.setDate(4, pojo.getCumple());
             st.setString(5, pojo.getHorario());
-            
-            
             id = st.executeUpdate();
             ResultSet rs = st.getGeneratedKeys();
             if (rs.next()) {
@@ -51,11 +49,15 @@ public class EmpleadoDao {
     }
     
     public boolean actualizar_empleado(Empleado POJO) {
-        
         Connection con = null;
         PreparedStatement st = null;
         Empleado empleado = POJO;
-        int id = 0;
+        System.out.println("P: "+empleado.getCumple());
+        System.out.println("P: "+empleado.getEspecialidad());
+        System.out.println("P: "+empleado.getHorario());
+        System.out.println("P: "+empleado.getIdempleado());
+        System.out.println("P: "+empleado.getNombre());
+        System.out.println("P: "+empleado.getSexo());
         try {
             con = Conexion.getConnection();
             st = con.prepareStatement("CALL update_empleado(?,?,?,?,?,?,?)");
@@ -66,10 +68,11 @@ public class EmpleadoDao {
             st.setDate(5, empleado.getCumple());
             st.setString(6, empleado.getHorario());
             st.setBoolean(7, empleado.isActivo());
-            id = st.executeUpdate();
 
             int x = st.executeUpdate();
+            System.out.println(x);
             if (x == 0) {
+                System.out.println("falso");
                 return false;
             }
         } catch (Exception e) {
@@ -142,6 +145,41 @@ public class EmpleadoDao {
             rs.close();
         } catch (Exception e) {
             System.out.println("Error al cargar la tabla Empleado " + e);
+        } finally {
+            Conexion.close(con);
+            Conexion.close(st);
+        }
+        return dt;
+    }
+    public DefaultTableModel cargarModeloA(boolean activo) {
+        Connection con = null;
+        PreparedStatement st = null;
+        DefaultTableModel dt = null;
+        String encabezados[] = {"Id", "Nombre", "Turno", "Estado"};
+        try {
+            con = Conexion.getConnection();
+            st = con.prepareStatement("select*from empleado where activo=?");
+            st.setBoolean(1, activo);
+            dt = new DefaultTableModel();
+            dt.setColumnIdentifiers(encabezados);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Object ob[] = new Object[4];
+                Empleado pojo = inflaPOJO(rs);
+                ob[0] = pojo.getIdempleado();
+                ob[1] = pojo.getNombre().toUpperCase();
+                ob[2] = pojo.getHorario();
+            if (pojo.isActivo()) {
+                ob[3] = "Activo";
+                }else{
+                ob[3] = "Inactivo";
+                }
+
+                dt.addRow(ob);
+            }          
+            rs.close();
+        } catch (Exception e) {
+            System.out.println("Error al cargar la tabla Dueño " + e);
         } finally {
             Conexion.close(con);
             Conexion.close(st);

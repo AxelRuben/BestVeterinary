@@ -33,6 +33,7 @@ public class Miscelaneas {
         this.caducidadMOA = caducidadMOA;
         this.descripcionS = descripcionS;
     }
+    
     public Miscelaneas(String nombre, double costo, int proveedor_idproveedor, int stock, String imagen, String tipo, Date caducidadMOA, String descripcionS) {
         this.nombre = nombre;
         this.costo = costo;
@@ -56,6 +57,13 @@ public class Miscelaneas {
         this.stock = stock;
         this.tipo = tipo;
         this.caducidadMOA = caducidadMOA;
+    }
+    public Miscelaneas(String nombre, double costo, int proveedor_idproveedor, int stock, String tipo) {
+        this.nombre = nombre;
+        this.costo = costo;
+        this.proveedor_idproveedor = proveedor_idproveedor;
+        this.stock = stock;
+        this.tipo = tipo;
     }
     public Miscelaneas(int idmiscelaneas, String nombre, double costo, String tipo, String descripcionS) {
         this.idmiscelaneas=idmiscelaneas;

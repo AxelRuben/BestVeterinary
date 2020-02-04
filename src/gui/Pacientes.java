@@ -236,31 +236,41 @@ public void filter(){
 //        
     }
     
-    void exportFormat() throws IOException, XDocReportException{
+        void exportFormat() throws IOException, XDocReportException{
     InputStream in = Pacientes.class.getResourceAsStream("exportarDatos.docx");
     IXDocReport report = XDocReportRegistry.getRegistry().loadReport(
             in, TemplateEngineKind.Velocity);
     IContext context = report.createContext(); 
         Paciente paciente = pacienteDao.selectedPaciente(iddd);
         Cliente cliente1 = clienteDao.selectedCliente(paciente.getCliente_idcliente());
-    context.put("nombrem", nom.getText());
-    context.put("cumplem", cum.getText());
-    context.put("sexom", sex.getText());
-    context.put("razam", raz.getText());
-    context.put("duenom", due.getText());
-    context.put("edam", aniV.getText());
-    context.put("desm", des.getText());
-    context.put("activom", ac.getText());
+        TipoAnimal tipoAnimal1 = tipoAnimalDao.selectedAnimal(paciente.getTipoAnimal_idtipoAnimal());
+    context.put("nombrem", paciente.getNombre());
+    context.put("cumplem", paciente.getCumple());
+    context.put("sexom", sexoDM(paciente.getSexo()));
+    context.put("razam", tipoAnimal1.getRaza());
+    context.put("duenom", cliente1.getNombre());
+    context.put("edam", calcularDias(paciente.getCumple())/365);
+    context.put("desm", paciente.getDescripcion());
+    context.put("activom", activoDM(paciente.isActivo()));
     
     context.put("nombred", cliente1.getNombre());
-    context.put("cumpleaniosd", cliente1.getCumpleani());
     context.put("sexod", cliente1.getSexo());
     context.put("contactod", cliente1.getContacto());
     context.put("correod", cliente1.getCorreo());
     context.put("direcciond", cliente1.getDireccion());
         java.util.Date date = new java.util.Date();
     String nombreSalida="Reporte"+nom.getText()+(date.getYear()+1900)+"-"+(date.getMonth()+1)+"-"+date.getDate()+".docx";
-    OutputStream out = new FileOutputStream(new File("C:/Users/blanc/Desktop/"+nombreSalida));
+    File file = new File(System.getProperty("user.home")+"\\OneDrive\\Documentos\\BestVeterinarySA");
+            if (!file.exists()) {
+            file.mkdir();
+                System.out.println("Creado");
+        }
+    File file1 = new File(System.getProperty("user.home")+"\\OneDrive\\Documentos\\BestVeterinarySA\\Reportes");
+            if (!file1.exists()) {
+            file1.mkdir();
+                System.out.println("Creado 2");
+        }
+    OutputStream out = new FileOutputStream(new File(System.getProperty("user.home")+"/OneDrive/Documentos/BestVeterinarySA/Reportes/"+nombreSalida));
     report.process(context,out);
     System.out.println("Creado con éxito");
     JOptionPane.showMessageDialog(null, "Éxito al exportar datos");
