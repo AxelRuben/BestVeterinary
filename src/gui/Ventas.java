@@ -65,7 +65,7 @@ public class Ventas extends javax.swing.JFrame {
         this.setTitle("Realizar venta");
         this.setLocationRelativeTo(null);
         miscelaneasDao = new MiscelaneasDao();
-        Object iden[] = {"Id", "Nombre", "Subtotal"} ;
+        Object iden[] = {"Id", "Nombre", "Subtotal"};
         dTMIn.setColumnIdentifiers(iden);
         loadModelIn();
         loadComEmp();
@@ -134,7 +134,7 @@ public class Ventas extends javax.swing.JFrame {
                 table2.addRow(producto);
                 tabla1.removeRow(row);
                 total.setText(calcularTotal() + "");
-                if (!miscelaneasDao.actualizar_stock(id, stock-cantidad)) {
+                if (!miscelaneasDao.actualizar_stock(id, stock - cantidad)) {
                     JOptionPane.showMessageDialog(null, "Error al actualizar Stock");
                 }
             } else {
@@ -144,7 +144,7 @@ public class Ventas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error fatality");
         }
     }
-    
+
     void regresarVenta() throws SQLException {
         DefaultTableModel table2 = (DefaultTableModel) jTable2.getModel();
         DefaultTableModel tabla1 = (DefaultTableModel) jTable1.getModel();
@@ -159,15 +159,15 @@ public class Ventas extends javax.swing.JFrame {
             total.setText(calcularTotal() + "");
 
         } else if (tipo.equalsIgnoreCase("Medicamento") || tipo.equalsIgnoreCase("Articulos")) {
-            cantidad = (int) (Double.parseDouble(jTable2.getValueAt(row, 2).toString())/Double.parseDouble(jTable2.getValueAt(row, 2).toString()));
+            cantidad = (int) (Double.parseDouble(jTable2.getValueAt(row, 2).toString()) / Double.parseDouble(jTable2.getValueAt(row, 2).toString()));
             int stock = miscelaneas.getStock();
-                Object producto[] = {id, miscelaneas.getNombre(), tipo, miscelaneas.getCosto()};
-                tabla1.addRow(producto);
-                table2.removeRow(row);
-                total.setText(calcularTotal() + "");
-                if (!miscelaneasDao.actualizar_stock(id, stock+cantidad)) {
-                    JOptionPane.showMessageDialog(null, "Error al actualizar Stock");
-                }
+            Object producto[] = {id, miscelaneas.getNombre(), tipo, miscelaneas.getCosto()};
+            tabla1.addRow(producto);
+            table2.removeRow(row);
+            total.setText(calcularTotal() + "");
+            if (!miscelaneasDao.actualizar_stock(id, stock + cantidad)) {
+                JOptionPane.showMessageDialog(null, "Error al actualizar Stock");
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error fatality");
         }
@@ -183,7 +183,7 @@ public class Ventas extends javax.swing.JFrame {
         java.util.Date date = new java.util.Date();
         Cliente cliente1 = clienteDao.selectedCliente(venta.getCliente_idcliente());
         context.put("nombrec", jTable3.getValueAt(jTable3.getSelectedRow(), 3));
-        context.put("fechac", date.getDate() + "-" + date.getMonth() +"-"+ date.getYear());
+        context.put("fechac", date.getDate() + "-" + date.getMonth() + "-" + date.getYear());
         context.put("empleadoc", jTable3.getValueAt(jTable3.getSelectedRow(), 2));
         context.put("totalc", t.getText());
         context.put("pagoc", p.getText());
@@ -193,19 +193,21 @@ public class Ventas extends javax.swing.JFrame {
             articulos += (String) tablaVenta.getValueAt(i, 1) + "\n";
         }
         context.put("articulosc", articulos);
-            File file = new File(System.getProperty("user.home")+"\\OneDrive\\Documentos\\BestVeterinarySA");
-            if (!file.exists()) {
+        File file = new File(System.getProperty("user.home") + "\\Documents\\BestVeterinarySA");
+        if (!file.exists()) {
+            System.out.println(file);
             file.mkdir();
-                System.out.println("Creado");
+            System.out.println("Creado");
         }
-    File file1 = new File(System.getProperty("user.home")+"\\OneDrive\\Documentos\\BestVeterinarySA\\Tickets");
-            if (!file1.exists()) {
+        File file1 = new File(System.getProperty("user.home") + "\\Documents\\BestVeterinarySA\\Tickets");
+        if (!file1.exists()) {
+            System.out.println(file1);
             file1.mkdir();
-                System.out.println("Creado 2");
+            System.out.println("Creado 2");
         }
-    String nombreSalida="Venta-"+(date.getYear()+1900)+"-"+(date.getMonth()+1)+"-"+date.getDate()+"-"+date.getHours()+"-"+date.getMinutes()+".docx";
-        
-        OutputStream out = new FileOutputStream(new File(System.getProperty("user.home")+"/OneDrive/Documentos/BestVeterinarySA/Tickets/" + nombreSalida));
+        String nombreSalida = "Venta-" + (date.getYear() + 1900) + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + ".docx";
+
+        OutputStream out = new FileOutputStream(new File(System.getProperty("user.home") + "\\Documents\\BestVeterinarySA\\Tickets\\" + nombreSalida));
         report.process(context, out);
         System.out.println("Creado con éxito");
         JOptionPane.showMessageDialog(null, "Éxito al exportar el ticket");
@@ -638,10 +640,10 @@ public class Ventas extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
             // TODO add your handling code here:
-            if (jTable1.getSelectedRow()==-1) {
+            if (jTable1.getSelectedRow() == -1) {
                 JOptionPane.showMessageDialog(null, "Seleccione un dato");
             } else {
-            agregarVenta();
+                agregarVenta();
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al insertar Venta");
@@ -651,9 +653,9 @@ public class Ventas extends javax.swing.JFrame {
     private void pagoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pagoKeyReleased
         // TODO add your handling code here
         try {
-        if (Double.parseDouble(total.getText())<=Double.parseDouble(pago.getText())) {
+            if (Double.parseDouble(total.getText()) <= Double.parseDouble(pago.getText())) {
                 cambio.setText(calcularCambio() + "");
-        }
+            }
         } catch (Exception e) {
             cambio.setText("");
         }
@@ -729,13 +731,13 @@ public class Ventas extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         try {
             // TODO add your handling code here:
-            if (jTable2.getSelectedRow()==-1) {
+            if (jTable2.getSelectedRow() == -1) {
                 JOptionPane.showMessageDialog(null, "Seleccione un dato");
             } else {
-            regresarVenta();
+                regresarVenta();
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al insertar Venta "+ ex);
+            JOptionPane.showMessageDialog(null, "Error al insertar Venta " + ex);
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -756,7 +758,7 @@ public class Ventas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
-    void resetear(){
+    void resetear() {
         loadModelIn();
         jTable2.setModel(dTMIn);
         jComboBox1.setSelectedIndex(0);
@@ -765,8 +767,7 @@ public class Ventas extends javax.swing.JFrame {
         pago.setText("");
         cambio.setText("");
     }
-    
-    
+
     void insertar_ven() throws SQLException {
         VentaDao ventaDao = new VentaDao();
         Venta_has_Miscelaneas vHM;
